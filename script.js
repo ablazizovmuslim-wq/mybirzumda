@@ -7,6 +7,11 @@
 // ---------- 2. Переводы (UZ / RU / EN) ----------
 const T = {
   uz: {
+    copied: 'Havola nusxalandi ✅', share_text: "Birzumda — Telegram botlar", lite_auto: "Telefoningiz uchun yengil rejim yoqildi 🍃",
+    anim: 'Animatsiyalar', anim_full: "To'liq", anim_lite: 'Yengil', mascot: 'Zumik (maskot)', on: 'Yoqilgan', off: "O'chirilgan",
+    reset: 'Sozlamalarni tiklash', bn_home: 'Asosiy', bn_projects: 'Botlar', bn_reviews: 'Fikrlar',
+    qr_hint: "Kamerani QR kodga qarating — bot ochiladi", close: 'Yopish',
+    zumik: ['Salom! Men Zumik ⚡', "Hammasi bir zumda! 🚀", "Video kerakmi? Birzumda Yukla'ni och! 📥", "Taqdimot? Tayyorla bor! 📊", "Meni ushlay olmaysan 😜", "Mavzuni almashtirib ko'r ⚙️"],
     cabinet: 'Kabinet', no_order: "Fikr qoldirish uchun avval bajarilgan buyurtmangiz bo'lishi kerak", error: 'Xatolik, keyinroq urinib ko\'ring',
     nav_projects: 'Loyihalar', nav_reviews: 'Fikrlar', nav_about: 'Biz haqimizda', nav_faq: 'Savollar',
     login: 'Kirish', settings: 'Sozlamalar', theme: 'Mavzu', dark: 'Tungi', light: 'Kunduzgi', color: 'Rang', language: 'Til',
@@ -40,6 +45,11 @@ const T = {
     support: 'Texnik yordam:'
   },
   ru: {
+    copied: 'Ссылка скопирована ✅', share_text: 'Birzumda — Telegram-боты', lite_auto: 'Для вашего телефона включён лёгкий режим 🍃',
+    anim: 'Анимации', anim_full: 'Полные', anim_lite: 'Лёгкие', mascot: 'Zumik (маскот)', on: 'Включён', off: 'Выключен',
+    reset: 'Сбросить настройки', bn_home: 'Главная', bn_projects: 'Боты', bn_reviews: 'Отзывы',
+    qr_hint: 'Наведите камеру на QR-код — откроется бот', close: 'Закрыть',
+    zumik: ['Привет! Я Zumik ⚡', 'Всё в один миг! 🚀', 'Нужно видео? Открой Birzumda Yukla! 📥', 'Презентация? Есть Tayyorla! 📊', 'Не поймаешь 😜', 'Попробуй сменить тему ⚙️'],
     cabinet: 'Кабинет', no_order: 'Отзыв можно оставить только после выполненного заказа', error: 'Ошибка, попробуйте позже',
     nav_projects: 'Проекты', nav_reviews: 'Отзывы', nav_about: 'О нас', nav_faq: 'Вопросы',
     login: 'Войти', settings: 'Настройки', theme: 'Тема', dark: 'Тёмная', light: 'Светлая', color: 'Цвет', language: 'Язык',
@@ -73,6 +83,11 @@ const T = {
     support: 'Техподдержка:'
   },
   en: {
+    copied: 'Link copied ✅', share_text: 'Birzumda — Telegram bots', lite_auto: 'Light mode turned on for your phone 🍃',
+    anim: 'Animations', anim_full: 'Full', anim_lite: 'Light', mascot: 'Zumik (mascot)', on: 'On', off: 'Off',
+    reset: 'Reset settings', bn_home: 'Home', bn_projects: 'Bots', bn_reviews: 'Reviews',
+    qr_hint: 'Point your camera at the QR code to open the bot', close: 'Close',
+    zumik: ["Hi! I'm Zumik ⚡", 'Everything in an instant! 🚀', 'Need a video? Open Birzumda Yukla! 📥', 'Presentation? Try Tayyorla! 📊', "Can't catch me 😜", 'Try another theme ⚙️'],
     cabinet: 'Account', no_order: 'You can leave a review only after a completed order', error: 'Error, please try again later',
     nav_projects: 'Projects', nav_reviews: 'Reviews', nav_about: 'About', nav_faq: 'FAQ',
     login: 'Log in', settings: 'Settings', theme: 'Theme', dark: 'Dark', light: 'Light', color: 'Color', language: 'Language',
@@ -110,39 +125,116 @@ const T = {
 state.rating = 0;
 const t = (key) => T[state.lang][key] || T.uz[key] || key;
 
-// ---------- 4. Применение темы, цвета и языка ----------
-function applyTheme() {
-  document.documentElement.dataset.theme = state.theme;
-  $$('[data-theme-set]').forEach(b => b.classList.toggle('active', b.dataset.themeSet === state.theme));
+// ---------- 4. 8 тем с живым фоном ----------
+const THEMES = [
+  { id: 'kosmos', em: '🌌', prev: 'linear-gradient(135deg,#07060b,#4c1d95)', name: { uz: 'Kosmos', ru: 'Космос', en: 'Space' } },
+  { id: 'light',  em: '☀️', prev: 'linear-gradient(135deg,#f5f3fb,#c4b5fd)', name: { uz: 'Kunduzgi', ru: 'Дневная', en: 'Daylight' } },
+  { id: 'okean',  em: '🌊', prev: 'linear-gradient(135deg,#021420,#0891b2)', name: { uz: 'Okean', ru: 'Океан', en: 'Ocean' } },
+  { id: 'neon',   em: '🕹', prev: 'linear-gradient(135deg,#0a0014,#ff2bd6 70%,#22d3ee)', name: { uz: 'Neon', ru: 'Неон', en: 'Neon' } },
+  { id: 'qish',   em: '❄️', prev: 'linear-gradient(135deg,#0b1220,#60a5fa)', name: { uz: 'Qish', ru: 'Зима', en: 'Winter' } },
+  { id: 'lava',   em: '🔥', prev: 'linear-gradient(135deg,#120604,#f97316)', name: { uz: 'Lava', ru: 'Лава', en: 'Lava' } },
+  { id: 'orman',  em: '🌿', prev: 'linear-gradient(135deg,#04110a,#22c55e)', name: { uz: "O'rmon", ru: 'Лес', en: 'Forest' } },
+  { id: 'sakura', em: '🌸', prev: 'linear-gradient(135deg,#fff1f5,#ec4899)', name: { uz: 'Sakura', ru: 'Сакура', en: 'Sakura' } }
+];
+
+function renderThemeList() {
+  $('#themeList').innerHTML = THEMES.map(th => `
+    <button class="theme-card${th.id === state.theme ? ' active' : ''}" data-theme-set="${th.id}" style="--prev:${th.prev}">
+      <span class="em">${th.em}</span>${th.name[state.lang] || th.name.uz}
+    </button>`).join('');
 }
+
+// смена темы с круговой анимацией от места нажатия
+function setTheme(id, e) {
+  const apply = () => {
+    state.theme = id; save('theme', id);
+    document.documentElement.dataset.theme = id;
+    $$('[data-theme-set]').forEach(b => b.classList.toggle('active', b.dataset.themeSet === id));
+    FX.setTheme(id);
+  };
+  if (document.startViewTransition && e && state.fx === 'full') {
+    document.documentElement.style.setProperty('--vx', e.clientX + 'px');
+    document.documentElement.style.setProperty('--vy', e.clientY + 'px');
+    document.startViewTransition(apply);
+  } else apply();
+}
+
+$('#themeList').addEventListener('click', e => {
+  const b = e.target.closest('[data-theme-set]');
+  if (b) setTheme(b.dataset.themeSet, e);
+});
 
 function applyAccent() {
   document.documentElement.dataset.accent = state.accent;
   $$('[data-accent-set]').forEach(b => b.classList.toggle('active', b.dataset.accentSet === state.accent));
+  FX.refreshColors();
 }
+$$('[data-accent-set]').forEach(b => b.addEventListener('click', () => {
+  state.accent = b.dataset.accentSet; save('accent', state.accent); applyAccent();
+}));
 
+// ---------- 5. Язык ----------
 function applyLang() {
   document.documentElement.lang = state.lang;
   $$('[data-i18n]').forEach(el => el.textContent = t(el.dataset.i18n));
   $$('[data-i18n-html]').forEach(el => el.innerHTML = t(el.dataset.i18nHtml));
   $$('[data-i18n-ph]').forEach(el => el.placeholder = t(el.dataset.i18nPh));
   $$('[data-lang-set]').forEach(b => b.classList.toggle('active', b.dataset.langSet === state.lang));
+  $('#langQuick').textContent = state.lang.toUpperCase();
+  renderThemeList();
   renderStatuses();
   renderReviews();
-  if ($('#loginBtn')) renderLogin();
+  renderLogin();
+}
+function setLang(l) { state.lang = l; save('lang', l); applyLang(); }
+$$('[data-lang-set]').forEach(b => b.addEventListener('click', () => setLang(b.dataset.langSet)));
+// быстрая кнопка языка в шапке: UZ → RU → EN → UZ
+$('#langQuick').addEventListener('click', () => setLang({ uz: 'ru', ru: 'en', en: 'uz' }[state.lang]));
+
+// ---------- 6. Анимации (полные / лёгкие) и маскот ----------
+state.fx = load('fx', '');           // '' = ещё не решили → проверим телефон
+state.mascot = load('mascot', 'on');
+
+function applyFx() {
+  const full = state.fx !== 'lite';
+  document.documentElement.classList.toggle('lite', !full);
+  FX.setEnabled(full);
+  $$('[data-fx-set]').forEach(b => b.classList.toggle('active', b.dataset.fxSet === (full ? 'full' : 'lite')));
+  applyMascot();
 }
 
-$$('[data-theme-set]').forEach(b => b.addEventListener('click', () => {
-  state.theme = b.dataset.themeSet; save('theme', state.theme); applyTheme();
+function applyMascot() {
+  const on = state.mascot === 'on' && state.fx !== 'lite' && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  on ? Mascot.enable(() => Mascot.say(t('zumik')[Math.floor(Math.random() * t('zumik').length)])) : Mascot.disable();
+  $$('[data-mascot-set]').forEach(b => b.classList.toggle('active', b.dataset.mascotSet === state.mascot));
+}
+
+$$('[data-fx-set]').forEach(b => b.addEventListener('click', () => {
+  state.fx = b.dataset.fxSet; save('fx', state.fx); applyFx();
 }));
-$$('[data-accent-set]').forEach(b => b.addEventListener('click', () => {
-  state.accent = b.dataset.accentSet; save('accent', state.accent); applyAccent();
-}));
-$$('[data-lang-set]').forEach(b => b.addEventListener('click', () => {
-  state.lang = b.dataset.langSet; save('lang', state.lang); applyLang();
+$$('[data-mascot-set]').forEach(b => b.addEventListener('click', () => {
+  state.mascot = b.dataset.mascotSet; save('mascot', state.mascot); applyMascot();
 }));
 
-// ---------- 5. Открытие / закрытие панели настроек ----------
+// автопроверка: тянет ли телефон живые анимации
+async function autoFx() {
+  if (state.fx) return;                                   // человек уже выбрал сам
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches || deviceIsWeak()) {
+    state.fx = 'lite'; applyFx(); return;
+  }
+  const fps = await measureFps(3000);
+  if (fps < 40) {                                         // тормозит → лёгкий режим
+    state.fx = 'lite'; save('fx', 'lite'); applyFx();
+    toast(t('lite_auto'));
+  }
+}
+
+$('#resetBtn').addEventListener('click', () => {
+  ['theme', 'accent', 'lang', 'fx', 'mascot'].forEach(k => save(k, null));
+  location.reload();
+});
+
+// ---------- 7. Панель настроек ----------
 function toggleSettings(open) {
   $('#settings').classList.toggle('open', open);
   $('#overlay').classList.toggle('show', open);
@@ -150,55 +242,80 @@ function toggleSettings(open) {
 $('#settingsBtn').addEventListener('click', () => toggleSettings(true));
 $('#closeSettings').addEventListener('click', () => toggleSettings(false));
 $('#overlay').addEventListener('click', () => toggleSettings(false));
-document.addEventListener('keydown', e => { if (e.key === 'Escape') toggleSettings(false); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { toggleSettings(false); closeQr(); } });
 
-// ---------- 7. Анимированный фон с частицами ----------
-function startParticles() {
-  const canvas = $('#particles');
-  const ctx = canvas.getContext('2d');
-  let w, h, dots;
+// ---------- 7б. Полезные кнопки ----------
+const botUrl = (bot) => 'https://t.me/' + bot;
 
-  function resize() {
-    w = canvas.width = innerWidth;
-    h = canvas.height = innerHeight;
-    const count = Math.min(70, Math.floor(w * h / 18000));
-    dots = Array.from({ length: count }, () => ({
-      x: Math.random() * w, y: Math.random() * h,
-      vx: (Math.random() - .5) * .4, vy: (Math.random() - .5) * .4,
-      r: Math.random() * 1.8 + .6
-    }));
-  }
-
-  function frame() {
-    ctx.clearRect(0, 0, w, h);
-    const color = getComputedStyle(document.documentElement).getPropertyValue('--accent-2').trim();
-    ctx.fillStyle = color;
-    ctx.strokeStyle = color;
-    for (const d of dots) {
-      d.x += d.vx; d.y += d.vy;
-      if (d.x < 0 || d.x > w) d.vx *= -1;
-      if (d.y < 0 || d.y > h) d.vy *= -1;
-      ctx.globalAlpha = .7;
-      ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2); ctx.fill();
-    }
-    // линии между близкими точками
-    for (let i = 0; i < dots.length; i++) {
-      for (let j = i + 1; j < dots.length; j++) {
-        const dx = dots[i].x - dots[j].x, dy = dots[i].y - dots[j].y;
-        const dist = Math.hypot(dx, dy);
-        if (dist < 120) {
-          ctx.globalAlpha = (1 - dist / 120) * .25;
-          ctx.beginPath(); ctx.moveTo(dots[i].x, dots[i].y); ctx.lineTo(dots[j].x, dots[j].y); ctx.stroke();
-        }
-      }
-    }
-    requestAnimationFrame(frame);
-  }
-
-  resize();
-  addEventListener('resize', resize);
-  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) frame();
+async function copyText(text) {
+  try { await navigator.clipboard.writeText(text); toast(t('copied')); }
+  catch { toast(text); }                                  // если копирование запрещено — показываем ссылку
 }
+
+$$('[data-copy-link]').forEach(b => b.addEventListener('click', () => copyText(botUrl(b.dataset.copyLink))));
+
+$$('[data-share]').forEach(b => b.addEventListener('click', async () => {
+  const url = botUrl(b.dataset.share);
+  try { await navigator.share({ title: 'Birzumda', text: t('share_text'), url }); }
+  catch (e) { if (e.name !== 'AbortError') copyText(url); }
+}));
+
+// QR-код: библиотека грузится только при первом нажатии
+let qrLib;
+function loadQrLib() {
+  qrLib ??= new Promise((ok, fail) => {
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+    s.onload = ok; s.onerror = fail; document.head.appendChild(s);
+  });
+  return qrLib;
+}
+$$('[data-qr]').forEach(b => b.addEventListener('click', async () => {
+  const url = botUrl(b.dataset.qr);
+  $('#qrTitle').textContent = '@' + b.dataset.qr;
+  $('#qrBox').innerHTML = '';
+  $('#qrModal').classList.add('show');
+  try {
+    await loadQrLib();
+    new QRCode($('#qrBox'), { text: url, width: 200, height: 200, colorDark: '#16121f', colorLight: '#ffffff' });
+  } catch { $('#qrBox').textContent = url; }
+}));
+function closeQr() { $('#qrModal').classList.remove('show'); }
+$('#qrClose').addEventListener('click', closeQr);
+$('#qrModal').addEventListener('click', e => { if (e.target.id === 'qrModal') closeQr(); });
+
+// полоса прокрутки сверху + кнопка «наверх» с кольцом
+function onScroll() {
+  const max = document.documentElement.scrollHeight - innerHeight;
+  const p = max > 0 ? scrollY / max : 0;
+  $('#progress').style.transform = `scaleX(${p})`;
+  $('#totop').classList.toggle('show', scrollY > 500);
+  $('#totopRing').style.strokeDashoffset = 151 - 151 * p;
+}
+addEventListener('scroll', onScroll, { passive: true });
+$('#totop').addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' }));
+
+// нижнее меню: подсвечиваем раздел, который сейчас на экране
+const secIo = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const id = e.target.id === 'about' || e.target.id === 'faq' ? 'reviews' : e.target.id;
+    $$('.bnav a[data-sec]').forEach(a => a.classList.toggle('active', a.dataset.sec === id));
+  });
+}, { rootMargin: '-45% 0px -45% 0px' });
+['top', 'projects', 'reviews', 'about', 'faq'].forEach(id => $('#' + id) && secIo.observe($('#' + id)));
+
+// 3D-наклон карточек за мышкой
+$$('.card').forEach(card => {
+  card.addEventListener('pointermove', e => {
+    if (e.pointerType !== 'mouse' || state.fx === 'lite') return;
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--ry', ((e.clientX - r.left) / r.width - .5) * 10 + 'deg');
+    card.style.setProperty('--rx', -((e.clientY - r.top) / r.height - .5) * 10 + 'deg');
+    card.classList.add('tilt');
+  });
+  card.addEventListener('pointerleave', () => card.classList.remove('tilt'));
+});
 
 // ---------- 8. Плавное появление при прокрутке ----------
 function startReveal() {
@@ -288,7 +405,11 @@ async function loadReviews() {
 // выбор звёзд
 $$('[data-star]').forEach(btn => btn.addEventListener('click', () => {
   state.rating = +btn.dataset.star;
-  $$('[data-star]').forEach(b => b.classList.toggle('on', +b.dataset.star <= state.rating));
+  $$('[data-star]').forEach(b => {
+    b.classList.toggle('on', +b.dataset.star <= state.rating);
+    b.classList.remove('pop');
+    if (+b.dataset.star <= state.rating) { void b.offsetWidth; b.style.animationDelay = (b.dataset.star * 40) + 'ms'; b.classList.add('pop'); }
+  });
 }));
 
 $('#reviewForm').addEventListener('submit', async e => {
@@ -310,17 +431,17 @@ $('#reviewForm').addEventListener('submit', async e => {
 // ---------- 12. Вход через Telegram ----------
 // Виджет Telegram работает только на домене, привязанном в BotFather (/setdomain)
 function renderLogin() {
+  const go = state.token ? () => location.href = 'cabinet.html' : startLogin;
+  const label = state.token ? t('cabinet') : t('login');
   const btn = $('#loginBtn');
-  if (state.token) {
-    btn.querySelector('span').textContent = t('cabinet');
-    btn.onclick = () => location.href = 'cabinet.html';
-  } else {
-    btn.querySelector('span').textContent = t('login');
-    btn.onclick = startLogin;
-  }
+  if (btn) { btn.querySelector('span').textContent = label; btn.onclick = go; }
+  const bn = $('#bnavLogin');
+  bn.querySelector('span').textContent = label;
+  bn.onclick = (e) => { e.preventDefault(); if (!state.token) scrollTo({ top: 0, behavior: 'smooth' }); go(); };
 }
 
 function startLogin() {
+  if (!$('#loginBtn')) return;                      // виджет уже показан
   if (location.hostname.replace(/^www\./, '') !== CONFIG.SITE_HOST) return toast(t('login_soon'));
   const box = document.createElement('div');
   box.className = 'tg-login';
@@ -343,11 +464,12 @@ window.onTelegramAuth = async function (user) {
 };
 
 // ---------- 13. Запуск ----------
-applyTheme();
+if (!THEMES.some(th => th.id === state.theme)) state.theme = 'kosmos';
+document.documentElement.dataset.theme = state.theme;
 applyAccent();
 applyLang();
-renderLogin();
-startParticles();
+FX.setTheme(state.theme);
+applyFx();
 loadStats();
 loadReviews();
 $('#year').textContent = new Date().getFullYear();
@@ -356,5 +478,6 @@ addEventListener('load', () => {
   setTimeout(() => {
     $('#loader').classList.add('hide');
     startReveal();
+    autoFx();
   }, 1000);
 });

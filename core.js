@@ -23,8 +23,8 @@ function save(key, value) {
 }
 
 const state = {
-  theme: load('theme', 'dark'),
-  accent: load('accent', 'purple'),
+  theme: load('theme', 'kosmos'),
+  accent: load('accent', 'auto'),
   lang: load('lang', 'uz'),          // при первом заходе всегда узбекский
   token: load('token', ''),          // токен входа (выдаёт наш сервер)
   user: JSON.parse(load('user', 'null')),
@@ -35,7 +35,10 @@ const $ = (s) => document.querySelector(s);
 const $$ = (s) => document.querySelectorAll(s);
 
 // тема и цвет применяются сразу, на любой странице
+const THEME_IDS = ['kosmos', 'light', 'okean', 'neon', 'qish', 'lava', 'orman', 'sakura'];
+if (!THEME_IDS.includes(state.theme)) state.theme = state.theme === 'light' ? 'light' : 'kosmos';
 document.documentElement.dataset.theme = state.theme;
+if (load('fx', '') === 'lite') document.documentElement.classList.add('lite');
 document.documentElement.dataset.accent = state.accent;
 
 // ---------- 3. Запросы к серверу ----------
@@ -77,3 +80,39 @@ function escapeHtml(s) {
   return String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
 const money = (n) => (n || 0).toLocaleString('ru-RU') + " so'm";
+
+// ---------- 7. Анимация нажатий: волна, искры, вибрация ----------
+const TAP = '.btn, .icon-btn, .card, .segmented button, .theme-card, .colors button, .bnav a, .mini-btn';
+
+document.addEventListener('pointerdown', e => {
+  const el = e.target.closest(TAP);
+  if (!el) return;
+  // волна от пальца
+  const r = el.getBoundingClientRect();
+  const w = document.createElement('span');
+  w.className = 'ripple';
+  w.style.left = (e.clientX - r.left) + 'px';
+  w.style.top = (e.clientY - r.top) + 'px';
+  w.style.setProperty('--s', Math.max(r.width, r.height) / 8);
+  el.appendChild(w);
+  setTimeout(() => w.remove(), 650);
+  // лёгкая вибрация на телефоне
+  try { navigator.vibrate?.(8); } catch { /* нет вибрации — не страшно */ }
+});
+
+// искры у главных кнопок
+document.addEventListener('click', e => {
+  const el = e.target.closest('.btn-primary, .theme-card, .stars-input button');
+  if (!el || document.documentElement.classList.contains('lite')) return;
+  for (let i = 0; i < 10; i++) {
+    const s = document.createElement('i');
+    const a = (Math.PI * 2 * i) / 10, d = 30 + Math.random() * 30;
+    s.className = 'spark';
+    s.style.left = e.clientX - 3 + 'px';
+    s.style.top = e.clientY - 3 + 'px';
+    s.style.setProperty('--dx', Math.cos(a) * d + 'px');
+    s.style.setProperty('--dy', Math.sin(a) * d + 'px');
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 600);
+  }
+});
