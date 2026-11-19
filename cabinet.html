@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="dark" data-accent="purple">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kabinet — Birzumda</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237c3aed'/%3E%3Cpath d='M36 8 16 36h14l-4 20 22-30H34z' fill='white'/%3E%3C/svg%3E">
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg"><div class="blob b1"></div><div class="blob b2"></div></div>
+
+  <header class="header">
+    <a href="index.html" class="brand">
+      <svg viewBox="0 0 64 64" class="logo-icon"><rect width="64" height="64" rx="16" fill="var(--accent)"/><path d="M36 8 16 36h14l-4 20 22-30H34z" fill="#fff"/></svg>
+      <span>Birzumda</span>
+    </a>
+    <div class="header-actions">
+      <a href="admin.html" class="btn btn-ghost" id="adminLink" hidden>🛠 Admin</a>
+      <button class="btn btn-ghost" id="logoutBtn" data-c="logout">Chiqish</button>
+    </div>
+  </header>
+
+  <main class="page">
+    <!-- Профиль -->
+    <section class="profile glass">
+      <div class="avatar big" id="avatar">?</div>
+      <div>
+        <h1 id="userName">...</h1>
+        <p class="muted" id="userHandle"></p>
+      </div>
+    </section>
+
+    <p class="glass notice" id="notKnown" hidden>
+      <span data-c="not_known">Siz hali Birzumda Tayyorla botidan foydalanmagansiz.</span>
+      <a href="https://t.me/Birzumda_Tayyorla_bot" class="btn btn-primary" target="_blank" rel="noopener" data-c="open_bot">Botni ochish</a>
+    </p>
+
+    <!-- Бонусы, промокод, бесплатные работы -->
+    <section class="kpis">
+      <div class="kpi glass">
+        <span data-c="bonus">💰 Bonus</span>
+        <b id="bonus">—</b>
+      </div>
+      <div class="kpi glass" id="promoBox" hidden>
+        <span data-c="weekly">⚡ Haftalik promokod</span>
+        <b><code id="promoCode"></code> <small id="promoPct"></small></b>
+        <button class="btn btn-ghost small" data-copy="promoCode" data-c="copy">Nusxa olish</button>
+      </div>
+      <div class="kpi glass" id="creditsBox" hidden>
+        <span data-c="free_works">🎁 Bepul ishlar</span>
+        <b id="credits"></b>
+      </div>
+    </section>
+
+    <!-- Рефералы -->
+    <section class="glass block">
+      <h2 data-c="ref_title">👥 Do'stlarni taklif qiling</h2>
+      <p class="muted" data-c="ref_text">Do'stingiz havola orqali kelib birinchi to'lovni qilsa — sizga bonus beriladi.</p>
+      <div class="copy-row">
+        <input id="refLink" readonly>
+        <button class="btn btn-primary" data-copy="refLink" data-c="copy">Nusxa olish</button>
+      </div>
+      <p class="muted"><span data-c="invited">Taklif qilinganlar:</span> <b id="invited">0</b> · <span data-c="paid">To'lov qilganlar:</span> <b id="paid">0</b></p>
+    </section>
+
+    <!-- Заказы -->
+    <section class="glass block">
+      <h2 data-c="orders">📋 Buyurtmalarim</h2>
+      <div id="orders"></div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+  <script src="core.js"></script>
+  <script src="cabinet.js"></script>
+</body>
+</html>

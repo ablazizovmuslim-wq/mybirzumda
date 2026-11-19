@@ -2,18 +2,12 @@
    Birzumda — логика сайта
    ========================================= */
 
-// ---------- 1. Настройки сайта ----------
-const CONFIG = {
-  API_URL: '',   // этап 2: адрес сервера на Railway, напр. 'https://api.birzumda.uz'
-  DEMO: true,    // true = показываем демо-цифры. Когда подключим сервер — поставить false
-  LOGIN_BOT: 'Birzumda_Tayyorla_bot' // бот для входа через Telegram
-};
-
-const DEMO_STATS = { users: 1250, downloads: 8400, orders: 120 };
+// CONFIG, state, api(), toast() и др. — в core.js
 
 // ---------- 2. Переводы (UZ / RU / EN) ----------
 const T = {
   uz: {
+    cabinet: 'Kabinet', no_order: "Fikr qoldirish uchun avval bajarilgan buyurtmangiz bo'lishi kerak", error: 'Xatolik, keyinroq urinib ko\'ring',
     nav_projects: 'Loyihalar', nav_reviews: 'Fikrlar', nav_about: 'Biz haqimizda', nav_faq: 'Savollar',
     login: 'Kirish', settings: 'Sozlamalar', theme: 'Mavzu', dark: 'Tungi', light: 'Kunduzgi', color: 'Rang', language: 'Til',
     hero_badge: '⚡ Telegram botlar oilasi',
@@ -21,7 +15,6 @@ const T = {
     hero_sub: 'Video yuklash, taqdimot va portfolio tayyorlash — barcha loyihalarimiz bir joyda.',
     hero_btn: "Loyihalarni ko'rish", hero_contact: "Bog'lanish",
     stat_users: 'foydalanuvchi', stat_downloads: 'video yuklandi', stat_orders: 'buyurtma bajarildi',
-    demo_note: '* Demo raqamlar — server ulangandan keyin haqiqiy raqamlar chiqadi',
     projects_title: 'Loyihalarimiz', projects_sub: 'Har biri — bitta vazifani bir zumda bajaradi',
     status_check: 'Tekshirilmoqda', status_on: 'Ishlayapti', status_off: "Ta'mirda",
     yukla_desc: 'Instagram, TikTok, YouTube va boshqa saytlardan videolarni bir zumda yuklab oling.',
@@ -35,7 +28,7 @@ const T = {
     need_login: 'Fikr qoldirish uchun avval Telegram orqali kiring',
     need_stars: 'Iltimos, yulduzcha bilan baholang',
     review_sent: 'Rahmat! Fikringiz tekshiruvdan keyin chiqadi',
-    login_soon: "Kirish domen va server ulangandan keyin ishlaydi (2-bosqich)",
+    login_soon: "Telegram orqali kirish faqat mybirzumda.uz saytida ishlaydi",
     about_title: 'Biz haqimizda',
     about_p1: "Birzumda — Andijonda tug'ilgan brend. Maqsadimiz oddiy: odamlarning kundalik ishlarini Telegram ichida bir zumda hal qilish.",
     about_p2: 'Loyihalar asoschisi — Muhammaddovud Ablazizov, kompyuter injiniringi talabasi va dasturchi.',
@@ -47,6 +40,7 @@ const T = {
     support: 'Texnik yordam:'
   },
   ru: {
+    cabinet: 'Кабинет', no_order: 'Отзыв можно оставить только после выполненного заказа', error: 'Ошибка, попробуйте позже',
     nav_projects: 'Проекты', nav_reviews: 'Отзывы', nav_about: 'О нас', nav_faq: 'Вопросы',
     login: 'Войти', settings: 'Настройки', theme: 'Тема', dark: 'Тёмная', light: 'Светлая', color: 'Цвет', language: 'Язык',
     hero_badge: '⚡ Семья Telegram-ботов',
@@ -54,7 +48,6 @@ const T = {
     hero_sub: 'Скачивание видео, презентации и портфолио — все наши проекты в одном месте.',
     hero_btn: 'Смотреть проекты', hero_contact: 'Связаться',
     stat_users: 'пользователей', stat_downloads: 'видео скачано', stat_orders: 'заказов выполнено',
-    demo_note: '* Демо-цифры — после подключения сервера появятся настоящие',
     projects_title: 'Наши проекты', projects_sub: 'Каждый решает одну задачу в один миг',
     status_check: 'Проверка', status_on: 'Работает', status_off: 'На обслуживании',
     yukla_desc: 'Скачивайте видео из Instagram, TikTok, YouTube и других сайтов в один миг.',
@@ -68,7 +61,7 @@ const T = {
     need_login: 'Чтобы оставить отзыв, сначала войдите через Telegram',
     need_stars: 'Пожалуйста, поставьте оценку звёздами',
     review_sent: 'Спасибо! Отзыв появится после проверки',
-    login_soon: 'Вход заработает после подключения домена и сервера (этап 2)',
+    login_soon: 'Вход через Telegram работает только на сайте mybirzumda.uz',
     about_title: 'О нас',
     about_p1: 'Birzumda — бренд, рождённый в Андижане. Наша цель простая: решать ежедневные задачи людей прямо в Telegram, в один миг.',
     about_p2: 'Основатель проектов — Мухаммаддовуд Аблазизов, студент компьютерной инженерии и разработчик.',
@@ -80,6 +73,7 @@ const T = {
     support: 'Техподдержка:'
   },
   en: {
+    cabinet: 'Account', no_order: 'You can leave a review only after a completed order', error: 'Error, please try again later',
     nav_projects: 'Projects', nav_reviews: 'Reviews', nav_about: 'About', nav_faq: 'FAQ',
     login: 'Log in', settings: 'Settings', theme: 'Theme', dark: 'Dark', light: 'Light', color: 'Color', language: 'Language',
     hero_badge: '⚡ A family of Telegram bots',
@@ -87,7 +81,6 @@ const T = {
     hero_sub: 'Video downloads, presentations and portfolios — all our projects in one place.',
     hero_btn: 'See projects', hero_contact: 'Contact',
     stat_users: 'users', stat_downloads: 'videos downloaded', stat_orders: 'orders completed',
-    demo_note: '* Demo numbers — real numbers appear once the server is connected',
     projects_title: 'Our projects', projects_sub: 'Each one does one job in an instant',
     status_check: 'Checking', status_on: 'Online', status_off: 'Maintenance',
     yukla_desc: 'Download videos from Instagram, TikTok, YouTube and more in an instant.',
@@ -101,7 +94,7 @@ const T = {
     need_login: 'Log in with Telegram first to leave a review',
     need_stars: 'Please rate with stars',
     review_sent: 'Thanks! Your review will appear after moderation',
-    login_soon: 'Login will work once the domain and server are connected (stage 2)',
+    login_soon: 'Telegram login works only on mybirzumda.uz',
     about_title: 'About us',
     about_p1: 'Birzumda is a brand born in Andijan. Our goal is simple: solve everyday tasks right inside Telegram, in an instant.',
     about_p2: 'Founder — Muhammaddovud Ablazizov, computer engineering student and developer.',
@@ -114,24 +107,7 @@ const T = {
   }
 };
 
-// ---------- 3. Сохранение настроек (в браузере) ----------
-function load(key, fallback) {
-  try { return localStorage.getItem('bz_' + key) || fallback; } catch { return fallback; }
-}
-function save(key, value) {
-  try { localStorage.setItem('bz_' + key, value); } catch { /* браузер запретил — не страшно */ }
-}
-
-const state = {
-  theme: load('theme', 'dark'),
-  accent: load('accent', 'purple'),
-  lang: load('lang', 'uz'),   // при первом заходе всегда узбекский
-  user: null,
-  rating: 0
-};
-
-const $ = (s) => document.querySelector(s);
-const $$ = (s) => document.querySelectorAll(s);
+state.rating = 0;
 const t = (key) => T[state.lang][key] || T.uz[key] || key;
 
 // ---------- 4. Применение темы, цвета и языка ----------
@@ -153,6 +129,7 @@ function applyLang() {
   $$('[data-lang-set]').forEach(b => b.classList.toggle('active', b.dataset.langSet === state.lang));
   renderStatuses();
   renderReviews();
+  if ($('#loginBtn')) renderLogin();
 }
 
 $$('[data-theme-set]').forEach(b => b.addEventListener('click', () => {
@@ -174,16 +151,6 @@ $('#settingsBtn').addEventListener('click', () => toggleSettings(true));
 $('#closeSettings').addEventListener('click', () => toggleSettings(false));
 $('#overlay').addEventListener('click', () => toggleSettings(false));
 document.addEventListener('keydown', e => { if (e.key === 'Escape') toggleSettings(false); });
-
-// ---------- 6. Уведомление (toast) ----------
-let toastTimer;
-function toast(msg) {
-  const el = $('#toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
-}
 
 // ---------- 7. Анимированный фон с частицами ----------
 function startParticles() {
@@ -256,28 +223,25 @@ function animateNumber(el, target) {
 }
 
 async function loadStats() {
-  let stats = null;
-  if (CONFIG.API_URL) {
-    try {
-      const res = await fetch(CONFIG.API_URL + '/stats');
-      stats = await res.json();          // ждём { users, downloads, orders, status: {yukla, tayyorla} }
-      botStatus = stats.status || botStatus;
-    } catch { /* сервер недоступен */ }
-  }
-  if (!stats && CONFIG.DEMO) {
-    stats = DEMO_STATS;
-    botStatus = { yukla: true, tayyorla: true };
-    $('#demoNote').hidden = false;
-  }
+  let stats;
+  try { stats = await api('/api/site/stats'); } catch { return; } // нет сервера — блок цифр скрыт
+  botStatus = { ...botStatus, ...(stats.status || {}) };
   renderStatuses();
-  if (!stats) return;
+
+  let shown = 0;
+  $$('[data-count]').forEach(el => {
+    const v = stats[el.dataset.count];
+    el.closest('.stat').hidden = (v === null || v === undefined);
+    if (!el.closest('.stat').hidden) shown++;
+  });
+  if (!shown) return;
+  $('.stats').hidden = false;
 
   // запускаем счёт, когда блок появился на экране
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (!e.isIntersecting) return;
-      const key = e.target.dataset.count;
-      animateNumber(e.target, stats[key] || 0);
+      animateNumber(e.target, stats[e.target.dataset.count] || 0);
       io.unobserve(e.target);
     });
   });
@@ -285,11 +249,12 @@ async function loadStats() {
 }
 
 // ---------- 10. Статус ботов 🟢 / 🔴 ----------
-let botStatus = { yukla: null, tayyorla: null }; // null = ещё не знаем
+let botStatus = { yukla: null, tayyorla: null }; // null = не знаем → значок скрыт
 
 function renderStatuses() {
   $$('[data-status]').forEach(el => {
     const s = botStatus[el.dataset.status];
+    el.hidden = (s === null || s === undefined);
     el.classList.toggle('online', s === true);
     el.classList.toggle('offline', s === false);
     el.querySelector('em').textContent = s === true ? t('status_on') : s === false ? t('status_off') : t('status_check');
@@ -298,10 +263,6 @@ function renderStatuses() {
 
 // ---------- 11. Отзывы со звёздами ----------
 let reviews = []; // этап 2: загружаются с сервера
-
-function escapeHtml(s) {
-  return s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-}
 
 function renderReviews() {
   const box = $('#reviewsList');
@@ -320,11 +281,7 @@ function renderReviews() {
 }
 
 async function loadReviews() {
-  if (!CONFIG.API_URL) return renderReviews();
-  try {
-    const res = await fetch(CONFIG.API_URL + '/reviews');
-    reviews = await res.json();
-  } catch { /* сервер недоступен */ }
+  try { reviews = await api('/api/site/reviews'); } catch { /* сервер недоступен */ }
   renderReviews();
 }
 
@@ -336,43 +293,60 @@ $$('[data-star]').forEach(btn => btn.addEventListener('click', () => {
 
 $('#reviewForm').addEventListener('submit', async e => {
   e.preventDefault();
-  if (!state.user) return toast(t('need_login'));
+  if (!state.token) return toast(t('need_login'));
   if (!state.rating) return toast(t('need_stars'));
-  const text = $('#reviewText').value.trim();
   try {
-    await fetch(CONFIG.API_URL + '/reviews', {
+    await api('/api/site/reviews', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ auth: state.user, stars: state.rating, text })
+      body: JSON.stringify({ stars: state.rating, text: $('#reviewText').value.trim() })
     });
     toast(t('review_sent'));
     $('#reviewText').value = '';
-  } catch { toast('Xatolik / Error'); }
+  } catch (err) {
+    toast(err.code === 'no_order' ? t('no_order') : t('error'));
+  }
 });
 
 // ---------- 12. Вход через Telegram ----------
-// Работает только на настоящем домене, привязанном в BotFather (/setdomain)
-$('#loginBtn').addEventListener('click', () => {
-  if (!CONFIG.API_URL) return toast(t('login_soon'));
+// Виджет Telegram работает только на домене, привязанном в BotFather (/setdomain)
+function renderLogin() {
+  const btn = $('#loginBtn');
+  if (state.token) {
+    btn.querySelector('span').textContent = t('cabinet');
+    btn.onclick = () => location.href = 'cabinet.html';
+  } else {
+    btn.querySelector('span').textContent = t('login');
+    btn.onclick = startLogin;
+  }
+}
+
+function startLogin() {
+  if (location.hostname.replace(/^www\./, '') !== CONFIG.SITE_HOST) return toast(t('login_soon'));
+  const box = document.createElement('div');
+  box.className = 'tg-login';
   const s = document.createElement('script');
   s.src = 'https://telegram.org/js/telegram-widget.js?22';
   s.async = true;
   s.dataset.telegramLogin = CONFIG.LOGIN_BOT;
   s.dataset.size = 'large';
   s.dataset.onauth = 'onTelegramAuth(user)';
-  s.dataset.requestAccess = 'write';
-  $('#loginBtn').replaceWith(s);
-});
+  box.appendChild(s);
+  $('#loginBtn').replaceWith(box);
+}
 
-window.onTelegramAuth = function (user) {
-  state.user = user; // сервер обязательно проверяет подпись (hash)!
-  toast('👋 ' + user.first_name);
+window.onTelegramAuth = async function (user) {
+  try {
+    const data = await api('/api/site/auth', { method: 'POST', body: JSON.stringify(user) }); // сервер проверяет подпись
+    saveLogin(data);
+    location.href = 'cabinet.html';
+  } catch { toast(t('error')); }
 };
 
 // ---------- 13. Запуск ----------
 applyTheme();
 applyAccent();
 applyLang();
+renderLogin();
 startParticles();
 loadStats();
 loadReviews();
