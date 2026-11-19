@@ -7,6 +7,10 @@
 // ---------- 2. Переводы (UZ / RU / EN) ----------
 const T = {
   uz: {
+    nav_services: 'Xizmatlar', bn_services: 'Xizmatlar', search_ph: 'Nima kerak? Masalan: slayd, kurs ishi, video', search_btn: 'Qidirish',
+    popular_title: 'Mashhur xizmatlar', popular_sub: "Saytning o'zida buyurtma bering — tayyor ish Telegram'ga keladi", all_services: 'Barcha xizmatlar →',
+    order_btn: 'Buyurtma berish', nothing: "Hech narsa topilmadi — boshqacha yozib ko'ring", tags: ['Slayd', 'Kurs ishi', 'Portfolio', 'Mustaqil ish', 'Video yuklash'],
+    themes_main: 'ASOSIY', themes_pro: 'BIRZUMDA TAYYORLA USLUBIDA',
     more: 'Batafsil: qanday ishlaydi va narxlar →',
     copied: 'Havola nusxalandi ✅', share_text: "Birzumda — Telegram botlar", lite_auto: "Telefoningiz uchun yengil rejim yoqildi 🍃",
     anim: 'Animatsiyalar', anim_full: "To'liq", anim_lite: 'Yengil',
@@ -45,6 +49,10 @@ const T = {
     support: 'Texnik yordam:'
   },
   ru: {
+    nav_services: 'Услуги', bn_services: 'Услуги', search_ph: 'Что нужно? Например: слайды, курсовая, видео', search_btn: 'Найти',
+    popular_title: 'Популярные услуги', popular_sub: 'Заказывайте прямо на сайте — готовая работа придёт в Telegram', all_services: 'Все услуги →',
+    order_btn: 'Заказать', nothing: 'Ничего не найдено — попробуйте иначе', tags: ['Слайды', 'Курсовая', 'Портфолио', 'Самостоятельная', 'Скачать видео'],
+    themes_main: 'ОСНОВНЫЕ', themes_pro: 'В СТИЛЕ BIRZUMDA TAYYORLA',
     more: 'Подробнее: как работает и цены →',
     copied: 'Ссылка скопирована ✅', share_text: 'Birzumda — Telegram-боты', lite_auto: 'Для вашего телефона включён лёгкий режим 🍃',
     anim: 'Анимации', anim_full: 'Полные', anim_lite: 'Лёгкие',
@@ -83,6 +91,10 @@ const T = {
     support: 'Техподдержка:'
   },
   en: {
+    nav_services: 'Services', bn_services: 'Services', search_ph: 'What do you need? e.g. slides, term paper, video', search_btn: 'Search',
+    popular_title: 'Popular services', popular_sub: 'Order right on the site — the finished work arrives in Telegram', all_services: 'All services →',
+    order_btn: 'Order', nothing: 'Nothing found — try other words', tags: ['Slides', 'Term paper', 'Portfolio', 'Assignment', 'Video download'],
+    themes_main: 'MAIN', themes_pro: 'BIRZUMDA TAYYORLA STYLE',
     more: 'Details: how it works & prices →',
     copied: 'Link copied ✅', share_text: 'Birzumda — Telegram bots', lite_auto: 'Light mode turned on for your phone 🍃',
     anim: 'Animations', anim_full: 'Full', anim_lite: 'Light',
@@ -134,14 +146,25 @@ const THEMES = [
   { id: 'qish',   em: '❄️', prev: 'linear-gradient(135deg,#0b1220,#60a5fa)', name: { uz: 'Qish', ru: 'Зима', en: 'Winter' } },
   { id: 'lava',   em: '🔥', prev: 'linear-gradient(135deg,#120604,#f97316)', name: { uz: 'Lava', ru: 'Лава', en: 'Lava' } },
   { id: 'orman',  em: '🌿', prev: 'linear-gradient(135deg,#04110a,#22c55e)', name: { uz: "O'rmon", ru: 'Лес', en: 'Forest' } },
-  { id: 'sakura', em: '🌸', prev: 'linear-gradient(135deg,#fff1f5,#ec4899)', name: { uz: 'Sakura', ru: 'Сакура', en: 'Sakura' } }
+  { id: 'sakura', em: '🌸', prev: 'linear-gradient(135deg,#fff1f5,#ec4899)', name: { uz: 'Sakura', ru: 'Сакура', en: 'Sakura' } },
+  // PRO — как шаблоны Birzumda Tayyorla
+  { id: 'synth',   pro: 1, em: '🌆', prev: 'linear-gradient(180deg,#0d0221 45%,#ff6ad5 60%,#b14bff)', name: { uz: 'Sintveyv', ru: 'Синтвейв', en: 'Synthwave' } },
+  { id: 'rings',   pro: 1, em: '💫', prev: 'radial-gradient(circle at 50% 50%,#7dd3fc 0 6%,#020818 7% 20%,#3b82f6 21% 23%,#020818 24% 40%,#3b82f6 41% 43%,#020818 44%)', name: { uz: 'Halqalar', ru: 'Кольца', en: 'Rings' } },
+  { id: 'circuit', pro: 1, em: '🔌', prev: 'linear-gradient(90deg,transparent 48%,#22c55e 49% 51%,transparent 52%),linear-gradient(0deg,transparent 48%,#22c55e 49% 51%,transparent 52%),#02110a', name: { uz: 'Mikrosxema', ru: 'Микросхема', en: 'Circuit' } },
+  { id: 'fire',    pro: 1, em: '🌋', prev: 'linear-gradient(160deg,#140500 40%,#f97316 75%,#fb7185)', name: { uz: "Olov to'lqini", ru: 'Огненная волна', en: 'Fire wave' } },
+  { id: 'hex',     pro: 1, em: '🔷', prev: 'linear-gradient(135deg,#021316,#0f766e 60%,#5eead4)', name: { uz: 'Olti burchak', ru: 'Соты', en: 'Hexagon' } },
+  { id: 'bolt',    pro: 1, em: '⚡', prev: 'linear-gradient(135deg,#0d0a00 50%,#eab308 70%,#fde047)', name: { uz: 'Chaqmoq', ru: 'Молния', en: 'Lightning' } },
+  { id: 'holo',    pro: 1, em: '🌈', prev: 'linear-gradient(120deg,#f3f0ff,#a5f3fc,#f9a8d4,#c4b5fd)', name: { uz: 'Golografik', ru: 'Голограмма', en: 'Holographic' } }
 ];
 
 function renderThemeList() {
-  $('#themeList').innerHTML = THEMES.map(th => `
-    <button class="theme-card${th.id === state.theme ? ' active' : ''}" data-theme-set="${th.id}" style="--prev:${th.prev}">
+  const card = th => `
+    <button class="theme-card${th.pro ? ' pro' : ''}${th.id === state.theme ? ' active' : ''}" data-theme-set="${th.id}" style="--prev:${th.prev}">
       <span class="em">${th.em}</span>${th.name[state.lang] || th.name.uz}
-    </button>`).join('');
+    </button>`;
+  $('#themeList').innerHTML =
+    `<p class="theme-group">${t('themes_main')}</p>` + THEMES.filter(x => !x.pro).map(card).join('') +
+    `<p class="theme-group">${t('themes_pro')} <b>PRO</b></p>` + THEMES.filter(x => x.pro).map(card).join('');
 }
 
 // смена темы с круговой анимацией от места нажатия
@@ -185,6 +208,7 @@ function applyLang() {
   renderStatuses();
   renderReviews();
   renderLogin();
+  if (CAT.items.length) renderPopular();
 }
 function setLang(l) { state.lang = l; save('lang', l); applyLang(); }
 $$('[data-lang-set]').forEach(b => b.addEventListener('click', () => setLang(b.dataset.langSet)));
@@ -430,27 +454,58 @@ function renderLogin() {
 }
 
 function startLogin() {
-  if (!$('#loginBtn')) return;                      // виджет уже показан
-  if (location.hostname.replace(/^www\./, '') !== CONFIG.SITE_HOST) return toast(t('login_soon'));
+  const btn = $('#loginBtn');
+  if (!btn) return;                                   // виджет уже показан
   const box = document.createElement('div');
   box.className = 'tg-login';
-  const s = document.createElement('script');
-  s.src = 'https://telegram.org/js/telegram-widget.js?22';
-  s.async = true;
-  s.dataset.telegramLogin = CONFIG.LOGIN_BOT;
-  s.dataset.size = 'large';
-  s.dataset.onauth = 'onTelegramAuth(user)';
-  box.appendChild(s);
-  $('#loginBtn').replaceWith(box);
+  if (!tgLogin(box, () => location.href = 'cabinet.html')) return toast(t('login_soon'));
+  btn.replaceWith(box);
 }
 
-window.onTelegramAuth = async function (user) {
-  try {
-    const data = await api('/api/site/auth', { method: 'POST', body: JSON.stringify(user) }); // сервер проверяет подпись
-    saveLogin(data);
-    location.href = 'cabinet.html';
-  } catch { toast(t('error')); }
-};
+// ---------- 12б. Поиск услуг и популярные услуги ----------
+function svcCard(it) {
+  const L = state.lang;
+  return `
+    <a class="svc-card glass" href="${it.url}">
+      <span class="svc-ic">${it.icon}</span>
+      <b>${escapeHtml(it.names[L])}</b>
+      <p class="muted">${escapeHtml(it.descs[L] || '')}</p>
+      <span class="svc-price">${priceText(it.from, L, !!it.pkgs)}</span>
+      <span class="btn btn-primary small">${it.kind === 'bot' ? t('open_bot') : t('order_btn')}</span>
+    </a>`;
+}
+
+function renderSuggest() {
+  const q = $('#heroQ').value.trim(), box = $('#suggest');
+  if (!q) { box.hidden = true; return; }
+  const res = searchCatalog(q).slice(0, 6);
+  box.hidden = false;
+  box.innerHTML = res.length ? res.map(it => `
+    <a href="${it.url}" class="sg-row"><span>${it.icon}</span><span><b>${escapeHtml(it.names[state.lang])}</b>
+      <small class="muted">${it.aud ? (it.aud === 's' ? '🎓' : '👩‍🏫') : '🤖'} ${priceText(it.from, state.lang, !!it.pkgs)}</small></span></a>`).join('')
+    : `<p class="muted sg-empty">${t('nothing')}</p>`;
+}
+
+function renderPopular() {
+  const ids = ['s-taqdimot', 's-kurs', 's-mustaqil', 't-dars', 't-portfolio', 'yukla'];
+  const items = ids.map(id => CAT.items.find(x => x.id === id)).filter(Boolean);
+  $('#popularGrid').innerHTML = items.map(svcCard).join('');
+  $('#quickTags').innerHTML = t('tags').map(x => `<button type="button" class="tag">${x}</button>`).join('');
+}
+
+$('#heroQ').addEventListener('input', renderSuggest);
+$('#heroQ').addEventListener('focus', renderSuggest);
+document.addEventListener('click', e => { if (!e.target.closest('#heroSearch')) $('#suggest').hidden = true; });
+$('#heroSearch').addEventListener('submit', e => {
+  e.preventDefault();
+  save('q', $('#heroQ').value.trim());
+  location.href = 'services.html';
+});
+$('#quickTags').addEventListener('click', e => {
+  const tag = e.target.closest('.tag'); if (!tag) return;
+  $('#heroQ').value = tag.textContent; $('#heroQ').focus(); renderSuggest();
+});
+loadCatalog().then(renderPopular);
 
 // ---------- 13. Запуск ----------
 if (!THEMES.some(th => th.id === state.theme)) state.theme = 'kosmos';

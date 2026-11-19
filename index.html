@@ -52,6 +52,7 @@
       <span>Birzumda</span>
     </a>
     <nav class="nav">
+      <a href="services.html" data-i18n="nav_services">Xizmatlar</a>
       <a href="#projects" data-i18n="nav_projects">Loyihalar</a>
       <a href="#reviews" data-i18n="nav_reviews">Fikrlar</a>
       <a href="#about" data-i18n="nav_about">Biz haqimizda</a>
@@ -119,6 +120,15 @@
       <span class="badge reveal" data-i18n="hero_badge">⚡ Telegram botlar oilasi</span>
       <h1 class="reveal" data-i18n-html="hero_title">Hammasi <span class="grad">bir zumda</span></h1>
       <p class="hero-sub reveal" data-i18n="hero_sub">Video yuklash, taqdimot va portfolio tayyorlash — barcha loyihalarimiz bir joyda.</p>
+      <!-- Поиск услуг, как поиск домена у Eskiz -->
+      <form class="search-bar reveal" id="heroSearch" autocomplete="off">
+        <span class="search-ic">🔎</span>
+        <input id="heroQ" data-i18n-ph="search_ph" placeholder="Nima kerak? Masalan: slayd, kurs ishi, video">
+        <button class="btn btn-primary" type="submit" data-i18n="search_btn">Qidirish</button>
+        <div class="suggest glass" id="suggest" hidden></div>
+      </form>
+      <div class="quick-tags reveal" id="quickTags"></div>
+
       <div class="hero-cta reveal">
         <a href="#projects" class="btn btn-primary" data-i18n="hero_btn">Loyihalarni ko'rish</a>
         <a href="https://t.me/Abdulazizov_prince" class="btn btn-ghost" target="_blank" rel="noopener" data-i18n="hero_contact">Bog'lanish</a>
@@ -138,6 +148,14 @@
           <span data-i18n="stat_orders">buyurtma bajarildi</span>
         </div>
       </div>
+    </section>
+
+    <!-- 5б. Популярные услуги -->
+    <section class="section" id="popular">
+      <h2 class="reveal" data-i18n="popular_title">Mashhur xizmatlar</h2>
+      <p class="section-sub reveal" data-i18n="popular_sub">Saytning o'zida buyurtma bering — tayyor ish Telegram'ga keladi</p>
+      <div class="svc-grid" id="popularGrid"></div>
+      <div class="center reveal"><a href="services.html" class="btn btn-ghost" data-i18n="all_services">Barcha xizmatlar →</a></div>
     </section>
 
     <!-- 6. Проекты -->
@@ -250,8 +268,8 @@
   <!-- Нижнее меню для телефона -->
   <nav class="bnav" id="bnav">
     <a href="#top" data-sec="top"><i>🏠</i><span data-i18n="bn_home">Asosiy</span></a>
+    <a href="services.html"><i>🛒</i><span data-i18n="bn_services">Xizmatlar</span></a>
     <a href="#projects" data-sec="projects"><i>🤖</i><span data-i18n="bn_projects">Botlar</span></a>
-    <a href="#reviews" data-sec="reviews"><i>⭐</i><span data-i18n="bn_reviews">Fikrlar</span></a>
     <a href="#" id="bnavLogin"><i>👤</i><span data-i18n="login">Kirish</span></a>
   </nav>
 
@@ -269,6 +287,7 @@
 
   <script src="core.js"></script>
   <script src="fx.js"></script>
+  <script src="catalog.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

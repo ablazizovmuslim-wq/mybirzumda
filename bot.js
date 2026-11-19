@@ -154,7 +154,7 @@ function renderPackages() {
             <h3>${escapeHtml(x.name)}</h3>
             <div class="pkg-price">${price(x.price)}</div>
             <ul>${x.desc.split(',').map(d => `<li>✓ ${escapeHtml(d.trim())}</li>`).join('')}</ul>
-            <a class="btn ${i === 1 ? 'btn-primary' : 'btn-ghost'} full" href="${url}" target="_blank" rel="noopener">${b('order')}</a>
+            <a class="btn ${i === 1 ? 'btn-primary' : 'btn-ghost'} full" href="order.html#${audience}-${s}-${p}">${b('order')}</a>
           </div>`;
         }).join('')}
       </div>`).join('')}
@@ -162,8 +162,8 @@ function renderPackages() {
     <div class="glass block price-list">
       ${single.map(s => {
         const x = tr(audience, s);
-        return `<div class="order-row"><div><b>${escapeHtml(x.name)}</b><p class="muted">${escapeHtml(x.desc || '')}</p></div>
-                <span class="pill">${price(x.price)}</span></div>`;
+        return `<a class="order-row" href="order.html#${audience}-${s}"><div><b>${escapeHtml(x.name)}</b><p class="muted">${escapeHtml(x.desc || '')}</p></div>
+                <span class="pill">${price(x.price)} →</span></a>`;
       }).join('')}
     </div>
 

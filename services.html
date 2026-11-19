@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="kosmos" data-accent="auto">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Xizmatlar — Birzumda</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237c3aed'/%3E%3Cpath d='M36 8 16 36h14l-4 20 22-30H34z' fill='white'/%3E%3C/svg%3E">
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+  <div class="bg">
+    <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+    <canvas id="particles"></canvas>
+  </div>
+
+  <header class="header">
+    <a href="index.html" class="brand">
+      <svg viewBox="0 0 64 64" class="logo-icon"><rect width="64" height="64" rx="16" fill="var(--accent)"/><path d="M36 8 16 36h14l-4 20 22-30H34z" fill="#fff"/></svg>
+      <span>Birzumda</span>
+    </a>
+    <div class="header-actions">
+      <button class="icon-btn lang-btn" id="langQuick">UZ</button>
+      <a href="cabinet.html" class="btn btn-ghost" id="cabLink">👤</a>
+    </div>
+  </header>
+
+  <main class="page">
+    <h1 class="reveal" data-s="title">🛒 Xizmatlar</h1>
+    <form class="search-bar reveal" id="sSearch" autocomplete="off" style="margin:0">
+      <span class="search-ic">🔎</span>
+      <input id="sQ" placeholder="">
+    </form>
+    <div class="filters reveal" id="filters"></div>
+    <p class="muted svc-count" id="count"></p>
+    <div class="svc-grid" id="grid"></div>
+  </main>
+
+  <footer class="footer">
+    <p><span data-s="support">Texnik yordam:</span> <a href="https://t.me/Abdulazizov_prince" target="_blank" rel="noopener">@Abdulazizov_prince</a></p>
+  </footer>
+  <div class="toast" id="toast"></div>
+  <script src="core.js"></script>
+  <script src="fx.js"></script>
+  <script src="catalog.js"></script>
+  <script src="services.js"></script>
+</body>
+</html>

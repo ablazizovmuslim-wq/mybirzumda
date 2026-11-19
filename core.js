@@ -8,7 +8,8 @@ const CONFIG = {
   // сервер Birzumda Tayyorla на Railway (там же API сайта: /api/site/...)
   API_URL: 'https://bot-production-24253578.up.railway.app',
   SITE_HOST: 'mybirzumda.uz',          // вход через Telegram работает только на этом домене
-  LOGIN_BOT: 'Birzumda_Tayyorla_bot'   // бот для входа (в BotFather: /setdomain → mybirzumda.uz)
+  LOGIN_BOT: 'MyBirzumda_bot',        // бот для входа «Birzumda» (в BotFather: /setdomain → mybirzumda.uz)
+  ORDER_BOT: 'Birzumda_Tayyorla_bot'  // бот, куда приходят готовые работы
 };
 
 // ---------- 2. Хранение в браузере ----------
@@ -35,7 +36,8 @@ const $ = (s) => document.querySelector(s);
 const $$ = (s) => document.querySelectorAll(s);
 
 // тема и цвет применяются сразу, на любой странице
-const THEME_IDS = ['kosmos', 'light', 'okean', 'neon', 'qish', 'lava', 'orman', 'sakura'];
+const THEME_IDS = ['kosmos', 'light', 'okean', 'neon', 'qish', 'lava', 'orman', 'sakura',
+                   'synth', 'rings', 'circuit', 'fire', 'hex', 'bolt', 'holo'];
 if (!THEME_IDS.includes(state.theme)) state.theme = state.theme === 'light' ? 'light' : 'kosmos';
 document.documentElement.dataset.theme = state.theme;
 if (load('fx', '') === 'lite') document.documentElement.classList.add('lite');
@@ -116,3 +118,29 @@ document.addEventListener('click', e => {
     setTimeout(() => s.remove(), 600);
   }
 });
+
+// ---------- 8. Вход через Telegram (виджет) ----------
+// Работает только на mybirzumda.uz (домен привязан в BotFather)
+const onSiteDomain = () => location.hostname.replace(/^www\./, '') === CONFIG.SITE_HOST;
+
+function tgLogin(box, onDone) {
+  if (!onSiteDomain()) return false;
+  window.onTelegramAuth = async (user) => {
+    try {
+      const data = await api('/api/site/auth', { method: 'POST', body: JSON.stringify(user) }); // сервер проверяет подпись
+      saveLogin(data);
+      onDone?.(data);
+    } catch { toast('Error'); }
+  };
+  box.innerHTML = '';
+  const s = document.createElement('script');
+  s.src = 'https://telegram.org/js/telegram-widget.js?22';
+  s.async = true;
+  s.dataset.telegramLogin = CONFIG.LOGIN_BOT;
+  s.dataset.size = 'large';
+  s.dataset.radius = '12';
+  s.dataset.onauth = 'onTelegramAuth(user)';
+  s.dataset.requestAccess = 'write';
+  box.appendChild(s);
+  return true;
+}

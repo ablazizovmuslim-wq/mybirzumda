@@ -3,17 +3,17 @@
    ========================================= */
 
 const C = {
-  uz: { logout: 'Chiqish', not_known: 'Siz hali Birzumda Tayyorla botidan foydalanmagansiz.', open_bot: 'Botni ochish',
+  uz: { new_order: '➕ Yangi buyurtma', logout: 'Chiqish', not_known: 'Siz hali Birzumda Tayyorla botidan foydalanmagansiz.', open_bot: 'Botni ochish',
         bonus: '💰 Bonus', weekly: '⚡ Haftalik promokod', free_works: '🎁 Bepul ishlar', copy: 'Nusxa olish', copied: 'Nusxa olindi ✅',
         ref_title: "👥 Do'stlarni taklif qiling", ref_text: "Do'stingiz havola orqali kelib birinchi to'lovni qilsa — sizga bonus beriladi.",
         invited: 'Taklif qilinganlar:', paid: "To'lov qilganlar:", orders: '📋 Buyurtmalarim', no_orders: "Hozircha buyurtmalar yo'q",
         until: 'gacha', error: "Ma'lumot yuklanmadi, keyinroq urinib ko'ring" },
-  ru: { logout: 'Выйти', not_known: 'Вы ещё не пользовались ботом Birzumda Tayyorla.', open_bot: 'Открыть бота',
+  ru: { new_order: '➕ Новый заказ', logout: 'Выйти', not_known: 'Вы ещё не пользовались ботом Birzumda Tayyorla.', open_bot: 'Открыть бота',
         bonus: '💰 Бонус', weekly: '⚡ Промокод недели', free_works: '🎁 Бесплатные работы', copy: 'Копировать', copied: 'Скопировано ✅',
         ref_title: '👥 Приглашайте друзей', ref_text: 'Если друг придёт по ссылке и сделает первую оплату — вы получите бонус.',
         invited: 'Приглашено:', paid: 'Оплатили:', orders: '📋 Мои заказы', no_orders: 'Заказов пока нет',
         until: 'до', error: 'Не удалось загрузить данные, попробуйте позже' },
-  en: { logout: 'Log out', not_known: "You haven't used the Birzumda Tayyorla bot yet.", open_bot: 'Open bot',
+  en: { new_order: '➕ New order', logout: 'Log out', not_known: "You haven't used the Birzumda Tayyorla bot yet.", open_bot: 'Open bot',
         bonus: '💰 Bonus', weekly: '⚡ Weekly promo code', free_works: '🎁 Free works', copy: 'Copy', copied: 'Copied ✅',
         ref_title: '👥 Invite friends', ref_text: 'When a friend joins via your link and makes the first payment, you get a bonus.',
         invited: 'Invited:', paid: 'Paid:', orders: '📋 My orders', no_orders: 'No orders yet',
