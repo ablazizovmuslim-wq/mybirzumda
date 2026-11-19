@@ -127,13 +127,13 @@ const onSiteDomain = () => location.hostname.replace(/^www\./, '') === CONFIG.SI
 // Вход без номера телефона: сайт → бот (/start login_X) → «✅ Ha, kiraman» → кабинет
 const QL_TX = {
   uz: { btn: 'Telegram orqali kirish', hint: "Raqam kerak emas — bot ochiladi, bitta tugma va tayyor",
-        wait: "Telegram'da «✅ Ha, kiraman» tugmasini bosing", open: "Botni ochish", cancel: 'Bekor qilish',
+        wait: "Telegram'da botni oching va «Start» bosing", open: "Botni ochish", cancel: 'Bekor qilish',
         exp: "Vaqt tugadi — qaytadan bosing", ok: 'Xush kelibsiz' },
   ru: { btn: 'Войти через Telegram', hint: 'Без номера телефона — откроется бот, одна кнопка и готово',
-        wait: 'Нажмите в Telegram «✅ Да, войти»', open: 'Открыть бота', cancel: 'Отмена',
+        wait: 'Откройте бота в Telegram и нажмите «Start»', open: 'Открыть бота', cancel: 'Отмена',
         exp: 'Время вышло — нажмите ещё раз', ok: 'Добро пожаловать' },
   en: { btn: 'Log in with Telegram', hint: 'No phone number — the bot opens, one tap and done',
-        wait: 'Tap «✅ Yes, log me in» in Telegram', open: 'Open the bot', cancel: 'Cancel',
+        wait: 'Open the bot in Telegram and tap «Start»', open: 'Open the bot', cancel: 'Cancel',
         exp: 'Time is up — tap again', ok: 'Welcome' }
 };
 const TG_ICON = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M9.8 15.3 9.6 19c.4 0 .6-.2.8-.4l2-1.9 4.1 3c.8.4 1.3.2 1.5-.7l2.7-12.7c.3-1.1-.4-1.6-1.1-1.3L3.8 10.8c-1.1.4-1.1 1-.2 1.3l4.1 1.3 9.6-6c.5-.3.9-.1.5.2"/></svg>';
@@ -142,8 +142,8 @@ const QuickLogin = (() => {
   let ses = null, prep = null, timer = 0, done = null, sheet = null;
   const tx = () => QL_TX[state.lang] || QL_TX.uz;
   const mobile = () => matchMedia('(pointer: coarse)').matches;
-  const httpsLink = () => `https://t.me/${CONFIG.ORDER_BOT}?start=${ses.start}`;
-  const appLink = () => `tg://resolve?domain=${CONFIG.ORDER_BOT}&start=${ses.start}`;
+  const httpsLink = () => `https://t.me/${CONFIG.LOGIN_BOT}?start=${ses.start}`;
+  const appLink = () => `tg://resolve?domain=${CONFIG.LOGIN_BOT}&start=${ses.start}`;
   const fresh = () => ses && Date.now() < ses.until;
 
   function prepare() {                        // заранее берём одноразовый код, чтобы клик сразу открыл бота
