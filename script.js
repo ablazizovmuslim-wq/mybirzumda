@@ -537,7 +537,7 @@ function renderBots() {
   // орбита: логотипы по кругу
   $('#orbitSpin').innerHTML = WALL.map((b, i) => `
     <button class="orb" style="--i:${i};--n:${WALL.length};--c:${b.color}" data-orb="${b.id}" aria-label="${b.name}">
-      <img src="media/logos/${b.id}.webp" alt="" width="84" height="84"></button>`).join('');
+      <span class="float"><img src="media/logos/${b.id}.webp" alt="" width="84" height="84"></span></button>`).join('');
   // стена ботов
   $('#wall').innerHTML = WALL.map(b => `
     <a class="tile${b.big ? ' big' : ''}${b.soon ? ' soon' : ''}" href="${b.soon ? '#projects' : botHref(b)}"${b.soon ? '' : ext(b)} style="--c:${b.color}">
