@@ -11,26 +11,26 @@ const BOTS = {
     channel: 'Birzumda_Goloslar',
     video: '',                       // сюда путь к видео-инструкции, напр. 'media/yukla.mp4'
     desc: {
-      uz: "Ijtimoiy tarmoqlardagi videolarni bir zumda, suv belgisiz yuklab beradi.",
-      ru: 'Скачивает видео из соцсетей в один миг, без водяных знаков.',
-      en: 'Downloads videos from social networks in an instant, without watermarks.'
+      uz: "Instagram, YouTube, Pinterest, TikTok va Facebookʼdan videolarni bir zumda, suv belgisiz yuklab beradi.",
+      ru: 'Скачивает видео из Instagram, YouTube, Pinterest, TikTok и Facebook в один миг, без водяных знаков.',
+      en: 'Downloads videos from Instagram, YouTube, Pinterest, TikTok and Facebook in an instant, without watermarks.'
     },
     steps: {
       uz: [
         ['🚀', 'Botni oching', '@Birzumda_Yukla_bot ga kiring va «Start» tugmasini bosing'],
-        ['🔗', 'Havolani yuboring', 'Instagram, TikTok yoki YouTube videosining havolasini nusxalab botga tashlang'],
+        ['🔗', 'Havolani yuboring', 'Instagram, YouTube, Pinterest, TikTok yoki Facebookʼdagi video havolasini nusxalab botga tashlang'],
         ['⚡', 'Videoni oling', 'Bot bir zumda videoni suv belgisiz yuboradi — galereyaga saqlang'],
         ['🔔', 'Kanalga qo\'shiling', 'Yangiliklar uchun @Birzumda_Goloslar kanali (ixtiyoriy)']
       ],
       ru: [
         ['🚀', 'Откройте бота', 'Зайдите в @Birzumda_Yukla_bot и нажмите «Start»'],
-        ['🔗', 'Отправьте ссылку', 'Скопируйте ссылку на видео из Instagram, TikTok или YouTube и отправьте боту'],
+        ['🔗', 'Отправьте ссылку', 'Скопируйте ссылку на видео из Instagram, YouTube, Pinterest, TikTok или Facebook и отправьте боту'],
         ['⚡', 'Получите видео', 'Бот в один миг пришлёт видео без водяного знака — сохраните в галерею'],
         ['🔔', 'Подпишитесь', 'Новости в канале @Birzumda_Goloslar (по желанию)']
       ],
       en: [
         ['🚀', 'Open the bot', 'Go to @Birzumda_Yukla_bot and tap «Start»'],
-        ['🔗', 'Send a link', 'Copy a video link from Instagram, TikTok or YouTube and send it to the bot'],
+        ['🔗', 'Send a link', 'Copy a video link from Instagram, YouTube, Pinterest, TikTok or Facebook and send it to the bot'],
         ['⚡', 'Get the video', 'The bot instantly sends the video without a watermark — save it'],
         ['🔔', 'Join the channel', 'News in @Birzumda_Goloslar (optional)']
       ]
@@ -45,9 +45,9 @@ const BOTS = {
            ['u', 'https://instagram.com/reel/…'], ['b', '⏳ Downloading…'], ['v', '🎬 video.mp4 · 12 MB'], ['b', '✅ Done! No watermark 💜']]
     },
     free: {
-      uz: ['Cheksiz yuklash', 'Suv belgisiz', 'UZ / RU / EN tillarida', "Ro'yxatdan o'tish shart emas"],
-      ru: ['Без ограничений', 'Без водяных знаков', 'На UZ / RU / EN', 'Без регистрации'],
-      en: ['Unlimited downloads', 'No watermarks', 'In UZ / RU / EN', 'No sign-up needed']
+      uz: ['Instagram · YouTube · Pinterest · TikTok · Facebook', 'Cheksiz yuklash', 'Suv belgisiz', 'UZ / RU / EN tillarida', "Ro'yxatdan o'tish shart emas"],
+      ru: ['Instagram · YouTube · Pinterest · TikTok · Facebook', 'Без ограничений', 'Без водяных знаков', 'На UZ / RU / EN', 'Без регистрации'],
+      en: ['Instagram · YouTube · Pinterest · TikTok · Facebook', 'Unlimited downloads', 'No watermarks', 'In UZ / RU / EN', 'No sign-up needed']
     }
   },
 
