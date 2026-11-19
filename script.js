@@ -7,6 +7,12 @@
 // ---------- 2. Переводы (UZ / RU / EN) ----------
 const T = {
   uz: {
+    h1a: 'Hammasi', h1b: 'bir zumda', hero_sub2: "Telegram botlar va sayt: video yuklash, taqdimot va kurs ishi, stiker, valyuta kursi va boshqalar — hammasi bir joyda.",
+    wall_title: 'Botlarimiz', wall_sub: 'Har biri bitta ishni bajaradi va Telegram ichida ochiladi.', nav_bots: 'Botlar',
+    show_sub: "Taqdimot, portfolio, kurs ishi va mustaqil ish — 32 ta dizayn shablonidan. Narxi 20 000 so'mdan.", show_prices: 'Paketlar va narxlar',
+    how_title: 'Saytda buyurtma berish', how1: 'Ishni tanlang', how1s: 'Xizmat, paket, mavzu va muddat', how2: 'Telegram orqali kiring',
+    how2s: 'Parolsiz, bitta tugma bilan', how3: "To'lang va kuting", how3s: 'Chek tasdiqlangach, tayyor ish botga keladi',
+    foot_tag: "Telegram botlar oilasi. Andijon, O'zbekiston.", foot_bots: 'Botlar', foot_site: 'Sayt', soon: 'Tez orada', free: 'Bepul', open: 'Ochish', more: 'Batafsil',
     tools_title: 'Foydali botlar', tools_sub: 'Bepul, tez va Telegram ichida',
     nav_services: 'Xizmatlar', bn_services: 'Xizmatlar', search_ph: 'Nima kerak? Masalan: slayd, kurs ishi, video', search_btn: 'Qidirish',
     popular_title: 'Mashhur xizmatlar', popular_sub: "Saytning o'zida buyurtma bering — tayyor ish Telegram'ga keladi", all_services: 'Barcha xizmatlar →',
@@ -50,6 +56,12 @@ const T = {
     support: 'Texnik yordam:'
   },
   ru: {
+    h1a: 'Всё', h1b: 'в один миг', hero_sub2: 'Telegram-боты и сайт: скачать видео, презентации и курсовые, стикеры, курс валют и многое другое — всё в одном месте.',
+    wall_title: 'Наши боты', wall_sub: 'Каждый делает одно дело и открывается прямо в Telegram.', nav_bots: 'Боты',
+    show_sub: 'Презентации, портфолио, курсовые и самостоятельные — 32 шаблона дизайна. Цена от 20 000 сум.', show_prices: 'Пакеты и цены',
+    how_title: 'Заказ на сайте', how1: 'Выберите работу', how1s: 'Услуга, пакет, тема и срок', how2: 'Войдите через Telegram',
+    how2s: 'Без пароля, одной кнопкой', how3: 'Оплатите и ждите', how3s: 'После проверки чека готовая работа придёт в бота',
+    foot_tag: 'Семья Telegram-ботов. Андижан, Узбекистан.', foot_bots: 'Боты', foot_site: 'Сайт', soon: 'Скоро', free: 'Бесплатно', open: 'Открыть', more: 'Подробнее',
     tools_title: 'Полезные боты', tools_sub: 'Бесплатно, быстро и прямо в Telegram',
     nav_services: 'Услуги', bn_services: 'Услуги', search_ph: 'Что нужно? Например: слайды, курсовая, видео', search_btn: 'Найти',
     popular_title: 'Популярные услуги', popular_sub: 'Заказывайте прямо на сайте — готовая работа придёт в Telegram', all_services: 'Все услуги →',
@@ -93,6 +105,12 @@ const T = {
     support: 'Техподдержка:'
   },
   en: {
+    h1a: 'Everything', h1b: 'in an instant', hero_sub2: 'Telegram bots and a website: video downloads, presentations and papers, stickers, exchange rates and more — all in one place.',
+    wall_title: 'Our bots', wall_sub: 'Each one does one job and opens right inside Telegram.', nav_bots: 'Bots',
+    show_sub: 'Presentations, portfolios, term papers and assignments — 32 design templates. From 20,000 sum.', show_prices: 'Plans and prices',
+    how_title: 'Ordering on the website', how1: 'Choose the work', how1s: 'Service, plan, topic and deadline', how2: 'Log in with Telegram',
+    how2s: 'No password, one tap', how3: 'Pay and relax', how3s: 'Once the receipt is checked, the work arrives in the bot',
+    foot_tag: 'A family of Telegram bots. Andijan, Uzbekistan.', foot_bots: 'Bots', foot_site: 'Website', soon: 'Soon', free: 'Free', open: 'Open', more: 'Details',
     tools_title: 'Handy bots', tools_sub: 'Free, fast and right inside Telegram',
     nav_services: 'Services', bn_services: 'Services', search_ph: 'What do you need? e.g. slides, term paper, video', search_btn: 'Search',
     popular_title: 'Popular services', popular_sub: 'Order right on the site — the finished work arrives in Telegram', all_services: 'All services →',
@@ -211,7 +229,7 @@ function applyLang() {
   renderStatuses();
   renderReviews();
   renderLogin();
-  if (CAT.items.length) renderPopular();
+  if ($('#wall')) renderBots();
 }
 function setLang(l) { state.lang = l; save('lang', l); applyLang(); }
 $$('[data-lang-set]').forEach(b => b.addEventListener('click', () => setLang(b.dataset.langSet)));
@@ -364,11 +382,11 @@ async function loadStats() {
   let shown = 0;
   $$('[data-count]').forEach(el => {
     const v = stats[el.dataset.count];
-    el.closest('.stat').hidden = (v === null || v === undefined);
-    if (!el.closest('.stat').hidden) shown++;
+    el.closest('.live-pill').hidden = (v === null || v === undefined);
+    if (!el.closest('.live-pill').hidden) shown++;
   });
   if (!shown) return;
-  $('.stats').hidden = false;
+  $('#live').hidden = false;
 
   // запускаем счёт, когда блок появился на экране
   const io = new IntersectionObserver(entries => {
@@ -489,14 +507,69 @@ function renderSuggest() {
     : `<p class="muted sg-empty">${t('nothing')}</p>`;
 }
 
-function renderPopular() {
-  const ids = ['s-taqdimot', 's-kurs', 's-mustaqil', 't-dars', 't-portfolio', 'yukla'];
-  const items = ids.map(id => CAT.items.find(x => x.id === id)).filter(Boolean);
-  $('#popularGrid').innerHTML = items.map(svcCard).join('');
-  $('#toolsGrid').innerHTML = ['lotin', 'hisob', 'stiker', 'musiqa'].map(id => CAT.items.find(x => x.id === id)).filter(Boolean)
-    .map(svcCard).join('').replaceAll('<a class="svc-card glass" href="https://t.me', '<a class="svc-card glass" target="_blank" rel="noopener" href="https://t.me');
+// ---------- Боты: орбита, стена, витрина ----------
+const WALL = [
+  { id: 'yukla', big: 1, url: 'bot.html#yukla', tg: 'Birzumda_Yukla_bot', price: 0, color: '#3b82f6',
+    name: 'Birzumda Yukla', d: { uz: 'Instagram, YouTube, Pinterest, TikTok va Facebook videolarini suv belgisiz yuklaydi',
+      ru: 'Скачивает видео из Instagram, YouTube, Pinterest, TikTok и Facebook без водяных знаков',
+      en: 'Downloads Instagram, YouTube, Pinterest, TikTok and Facebook videos without watermarks' } },
+  { id: 'tayyorla', big: 1, url: 'bot.html#tayyorla', tg: 'Birzumda_Tayyorla_bot', price: 20000, color: '#a855f7',
+    name: 'Birzumda Tayyorla', d: { uz: 'Taqdimot, portfolio, kurs ishi va mustaqil ish talabalar va ustozlar uchun',
+      ru: 'Презентации, портфолио, курсовые и самостоятельные для студентов и преподавателей',
+      en: 'Presentations, portfolios, term papers and assignments for students and teachers' } },
+  { id: 'lotin', tg: 'Birzumda_Lotin_bot', price: 0, color: '#a855f7', name: 'Birzumda Lotin',
+    d: { uz: "Kirill ↔ lotin: matn va Word fayllar", ru: 'Кириллица ↔ латиница: текст и Word', en: 'Cyrillic ↔ Latin: text and Word files' } },
+  { id: 'hisob', tg: 'Birzumda_Hisob_bot', price: 0, color: '#10b981', name: 'Birzumda Hisob',
+    d: { uz: 'Valyuta kursi, konvertor, QR kod, kredit', ru: 'Курс валют, конвертер, QR, кредит', en: 'Rates, converter, QR codes, loans' } },
+  { id: 'stiker', tg: 'Birzumda_Stiker_bot', price: 0, color: '#f97316', name: 'Birzumda Stiker',
+    d: { uz: "Rasmdan stiker va o'z stikerpakingiz", ru: 'Стикеры из фото и свой стикерпак', en: 'Stickers from photos and your own pack' } },
+  { id: 'musiqa', tg: 'Birzumda_Musiqa_bot', price: 0, color: '#ec4899', name: 'Birzumda Musiqa',
+    d: { uz: 'Videodan va ovozli xabardan MP3', ru: 'MP3 из видео и голосовых', en: 'MP3 from videos and voice messages' } },
+  { id: 'eslatma', soon: 1, tg: 'Birzumda_Eslatma_bot', price: 0, color: '#eab308', name: 'Birzumda Eslatma',
+    d: { uz: 'Eslatmalar va dars jadvali', ru: 'Напоминания и расписание', en: 'Reminders and timetable' } }
+];
+const TPLS = [1, 4, 7, 13, 15, 17, 19, 23, 25, 28];
+const botHref = (b) => b.url || `https://t.me/${b.tg}`;
+const ext = (b) => b.url ? '' : ' target="_blank" rel="noopener"';
+
+function renderBots() {
+  const L = state.lang;
+  // орбита: логотипы по кругу
+  $('#orbitSpin').innerHTML = WALL.map((b, i) => `
+    <button class="orb" style="--i:${i};--n:${WALL.length};--c:${b.color}" data-orb="${b.id}" aria-label="${b.name}">
+      <img src="media/logos/${b.id}.webp" alt="" width="84" height="84"></button>`).join('');
+  // стена ботов
+  $('#wall').innerHTML = WALL.map(b => `
+    <a class="tile${b.big ? ' big' : ''}${b.soon ? ' soon' : ''}" href="${b.soon ? '#projects' : botHref(b)}"${b.soon ? '' : ext(b)} style="--c:${b.color}">
+      <img src="media/logos/${b.id}.webp" alt="" width="120" height="120" loading="lazy">
+      <span class="tile-body">
+        <b>${b.name}</b>
+        <span class="muted">${escapeHtml(b.d[L])}</span>
+        <span class="tile-foot">
+          <span class="price">${b.soon ? t('soon') : b.price ? priceText(b.price, L, true) : t('free')}</span>
+          ${b.id === 'yukla' || b.id === 'tayyorla' ? `<span class="status" data-status="${b.id}" hidden><i></i><em></em></span>` : ''}
+        </span>
+      </span>
+    </a>`).join('');
+  // витрина шаблонов Tayyorla
+  $('#ribbon').innerHTML = TPLS.map(n => `<img src="media/tpl/s${n}.webp" alt="" width="560" height="315" loading="lazy">`).join('');
+  $('#footBots').innerHTML = WALL.filter(b => !b.soon).map(b => `<li><a href="https://t.me/${b.tg}" target="_blank" rel="noopener">@${b.tg}</a></li>`).join('');
   $('#quickTags').innerHTML = t('tags').map(x => `<button type="button" class="tag">${x}</button>`).join('');
+  renderStatuses();
 }
+
+// клик по логотипу на орбите — карточка бота
+$('#orbitSpin').addEventListener('click', e => {
+  const o = e.target.closest('[data-orb]');
+  if (!o) return;
+  const b = WALL.find(x => x.id === o.dataset.orb), L = state.lang, card = $('#orbitCard');
+  $$('.orb').forEach(x => x.classList.toggle('on', x === o));
+  card.style.setProperty('--c', b.color);
+  card.innerHTML = `<img src="media/logos/${b.id}.webp" alt="" width="56" height="56">
+    <div><b>${b.name}</b><p class="muted">${escapeHtml(b.d[L])}</p></div>
+    ${b.soon ? `<span class="price">${t('soon')}</span>` : `<a class="btn btn-primary small" href="${botHref(b)}"${ext(b)}>${t('open')}</a>`}`;
+  card.hidden = false;
+});
 
 $('#heroQ').addEventListener('input', renderSuggest);
 $('#heroQ').addEventListener('focus', renderSuggest);
@@ -510,7 +583,8 @@ $('#quickTags').addEventListener('click', e => {
   const tag = e.target.closest('.tag'); if (!tag) return;
   $('#heroQ').value = tag.textContent; $('#heroQ').focus(); renderSuggest();
 });
-loadCatalog().then(renderPopular);
+renderBots();
+loadCatalog();
 
 // ---------- 13. Запуск ----------
 if (!THEMES.some(th => th.id === state.theme)) state.theme = 'kosmos';
@@ -526,6 +600,7 @@ $('#year').textContent = new Date().getFullYear();
 addEventListener('load', () => {
   setTimeout(() => {
     $('#loader').classList.add('hide');
+    $('#sign').classList.add('on');            // вывеска «включается» один раз
     startReveal();
     autoFx();
   }, 1000);

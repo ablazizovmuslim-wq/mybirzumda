@@ -53,9 +53,8 @@
     </a>
     <nav class="nav">
       <a href="services.html" data-i18n="nav_services">Xizmatlar</a>
-      <a href="#projects" data-i18n="nav_projects">Loyihalar</a>
-      <a href="#reviews" data-i18n="nav_reviews">Fikrlar</a>
-      <a href="#about" data-i18n="nav_about">Biz haqimizda</a>
+      <a href="#projects" data-i18n="nav_bots">Botlar</a>
+      <a href="#tayyorla">Tayyorla</a>
       <a href="#faq" data-i18n="nav_faq">Savollar</a>
     </nav>
     <div class="header-actions">
@@ -115,114 +114,77 @@
 
   <main id="top">
 
-    <!-- 5. Главный экран -->
-    <section class="hero">
-      <span class="badge reveal" data-i18n="hero_badge">⚡ Telegram botlar oilasi</span>
-      <h1 class="reveal" data-i18n-html="hero_title">Hammasi <span class="grad">bir zumda</span></h1>
-      <p class="hero-sub reveal" data-i18n="hero_sub">Video yuklash, taqdimot va portfolio tayyorlash — barcha loyihalarimiz bir joyda.</p>
-      <!-- Поиск услуг, как поиск домена у Eskiz -->
-      <form class="search-bar reveal" id="heroSearch" autocomplete="off">
-        <span class="search-ic">🔎</span>
-        <input id="heroQ" data-i18n-ph="search_ph" placeholder="Nima kerak? Masalan: slayd, kurs ishi, video">
-        <button class="btn btn-primary" type="submit" data-i18n="search_btn">Qidirish</button>
-        <div class="suggest glass" id="suggest" hidden></div>
-      </form>
-      <div class="quick-tags reveal" id="quickTags"></div>
+    <!-- 1. Главный экран: неоновая вывеска + орбита ботов -->
+    <section class="hero2">
+      <div class="hero-copy">
+        <h1 class="neon-sign" id="sign"><span data-i18n="h1a">Hammasi</span> <span data-i18n="h1b">bir zumda</span></h1>
+        <p class="hero-sub" data-i18n="hero_sub2">Telegram botlar va sayt: video yuklash, taqdimot va kurs ishi, stiker, valyuta kursi va boshqalar — hammasi bir joyda.</p>
 
-      <div class="hero-cta reveal">
-        <a href="#projects" class="btn btn-primary" data-i18n="hero_btn">Loyihalarni ko'rish</a>
-        <a href="https://t.me/Abdulazizov_prince" class="btn btn-ghost" target="_blank" rel="noopener" data-i18n="hero_contact">Bog'lanish</a>
+        <form class="search-bar" id="heroSearch" autocomplete="off">
+          <span class="search-ic">🔎</span>
+          <input id="heroQ" data-i18n-ph="search_ph" placeholder="Nima kerak? Masalan: slayd, kurs ishi, video">
+          <button class="btn btn-primary" type="submit" data-i18n="search_btn">Qidirish</button>
+          <div class="suggest glass" id="suggest" hidden></div>
+        </form>
+        <div class="quick-tags" id="quickTags"></div>
+
+        <div class="live" id="live" hidden>
+          <span class="live-pill"><i class="dot"></i><b data-count="users">—</b> <span data-i18n="stat_users">foydalanuvchi</span></span>
+          <span class="live-pill"><b data-count="orders">—</b> <span data-i18n="stat_orders">buyurtma bajarildi</span></span>
+        </div>
       </div>
 
-      <div class="stats reveal" hidden>
-        <div class="stat glass">
-          <b data-count="users">—</b>
-          <span data-i18n="stat_users">foydalanuvchi</span>
+      <div class="orbit-wrap">
+        <div class="orbit" id="orbit">
+          <div class="orbit-ring"></div>
+          <div class="core">
+            <svg viewBox="0 0 64 64" class="core-icon"><use href="#logo"/></svg>
+          </div>
+          <div class="orbit-spin" id="orbitSpin"></div>
         </div>
-        <div class="stat glass">
-          <b data-count="downloads">—</b>
-          <span data-i18n="stat_downloads">video yuklandi</span>
-        </div>
-        <div class="stat glass">
-          <b data-count="orders">—</b>
-          <span data-i18n="stat_orders">buyurtma bajarildi</span>
-        </div>
+        <div class="orbit-card glass" id="orbitCard" hidden></div>
       </div>
     </section>
 
-    <!-- 5б. Популярные услуги -->
-    <section class="section" id="popular">
-      <h2 class="reveal" data-i18n="popular_title">Mashhur xizmatlar</h2>
-      <p class="section-sub reveal" data-i18n="popular_sub">Saytning o'zida buyurtma bering — tayyor ish Telegram'ga keladi</p>
-      <div class="svc-grid" id="popularGrid"></div>
-      <div class="center reveal"><a href="services.html" class="btn btn-ghost" data-i18n="all_services">Barcha xizmatlar →</a></div>
-    </section>
-
-    <!-- 6. Проекты -->
+    <!-- 2. Все боты -->
     <section class="section" id="projects">
-      <h2 class="reveal" data-i18n="projects_title">Loyihalarimiz</h2>
-      <p class="section-sub reveal" data-i18n="projects_sub">Har biri — bitta vazifani bir zumda bajaradi</p>
+      <h2 data-i18n="wall_title">Botlarimiz</h2>
+      <p class="section-sub" data-i18n="wall_sub">Har biri bitta ishni bajaradi va Telegram ichida ochiladi.</p>
+      <div class="wall" id="wall"></div>
+    </section>
 
-      <div class="cards">
-        <article class="card glass reveal" data-bot="yukla">
-          <div class="card-top">
-            <div class="card-icon">📥</div>
-            <span class="status" data-status="yukla"><i></i><em data-i18n="status_check">Tekshirilmoqda</em></span>
-          </div>
-          <h3>Birzumda Yukla</h3>
-          <p data-i18n="yukla_desc">Instagram, YouTube, Pinterest, TikTok va Facebook'dan videolarni bir zumda yuklab oling.</p>
-          <ul class="features">
-            <li data-i18n="yukla_f1">✓ Suv belgisiz videolar</li>
-            <li data-i18n="yukla_f2">✓ Tez va bepul</li>
-            <li data-i18n="yukla_f3">✓ UZ / RU / EN tillarida</li>
-          </ul>
-          <a class="more-link" href="bot.html#yukla" data-i18n="more">Batafsil: qanday ishlaydi va narxlar →</a>
-          <div class="card-actions">
-            <a href="https://t.me/Birzumda_Yukla_bot" class="btn btn-primary" target="_blank" rel="noopener" data-i18n="open_bot">Botni ochish</a>
-            <button class="mini-btn" data-copy-link="Birzumda_Yukla_bot" aria-label="Copy">📋</button>
-            <button class="mini-btn" data-qr="Birzumda_Yukla_bot" aria-label="QR">🔳</button>
-            <button class="mini-btn" data-share="Birzumda_Yukla_bot" aria-label="Share">📤</button>
-          </div>
-        </article>
-
-        <article class="card glass reveal" data-bot="tayyorla">
-          <div class="card-top">
-            <div class="card-icon">📊</div>
-            <span class="status" data-status="tayyorla"><i></i><em data-i18n="status_check">Tekshirilmoqda</em></span>
-          </div>
-          <h3>Birzumda Tayyorla</h3>
-          <p data-i18n="tayyorla_desc">Taqdimot, portfolio, kurs ishi va mustaqil ish — talabalar va ustozlar uchun.</p>
-          <ul class="features">
-            <li data-i18n="tayyorla_f1">✓ Animatsiyali taqdimotlar</li>
-            <li data-i18n="tayyorla_f2">✓ Tayyor ish darhol keladi</li>
-            <li data-i18n="tayyorla_f3">✓ Haftalik promokodlar</li>
-          </ul>
-          <a class="more-link" href="bot.html#tayyorla" data-i18n="more">Batafsil: qanday ishlaydi va narxlar →</a>
-          <div class="card-actions">
-            <a href="https://t.me/Birzumda_Tayyorla_bot" class="btn btn-primary" target="_blank" rel="noopener" data-i18n="open_bot">Botni ochish</a>
-            <button class="mini-btn" data-copy-link="Birzumda_Tayyorla_bot" aria-label="Copy">📋</button>
-            <button class="mini-btn" data-qr="Birzumda_Tayyorla_bot" aria-label="QR">🔳</button>
-            <button class="mini-btn" data-share="Birzumda_Tayyorla_bot" aria-label="Share">📤</button>
-          </div>
-        </article>
+    <!-- 3. Витрина Tayyorla: настоящие шаблоны -->
+    <section class="section showcase" id="tayyorla">
+      <div class="show-head">
+        <img src="media/logos/tayyorla.webp" alt="" width="96" height="96" loading="lazy">
+        <div>
+          <h2>Birzumda Tayyorla</h2>
+          <p class="muted" data-i18n="show_sub">Taqdimot, portfolio, kurs ishi va mustaqil ish — 32 ta dizayn shablonidan. Narxi 20 000 so'mdan.</p>
+        </div>
+      </div>
+      <div class="ribbon" id="ribbon" tabindex="0" aria-label="Shablonlar"></div>
+      <div class="row-btns show-actions">
+        <a href="order.html#s-taqdimot" class="btn btn-primary" data-i18n="order_btn">Buyurtma berish</a>
+        <a href="bot.html#tayyorla" class="btn btn-ghost" data-i18n="show_prices">Paketlar va narxlar</a>
       </div>
     </section>
 
-    <!-- 6б. Бесплатные боты Birzumda -->
-    <section class="section" id="tools">
-      <h2 class="reveal" data-i18n="tools_title">Foydali botlar</h2>
-      <p class="section-sub reveal" data-i18n="tools_sub">Bepul, tez va Telegram ichida</p>
-      <div class="svc-grid" id="toolsGrid"></div>
+    <!-- 4. Как заказать на сайте — это последовательность, поэтому с номерами -->
+    <section class="section" id="how">
+      <h2 data-i18n="how_title">Saytda buyurtma berish</h2>
+      <ol class="how3">
+        <li><b data-i18n="how1">Ishni tanlang</b><span class="muted" data-i18n="how1s">Xizmat, paket, mavzu va muddat</span></li>
+        <li><b data-i18n="how2">Telegram orqali kiring</b><span class="muted" data-i18n="how2s">Parolsiz, bitta tugma bilan</span></li>
+        <li><b data-i18n="how3">To'lang va kuting</b><span class="muted" data-i18n="how3s">Chek tasdiqlangach, tayyor ish botga keladi</span></li>
+      </ol>
     </section>
 
-    <!-- 7. Отзывы -->
+    <!-- 5. Отзывы -->
     <section class="section" id="reviews">
-      <h2 class="reveal" data-i18n="reviews_title">Mijozlar fikri</h2>
-      <p class="section-sub reveal" data-i18n="reviews_sub">Fikr faqat Telegram orqali kirgan foydalanuvchilardan</p>
-
+      <h2 data-i18n="reviews_title">Mijozlar fikri</h2>
+      <p class="section-sub" data-i18n="reviews_sub">Fikr faqat Telegram orqali kirgan foydalanuvchilardan</p>
       <div class="reviews" id="reviewsList"></div>
-
-      <form class="review-form glass reveal" id="reviewForm">
+      <form class="review-form glass" id="reviewForm">
         <p data-i18n="your_rating">Bahoyingiz:</p>
         <div class="stars-input" id="starsInput">
           <button type="button" data-star="1">★</button>
@@ -236,35 +198,48 @@
       </form>
     </section>
 
-    <!-- 8. О нас -->
-    <section class="section" id="about">
-      <div class="about glass reveal">
-        <div class="about-icon"><svg viewBox="0 0 64 64" class="logo-icon big"><use href="#logo"/></svg></div>
-        <div>
-          <h2 data-i18n="about_title">Biz haqimizda</h2>
-          <p data-i18n="about_p1">Birzumda — Andijonda tug'ilgan brend. Maqsadimiz oddiy: odamlarning kundalik ishlarini Telegram ichida bir zumda hal qilish.</p>
-          <p data-i18n="about_p2">Loyihalar asoschisi — Muhammaddovud Ablazizov, kompyuter injiniringi talabasi va dasturchi.</p>
-        </div>
+    <!-- 6. О нас + вопросы -->
+    <section class="section two-col" id="faq">
+      <div id="about">
+        <h2 data-i18n="about_title">Biz haqimizda</h2>
+        <p class="muted" data-i18n="about_p1">Birzumda — Andijonda tug'ilgan brend. Maqsadimiz oddiy: odamlarning kundalik ishlarini Telegram ichida bir zumda hal qilish.</p>
+        <p class="muted" data-i18n="about_p2">Loyihalar asoschisi — Muhammaddovud Ablazizov, kompyuter injiniringi talabasi va dasturchi.</p>
       </div>
-    </section>
-
-    <!-- 9. FAQ -->
-    <section class="section" id="faq">
-      <h2 class="reveal" data-i18n="faq_title">Ko'p beriladigan savollar</h2>
-      <div class="faq">
-        <details class="glass reveal"><summary data-i18n="q1">Botlar bepulmi?</summary><p data-i18n="a1">Birzumda Yukla to'liq bepul. Birzumda Tayyorla'da ishlar tarifga qarab pullik, lekin haftalik promokodlar bor.</p></details>
-        <details class="glass reveal"><summary data-i18n="q2">Buyurtma qancha vaqtda tayyor bo'ladi?</summary><p data-i18n="a2">To'lov tasdiqlangandan so'ng tayyor ish darhol botga yuboriladi.</p></details>
-        <details class="glass reveal"><summary data-i18n="q3">Saytga qanday kiraman?</summary><p data-i18n="a3">"Kirish" tugmasini bosing va Telegram orqali tasdiqlang. Parol kerak emas.</p></details>
-        <details class="glass reveal"><summary data-i18n="q4">Muammo bo'lsa kimga yozaman?</summary><p data-i18n="a4">Texnik yordam: @Abdulazizov_prince</p></details>
+      <div>
+        <h2 data-i18n="faq_title">Ko'p beriladigan savollar</h2>
+        <div class="faq">
+          <details class="glass"><summary data-i18n="q1">Botlar bepulmi?</summary><p data-i18n="a1"></p></details>
+          <details class="glass"><summary data-i18n="q2">Buyurtma qancha vaqtda tayyor bo'ladi?</summary><p data-i18n="a2"></p></details>
+          <details class="glass"><summary data-i18n="q3">Saytga qanday kiraman?</summary><p data-i18n="a3"></p></details>
+          <details class="glass"><summary data-i18n="q4">Muammo bo'lsa kimga yozaman?</summary><p data-i18n="a4"></p></details>
+        </div>
       </div>
     </section>
   </main>
 
-  <!-- 10. Подвал -->
-  <footer class="footer">
-    <div class="brand"><svg viewBox="0 0 64 64" class="logo-icon"><use href="#logo"/></svg><span>Birzumda</span></div>
-    <p><span data-i18n="support">Texnik yordam:</span> <a href="https://t.me/Abdulazizov_prince" target="_blank" rel="noopener">@Abdulazizov_prince</a></p>
-    <p class="muted">© <span id="year"></span> Birzumda</p>
+  <!-- 7. Подвал -->
+  <footer class="footer2">
+    <div class="foot-brand">
+      <div class="brand"><svg viewBox="0 0 64 64" class="logo-icon"><use href="#logo"/></svg><span>Birzumda</span></div>
+      <p class="muted" data-i18n="foot_tag">Telegram botlar oilasi. Andijon, O'zbekiston.</p>
+    </div>
+    <div>
+      <b data-i18n="foot_bots">Botlar</b>
+      <ul id="footBots"></ul>
+    </div>
+    <div>
+      <b data-i18n="foot_site">Sayt</b>
+      <ul>
+        <li><a href="services.html" data-i18n="nav_services">Xizmatlar</a></li>
+        <li><a href="order.html" data-i18n="order_btn">Buyurtma berish</a></li>
+        <li><a href="cabinet.html" data-i18n="cabinet">Kabinet</a></li>
+      </ul>
+    </div>
+    <div>
+      <b data-i18n="support">Texnik yordam:</b>
+      <ul><li><a href="https://t.me/Abdulazizov_prince" target="_blank" rel="noopener">@Abdulazizov_prince</a></li></ul>
+      <p class="muted">© <span id="year"></span> Birzumda</p>
+    </div>
   </footer>
 
   <!-- Кнопка «наверх» с кольцом прогресса -->
