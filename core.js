@@ -203,7 +203,14 @@ const QuickLogin = (() => {
       showSheet();
       prepare().then(() => {
         if (!sheet) return;
-        if (!ses) { sheet.querySelector('.ql-msg').textContent = 'Error'; return; }
+        if (!ses) {                                       // сервер без быстрого входа → виджет
+          const card = sheet.querySelector('.ql-card'), cb = done;
+          card.querySelector('.ql-dots').remove(); card.querySelector('.ql-open').remove();
+          card.querySelector('.ql-msg').textContent = tx().btn;
+          const box = document.createElement('div'); card.insertBefore(box, card.querySelector('.ql-cancel'));
+          widgetLogin(box, (d) => { sheet = null; cb?.(d); });
+          return;
+        }
         sheet.querySelector('.ql-open').href = httpsLink();
         poll();
       });
@@ -211,6 +218,22 @@ const QuickLogin = (() => {
   }
   return { prepare, go };
 })();
+
+// запасной вариант: старый виджет Telegram (если сервер ещё без быстрого входа)
+function widgetLogin(box, onDone) {
+  window.onTelegramAuth = async (user) => {
+    try {
+      const data = await api('/api/site/auth', { method: 'POST', body: JSON.stringify(user) });
+      saveLogin(data); document.querySelector('.ql-sheet')?.remove(); onDone?.(data);
+    } catch { toast('Error'); }
+  };
+  box.innerHTML = '';
+  const s = document.createElement('script');
+  s.src = 'https://telegram.org/js/telegram-widget.js?22'; s.async = true;
+  Object.assign(s.dataset, { telegramLogin: CONFIG.LOGIN_BOT, size: 'large', radius: '12',
+                             onauth: 'onTelegramAuth(user)', requestAccess: 'write' });
+  box.appendChild(s);
+}
 
 // кнопка входа внутри блока (страница заказа)
 function tgLogin(box, onDone) {
