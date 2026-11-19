@@ -12,7 +12,8 @@
 /* Тёмные темы: общие значения */
 [data-theme="kosmos"], [data-theme="okean"], [data-theme="neon"], [data-theme="qish"],
 [data-theme="lava"], [data-theme="orman"], [data-theme="synth"], [data-theme="rings"], [data-theme="circuit"],
-[data-theme="fire"], [data-theme="hex"], [data-theme="bolt"] {
+[data-theme="fire"], [data-theme="hex"], [data-theme="bolt"], [data-theme="aurora"], [data-theme="matrix"],
+[data-theme="warp"], [data-theme="rain"], [data-theme="lamp"], [data-theme="dna"], [data-theme="galaxy"], [data-theme="party"] {
   --text: #f4f2fa; --muted: #a39fb5;
   --glass: rgba(255, 255, 255, 0.06); --glass-border: rgba(255, 255, 255, 0.12);
   --shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
@@ -63,6 +64,16 @@
                          --shadow: 0 10px 40px rgba(80, 60, 180, 0.15); }
 [data-theme="holo"] .bg { background: linear-gradient(120deg, #f3f0ff, #e0f7ff, #ffe4f3, #f3f0ff); background-size: 300% 300%; animation: holoBg 14s ease infinite; }
 @keyframes holoBg { 50% { background-position: 100% 50%; } }
+
+/* ===== YANGI: 8 ta jonli tema ===== */
+[data-theme="aurora"] { --bg: #020b14; --accent: #10b981; --accent-2: #a78bfa; --muted: #93b4b0; }   /* qutb shafag'i lentalari */
+[data-theme="matrix"] { --bg: #000a03; --accent: #16a34a; --accent-2: #4ade80; --muted: #86a892; }   /* tushayotgan kod */
+[data-theme="warp"]   { --bg: #00010a; --accent: #6366f1; --accent-2: #c7d2fe; --muted: #a3a8cc; }   /* yulduzlar orasidan uchish */
+[data-theme="rain"]   { --bg: #060b16; --accent: #38bdf8; --accent-2: #bae6fd; --muted: #98aac2; }   /* yomg'ir va tomchilar */
+[data-theme="lamp"]   { --bg: #12020c; --accent: #f43f5e; --accent-2: #fb923c; --muted: #c49aa8; }   /* lava lampa pufaklari */
+[data-theme="dna"]    { --bg: #010d14; --accent: #06b6d4; --accent-2: #f472b6; --muted: #92b1bd; }   /* aylanayotgan DNK */
+[data-theme="galaxy"] { --bg: #05010f; --accent: #a855f7; --accent-2: #f0abfc; --muted: #ac9cc6; }   /* spiral galaktika */
+[data-theme="party"]  { --bg: #0f0a1e; --accent: #f59e0b; --accent-2: #ec4899; --muted: #b3a6c4; }   /* konfetti */
 
 /* Свой акцентный цвет (если выбран не «Avto») — перекрывает цвет темы */
 [data-accent="purple"] { --accent: #8b5cf6; --accent-2: #c4b5fd; }
@@ -740,3 +751,26 @@ html, body { overflow-x: clip; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .reveal { opacity: 1; transform: none; }
 }
+
+/* ---------- 31. Вход без номера: окно ожидания ---------- */
+.ql-btn, .ql-sheet .btn-tg { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.ql-btn span, .ql-sheet .btn-tg span { display: inline !important; }
+.ql-btn { padding: 13px 22px; font-size: 1rem; }
+.ql-hint { margin-top: 8px; font-size: .85rem; }
+.ql-sheet { position: fixed; inset: 0; z-index: 120; display: grid; place-items: center; padding: 20px;
+  background: rgba(0, 0, 0, .55); backdrop-filter: blur(6px); opacity: 0; transition: opacity .25s; }
+.ql-sheet.on { opacity: 1; }
+.ql-card { width: min(360px, 100%); padding: 28px 22px 18px; border-radius: 24px; text-align: center;
+  display: grid; gap: 14px; justify-items: center; transform: translateY(18px) scale(.97); transition: transform .3s; }
+.ql-sheet.on .ql-card { transform: none; }
+.ql-orb { width: 74px; height: 74px; border-radius: 50%; display: grid; place-items: center; color: #fff;
+  background: #229ed9; box-shadow: 0 0 0 0 rgba(34, 158, 217, .6); animation: qlPing 1.8s ease-out infinite; }
+.ql-orb svg { width: 38px; height: 38px; }
+@keyframes qlPing { 70% { box-shadow: 0 0 0 22px rgba(34, 158, 217, 0); } 100% { box-shadow: 0 0 0 0 rgba(34, 158, 217, 0); } }
+.ql-msg { font-size: 1.05rem; line-height: 1.4; }
+.ql-dots { display: flex; gap: 6px; }
+.ql-dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: qlDot 1.2s infinite; }
+.ql-dots i:nth-child(2) { animation-delay: .15s; } .ql-dots i:nth-child(3) { animation-delay: .3s; }
+@keyframes qlDot { 0%, 80%, 100% { opacity: .25; transform: scale(.8); } 40% { opacity: 1; transform: scale(1.15); } }
+.ql-open { width: 100%; padding: 12px; }
+@media (prefers-reduced-motion: reduce) { .ql-orb, .ql-dots i { animation: none; } }

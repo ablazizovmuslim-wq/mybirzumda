@@ -17,7 +17,7 @@ const T = {
     nav_services: 'Xizmatlar', bn_services: 'Xizmatlar', search_ph: 'Nima kerak? Masalan: slayd, kurs ishi, video', search_btn: 'Qidirish',
     popular_title: 'Mashhur xizmatlar', popular_sub: "Saytning o'zida buyurtma bering — tayyor ish Telegram'ga keladi", all_services: 'Barcha xizmatlar →',
     order_btn: 'Buyurtma berish', nothing: "Hech narsa topilmadi — boshqacha yozib ko'ring", tags: ['Slayd', 'Kurs ishi', 'Portfolio', 'Mustaqil ish', 'Video yuklash'],
-    themes_main: 'ASOSIY', themes_pro: 'BIRZUMDA TAYYORLA USLUBIDA',
+    themes_main: 'ASOSIY', themes_new: 'YANGI JONLI', themes_pro: 'BIRZUMDA TAYYORLA USLUBIDA',
     more: 'Batafsil: qanday ishlaydi va narxlar →',
     copied: 'Havola nusxalandi ✅', share_text: "Birzumda — Telegram botlar", lite_auto: "Telefoningiz uchun yengil rejim yoqildi 🍃",
     anim: 'Animatsiyalar', anim_full: "To'liq", anim_lite: 'Yengil',
@@ -66,7 +66,7 @@ const T = {
     nav_services: 'Услуги', bn_services: 'Услуги', search_ph: 'Что нужно? Например: слайды, курсовая, видео', search_btn: 'Найти',
     popular_title: 'Популярные услуги', popular_sub: 'Заказывайте прямо на сайте — готовая работа придёт в Telegram', all_services: 'Все услуги →',
     order_btn: 'Заказать', nothing: 'Ничего не найдено — попробуйте иначе', tags: ['Слайды', 'Курсовая', 'Портфолио', 'Самостоятельная', 'Скачать видео'],
-    themes_main: 'ОСНОВНЫЕ', themes_pro: 'В СТИЛЕ BIRZUMDA TAYYORLA',
+    themes_main: 'ОСНОВНЫЕ', themes_new: 'НОВЫЕ ЖИВЫЕ', themes_pro: 'В СТИЛЕ BIRZUMDA TAYYORLA',
     more: 'Подробнее: как работает и цены →',
     copied: 'Ссылка скопирована ✅', share_text: 'Birzumda — Telegram-боты', lite_auto: 'Для вашего телефона включён лёгкий режим 🍃',
     anim: 'Анимации', anim_full: 'Полные', anim_lite: 'Лёгкие',
@@ -115,7 +115,7 @@ const T = {
     nav_services: 'Services', bn_services: 'Services', search_ph: 'What do you need? e.g. slides, term paper, video', search_btn: 'Search',
     popular_title: 'Popular services', popular_sub: 'Order right on the site — the finished work arrives in Telegram', all_services: 'All services →',
     order_btn: 'Order', nothing: 'Nothing found — try other words', tags: ['Slides', 'Term paper', 'Portfolio', 'Assignment', 'Video download'],
-    themes_main: 'MAIN', themes_pro: 'BIRZUMDA TAYYORLA STYLE',
+    themes_main: 'MAIN', themes_new: 'NEW LIVE', themes_pro: 'BIRZUMDA TAYYORLA STYLE',
     more: 'Details: how it works & prices →',
     copied: 'Link copied ✅', share_text: 'Birzumda — Telegram bots', lite_auto: 'Light mode turned on for your phone 🍃',
     anim: 'Animations', anim_full: 'Full', anim_lite: 'Light',
@@ -175,7 +175,16 @@ const THEMES = [
   { id: 'fire',    pro: 1, em: '🌋', prev: 'linear-gradient(160deg,#140500 40%,#f97316 75%,#fb7185)', name: { uz: "Olov to'lqini", ru: 'Огненная волна', en: 'Fire wave' } },
   { id: 'hex',     pro: 1, em: '🔷', prev: 'linear-gradient(135deg,#021316,#0f766e 60%,#5eead4)', name: { uz: 'Olti burchak', ru: 'Соты', en: 'Hexagon' } },
   { id: 'bolt',    pro: 1, em: '⚡', prev: 'linear-gradient(135deg,#0d0a00 50%,#eab308 70%,#fde047)', name: { uz: 'Chaqmoq', ru: 'Молния', en: 'Lightning' } },
-  { id: 'holo',    pro: 1, em: '🌈', prev: 'linear-gradient(120deg,#f3f0ff,#a5f3fc,#f9a8d4,#c4b5fd)', name: { uz: 'Golografik', ru: 'Голограмма', en: 'Holographic' } }
+  { id: 'holo',    pro: 1, em: '🌈', prev: 'linear-gradient(120deg,#f3f0ff,#a5f3fc,#f9a8d4,#c4b5fd)', name: { uz: 'Golografik', ru: 'Голограмма', en: 'Holographic' } },
+  // YANGI — 8 ta jonli tema
+  { id: 'aurora', nw: 1, em: '✨', prev: 'linear-gradient(170deg,#020b14 30%,#10b981 60%,#a78bfa)', name: { uz: "Qutb shafag'i", ru: 'Северное сияние', en: 'Aurora' } },
+  { id: 'matrix', nw: 1, em: '💻', prev: 'repeating-linear-gradient(90deg,#000a03 0 9px,#16a34a 9px 11px),#000a03', name: { uz: 'Matritsa', ru: 'Матрица', en: 'Matrix' } },
+  { id: 'warp',   nw: 1, em: '🚀', prev: 'radial-gradient(circle,#e0e7ff 0 4%,#6366f1 12%,#00010a 60%)', name: { uz: 'Giperfazo', ru: 'Гиперпрыжок', en: 'Hyperspace' } },
+  { id: 'rain',   nw: 1, em: '🌧', prev: 'repeating-linear-gradient(100deg,#060b16 0 8px,#38bdf8 8px 9px),#060b16', name: { uz: "Yomg'ir", ru: 'Дождь', en: 'Rain' } },
+  { id: 'lamp',   nw: 1, em: '🫧', prev: 'radial-gradient(circle at 30% 70%,#fb923c 0 18%,transparent 19%),radial-gradient(circle at 70% 30%,#f43f5e 0 22%,#12020c 23%)', name: { uz: 'Lava lampa', ru: 'Лава-лампа', en: 'Lava lamp' } },
+  { id: 'dna',    nw: 1, em: '🧬', prev: 'linear-gradient(135deg,#010d14 40%,#06b6d4 65%,#f472b6)', name: { uz: 'DNK', ru: 'ДНК', en: 'DNA' } },
+  { id: 'galaxy', nw: 1, em: '🪐', prev: 'radial-gradient(circle,#f0abfc 0 5%,#a855f7 20%,#05010f 62%)', name: { uz: 'Galaktika', ru: 'Галактика', en: 'Galaxy' } },
+  { id: 'party',  nw: 1, em: '🎉', prev: 'conic-gradient(#f59e0b,#ec4899,#22d3ee,#a3e635,#f59e0b)', name: { uz: 'Bayram', ru: 'Праздник', en: 'Party' } }
 ];
 
 function renderThemeList() {
@@ -184,7 +193,8 @@ function renderThemeList() {
       <span class="em">${th.em}</span>${th.name[state.lang] || th.name.uz}
     </button>`;
   $('#themeList').innerHTML =
-    `<p class="theme-group">${t('themes_main')}</p>` + THEMES.filter(x => !x.pro).map(card).join('') +
+    `<p class="theme-group">${t('themes_new')} <b>NEW</b></p>` + THEMES.filter(x => x.nw).map(card).join('') +
+    `<p class="theme-group">${t('themes_main')}</p>` + THEMES.filter(x => !x.pro && !x.nw).map(card).join('') +
     `<p class="theme-group">${t('themes_pro')} <b>PRO</b></p>` + THEMES.filter(x => x.pro).map(card).join('');
 }
 
@@ -465,6 +475,7 @@ $('#reviewForm').addEventListener('submit', async e => {
 // ---------- 12. Вход через Telegram ----------
 // Виджет Telegram работает только на домене, привязанном в BotFather (/setdomain)
 function renderLogin() {
+  if (!state.token && onSiteDomain()) setTimeout(() => QuickLogin.prepare(), 1200);
   const go = state.token ? () => location.href = 'cabinet.html' : startLogin;
   const label = state.token ? t('cabinet') : t('login');
   const btn = $('#loginBtn');
@@ -475,12 +486,8 @@ function renderLogin() {
 }
 
 function startLogin() {
-  const btn = $('#loginBtn');
-  if (!btn) return;                                   // виджет уже показан
-  const box = document.createElement('div');
-  box.className = 'tg-login';
-  if (!tgLogin(box, () => location.href = 'cabinet.html')) return toast(t('login_soon'));
-  btn.replaceWith(box);
+  if (!onSiteDomain()) return toast(t('login_soon'));
+  QuickLogin.go(() => location.href = 'cabinet.html');
 }
 
 // ---------- 12б. Поиск услуг и популярные услуги ----------

@@ -1,5 +1,5 @@
 /* =========================================
-   Birzumda — живой фон (8 эффектов)
+   Birzumda — живой фон (23 темы)
    ========================================= */
 
 // ---------- 1. Живой фон на canvas ----------
@@ -15,7 +15,9 @@ const FX = (() => {
     kosmos: 'constellation', light: 'bubbles', okean: 'bubbles', neon: 'grid',
     qish: 'snow', lava: 'embers', orman: 'fireflies', sakura: 'petals',
     // PRO — как шаблоны Birzumda Tayyorla
-    synth: 'synth', rings: 'rings', circuit: 'circuit', fire: 'waves', hex: 'hex', bolt: 'lightning', holo: 'holo'
+    synth: 'synth', rings: 'rings', circuit: 'circuit', fire: 'waves', hex: 'hex', bolt: 'lightning', holo: 'holo',
+    // YANGI
+    aurora: 'aurora', matrix: 'matrix', warp: 'warp', rain: 'rain', lamp: 'lamp', dna: 'dna', galaxy: 'galaxy', party: 'confetti'
   };
   let bgColor = '#000', extra = {};
 
@@ -262,6 +264,129 @@ const FX = (() => {
     }
   });
 
+  // ===== YANGI 8 ta effekt =====
+  const GLYPHS = 'アイウエオカキクケコサシスセソタチツテト0123456789BIRZUMDA';
+  Object.assign(MODES, {
+    aurora: { // переливающиеся ленты северного сияния + звёзды
+      density: 20000,
+      make: () => ({ x: R() * w, y: R() * h, r: R() * 1.2 + .3, ph: R() * 6 }),
+      step() {},
+      draw(p) { dot(p.x, p.y, p.r, '#ffffff', .25 + Math.sin(t / 30 + p.ph) * .25); },
+      after() {
+        ctx.globalCompositeOperation = 'lighter';
+        const bands = [[c1, .28, 0], [c2, .22, 2.1], ['#22d3ee', .14, 4.2]];
+        for (const [col, base, k] of bands) {
+          for (const [lw, a] of [[90, .05], [44, .08], [14, .16]]) {
+            ctx.globalAlpha = a; ctx.strokeStyle = col; ctx.lineWidth = lw; ctx.beginPath();
+            for (let x = -20; x <= w + 20; x += 16) {
+              const y = h * base + Math.sin(x * .004 + t * .008 + k) * 46 + Math.sin(x * .011 - t * .013 + k) * 18;
+              x < 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+          }
+        }
+        ctx.globalCompositeOperation = 'source-over';
+      }
+    },
+    matrix: { // падающие столбцы символов
+      density: 16000, max: 70,
+      make: (init) => ({ x: Math.floor(R() * (w / 18)) * 18 + 4, y: init ? R() * h : -R() * 200, v: 1.5 + R() * 2.5,
+                         len: 8 + (R() * 12 | 0), ch: Array.from({ length: 20 }, () => GLYPHS[R() * GLYPHS.length | 0]) }),
+      step(p, i) { p.y += p.v; if (R() < .05) p.ch[R() * p.len | 0] = GLYPHS[R() * GLYPHS.length | 0];
+                   if (p.y - p.len * 18 > h) parts[i] = this.make(false); },
+      draw(p) {
+        ctx.font = '15px monospace';
+        for (let k = 0; k < p.len; k++) {
+          const y = p.y - k * 18; if (y < -18 || y > h + 18) continue;
+          ctx.globalAlpha = k ? (1 - k / p.len) * .55 : .95;
+          ctx.fillStyle = k ? c1 : '#d9ffe4';
+          ctx.fillText(p.ch[k], p.x, y);
+        }
+      }
+    },
+    warp: { // гиперпрыжок: звёзды летят на зрителя
+      density: 9000, max: 160,
+      make: (init) => ({ x: (R() - .5) * w * 2, y: (R() - .5) * h * 2, z: init ? R() * w : w, pz: 0 }),
+      step(p, i) { p.pz = p.z; p.z -= 7 + (Math.sin(t / 240) + 1) * 5; if (p.z < 2) { parts[i] = this.make(false); parts[i].pz = w; } },
+      draw(p) {
+        const cx = w / 2, cy = h / 2, f = Math.min(w, h) * .5;
+        const sx = cx + p.x / p.z * f, sy = cy + p.y / p.z * f, px = cx + p.x / p.pz * f, py = cy + p.y / p.pz * f;
+        const a = Math.min(1, (1 - p.z / w) * 1.4);
+        ctx.globalAlpha = a; ctx.strokeStyle = a > .7 ? '#ffffff' : c2; ctx.lineWidth = Math.max(1, (1 - p.z / w) * 3.5);
+        ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(sx, sy); ctx.stroke();
+      },
+      after() { const g = ctx.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, Math.min(w, h) * .35);
+        g.addColorStop(0, c1); g.addColorStop(1, 'transparent'); ctx.globalAlpha = .12; ctx.fillStyle = g; ctx.fillRect(0, 0, w, h); }
+    },
+    rain: { // косой дождь и круги от капель
+      density: 7000, max: 140,
+      make: (init) => ({ x: R() * (w + 200) - 100, y: init ? R() * h : -R() * 100, len: 10 + R() * 18, v: 9 + R() * 7 }),
+      step(p, i) { p.y += p.v; p.x += p.v * .18;
+        if (p.y > h * (.75 + R() * .25)) { (extra.spl ||= []).push({ x: p.x, y: p.y, r: 1 }); parts[i] = this.make(false); } },
+      draw(p) { ctx.globalAlpha = .45; ctx.strokeStyle = c2; ctx.lineWidth = 1.1;
+        ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x - p.len * .18, p.y - p.len); ctx.stroke(); },
+      after() {
+        const sp = extra.spl || []; ctx.strokeStyle = c1; ctx.lineWidth = 1;
+        for (const q of sp) { q.r += .9; ctx.globalAlpha = Math.max(0, .5 - q.r / 40);
+          ctx.beginPath(); ctx.ellipse(q.x, q.y, q.r, q.r * .3, 0, 0, 7); ctx.stroke(); }
+        extra.spl = sp.filter(q => q.r < 20).slice(-80);
+      }
+    },
+    lamp: { // лава-лампа: светящиеся капли сливаются
+      density: 70000, max: 14,
+      make: () => ({ x: R() * w, y: R() * h, r: 60 + R() * 90, vx: (R() - .5) * .6, vy: (R() - .5) * .9, ph: R() * 6 }),
+      step(p) { p.x += p.vx; p.y += p.vy + Math.sin(t / 90 + p.ph) * .4;
+        if (p.x < -p.r || p.x > w + p.r) p.vx *= -1; if (p.y < -p.r || p.y > h + p.r) p.vy *= -1; },
+      draw(p) {
+        ctx.globalCompositeOperation = 'lighter';
+        const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r);
+        g.addColorStop(0, p.ph > 3 ? c1 : c2); g.addColorStop(1, 'transparent');
+        ctx.globalAlpha = .38; ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 7); ctx.fill();
+        ctx.globalCompositeOperation = 'source-over';
+      }
+    },
+    dna: { // вращающиеся спирали ДНК
+      density: 30000,
+      make: () => ({ x: R() * w, y: R() * h, r: R() * 1.4 + .4, vy: -.2 - R() * .4, ph: R() * 6 }),
+      step(p) { p.y += p.vy; if (p.y < -5) p.y = h + 5; },
+      draw(p) { dot(p.x, p.y, p.r, c2, .25 + Math.sin(t / 25 + p.ph) * .2); },
+      after() {
+        const rows = w > 700 ? [h * .3, h * .72] : [h * .26, h * .7], A = Math.min(70, h * .08), step = 22;
+        rows.forEach((cy, ri) => {
+          for (let x = -10, i = 0; x < w + 10; x += step, i++) {
+            const ph = i * .32 + t * .025 + ri * 2, s = Math.sin(ph), z = Math.cos(ph);
+            const y1 = cy + s * A, y2 = cy - s * A;
+            ctx.globalAlpha = .12 + Math.abs(z) * .12; ctx.strokeStyle = c2; ctx.lineWidth = 1.5;
+            ctx.beginPath(); ctx.moveTo(x, y1); ctx.lineTo(x, y2); ctx.stroke();
+            dot(x, y1, 3 + z * 1.6, c1, .45 + z * .35); dot(x, y2, 3 - z * 1.6, c2, .45 - z * .35);
+          }
+        });
+      }
+    },
+    galaxy: { // спиральная галактика вращается
+      density: 3500, max: 320,
+      make: () => { const arm = R() * 3 | 0, d = Math.pow(R(), .7);
+        return { arm, d, a: arm * 2.094 + d * 5.5 + (R() - .5) * .6, r: R() * 1.8 + .7, ph: R() * 6 }; },
+      step(p) { p.a += .0016 + .004 * (1 - p.d); },
+      draw(p) {
+        const R0 = Math.min(w, h) * .55, cx = w * .5, cy = h * .45, rr = p.d * R0;
+        const x = cx + Math.cos(p.a) * rr, y = cy + Math.sin(p.a) * rr * .55;
+        dot(x, y, p.r * 2.6, p.arm ? c1 : c2, .08); dot(x, y, p.r, p.d < .3 ? '#ffffff' : (p.arm ? c2 : c1), .55 + Math.sin(t / 30 + p.ph) * .35);
+      },
+      after() { const cx = w * .5, cy = h * .45, g = ctx.createRadialGradient(cx, cy, 0, cx, cy, 90);
+        g.addColorStop(0, '#ffffff'); g.addColorStop(.25, c2); g.addColorStop(1, 'transparent');
+        ctx.globalAlpha = .35; ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(cx, cy, 90, 50, 0, 0, 7); ctx.fill(); }
+    },
+    confetti: { // праздничное конфетти с 3D-переворотом
+      density: 12000, max: 110,
+      make: (init) => ({ x: R() * w, y: init ? R() * h : -20, s: 5 + R() * 6, vy: 1 + R() * 1.8, rot: R() * 7, vr: (R() - .5) * .12,
+                         fl: R() * 7, col: ['#f59e0b', '#ec4899', '#22d3ee', '#a3e635', '#8b5cf6', '#ffffff'][R() * 6 | 0] }),
+      step(p, i) { p.y += p.vy; p.x += Math.sin(t / 40 + p.fl) * .9; p.rot += p.vr; p.fl += .08; if (p.y > h + 20) parts[i] = this.make(false); },
+      draw(p) { ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.scale(1, Math.cos(p.fl));
+        ctx.globalAlpha = .85; ctx.fillStyle = p.col; ctx.fillRect(-p.s / 2, -p.s * .3, p.s, p.s * .6); ctx.restore(); }
+    }
+  });
+
   function hexPath(c, x, y, s) {
     c.beginPath();
     for (let i = 0; i < 6; i++) { const a = Math.PI / 3 * i + Math.PI / 6; c[i ? 'lineTo' : 'moveTo'](x + s * Math.cos(a), y + s * Math.sin(a)); }
@@ -283,7 +408,7 @@ const FX = (() => {
   function build() {
     w = canvas.width = innerWidth; h = canvas.height = innerHeight;
     const m = MODES[mode];
-    const count = Math.min(90, Math.floor(w * h / m.density));
+    const count = Math.min(m.max || 90, Math.floor(w * h / m.density));
     parts = Array.from({ length: count }, () => m.make(true));
     extra = {};
     m.init?.();
