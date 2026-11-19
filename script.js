@@ -7,6 +7,7 @@
 // ---------- 2. Переводы (UZ / RU / EN) ----------
 const T = {
   uz: {
+    more: 'Batafsil: qanday ishlaydi va narxlar →',
     copied: 'Havola nusxalandi ✅', share_text: "Birzumda — Telegram botlar", lite_auto: "Telefoningiz uchun yengil rejim yoqildi 🍃",
     anim: 'Animatsiyalar', anim_full: "To'liq", anim_lite: 'Yengil', mascot: 'Zumik (maskot)', on: 'Yoqilgan', off: "O'chirilgan",
     reset: 'Sozlamalarni tiklash', bn_home: 'Asosiy', bn_projects: 'Botlar', bn_reviews: 'Fikrlar',
@@ -45,6 +46,7 @@ const T = {
     support: 'Texnik yordam:'
   },
   ru: {
+    more: 'Подробнее: как работает и цены →',
     copied: 'Ссылка скопирована ✅', share_text: 'Birzumda — Telegram-боты', lite_auto: 'Для вашего телефона включён лёгкий режим 🍃',
     anim: 'Анимации', anim_full: 'Полные', anim_lite: 'Лёгкие', mascot: 'Zumik (маскот)', on: 'Включён', off: 'Выключен',
     reset: 'Сбросить настройки', bn_home: 'Главная', bn_projects: 'Боты', bn_reviews: 'Отзывы',
@@ -83,6 +85,7 @@ const T = {
     support: 'Техподдержка:'
   },
   en: {
+    more: 'Details: how it works & prices →',
     copied: 'Link copied ✅', share_text: 'Birzumda — Telegram bots', lite_auto: 'Light mode turned on for your phone 🍃',
     anim: 'Animations', anim_full: 'Full', anim_lite: 'Light', mascot: 'Zumik (mascot)', on: 'On', off: 'Off',
     reset: 'Reset settings', bn_home: 'Home', bn_projects: 'Bots', bn_reviews: 'Reviews',

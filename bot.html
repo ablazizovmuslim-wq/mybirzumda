@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="kosmos" data-accent="auto">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bot — Birzumda</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237c3aed'/%3E%3Cpath d='M36 8 16 36h14l-4 20 22-30H34z' fill='white'/%3E%3C/svg%3E">
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+  <div class="bg">
+    <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+    <canvas id="particles"></canvas>
+  </div>
+
+  <header class="header">
+    <a href="index.html" class="brand">
+      <svg viewBox="0 0 64 64" class="logo-icon"><rect width="64" height="64" rx="16" fill="var(--accent)"/><path d="M36 8 16 36h14l-4 20 22-30H34z" fill="#fff"/></svg>
+      <span>Birzumda</span>
+    </a>
+    <div class="header-actions">
+      <button class="icon-btn lang-btn" id="langQuick">UZ</button>
+      <a href="index.html#projects" class="btn btn-ghost" data-b="back">← Orqaga</a>
+    </div>
+  </header>
+
+  <main class="page bot-page">
+    <!-- 1. Шапка бота -->
+    <section class="bot-hero glass reveal">
+      <div class="bot-icon" id="botIcon">🤖</div>
+      <div class="bot-info">
+        <h1 id="botName">...</h1>
+        <button class="nick" id="botNick" title="Copy">@...</button>
+        <p class="muted" id="botDesc"></p>
+        <span class="status" id="botStatus" hidden><i></i><em></em></span>
+      </div>
+      <div class="card-actions">
+        <a class="btn btn-primary" id="botOpen" target="_blank" rel="noopener" data-b="open">Botni ochish</a>
+        <button class="mini-btn" id="botShare" aria-label="Share">📤</button>
+      </div>
+    </section>
+
+    <!-- 2. Как работает: демо + шаги -->
+    <section class="reveal">
+      <h2 class="sec-title" data-b="how">🎬 Qanday ishlaydi</h2>
+      <div class="how">
+        <div class="phone" id="phone">
+          <div class="phone-top"><span id="phoneName">Bot</span><small data-b="online">online</small></div>
+          <div class="chat" id="chat"></div>
+        </div>
+        <ol class="steps" id="steps"></ol>
+      </div>
+    </section>
+
+    <!-- 3. Пакеты и цены -->
+    <section class="reveal">
+      <h2 class="sec-title" data-b="packages">💎 Paketlar va narxlar</h2>
+      <div id="packages"></div>
+    </section>
+
+    <!-- 4. Информация о боте -->
+    <section class="glass block bot-meta reveal">
+      <h2 data-b="info">ℹ️ Bot haqida</h2>
+      <div class="meta-grid" id="meta"></div>
+      <a class="btn btn-primary full" id="botOpen2" target="_blank" rel="noopener" data-b="open_big">🚀 Botni hoziroq ochish</a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p><span data-b="support">Texnik yordam:</span> <a href="https://t.me/Abdulazizov_prince" target="_blank" rel="noopener">@Abdulazizov_prince</a></p>
+    <p class="muted">© <span id="year"></span> Birzumda</p>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+  <script src="core.js"></script>
+  <script src="fx.js"></script>
+  <script src="bots.js"></script>
+  <script src="bot.js"></script>
+</body>
+</html>
