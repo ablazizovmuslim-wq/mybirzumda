@@ -7,6 +7,7 @@
 // ---------- 2. Переводы (UZ / RU / EN) ----------
 const T = {
   uz: {
+    tools_title: 'Foydali botlar', tools_sub: 'Bepul, tez va Telegram ichida',
     nav_services: 'Xizmatlar', bn_services: 'Xizmatlar', search_ph: 'Nima kerak? Masalan: slayd, kurs ishi, video', search_btn: 'Qidirish',
     popular_title: 'Mashhur xizmatlar', popular_sub: "Saytning o'zida buyurtma bering — tayyor ish Telegram'ga keladi", all_services: 'Barcha xizmatlar →',
     order_btn: 'Buyurtma berish', nothing: "Hech narsa topilmadi — boshqacha yozib ko'ring", tags: ['Slayd', 'Kurs ishi', 'Portfolio', 'Mustaqil ish', 'Video yuklash'],
@@ -49,6 +50,7 @@ const T = {
     support: 'Texnik yordam:'
   },
   ru: {
+    tools_title: 'Полезные боты', tools_sub: 'Бесплатно, быстро и прямо в Telegram',
     nav_services: 'Услуги', bn_services: 'Услуги', search_ph: 'Что нужно? Например: слайды, курсовая, видео', search_btn: 'Найти',
     popular_title: 'Популярные услуги', popular_sub: 'Заказывайте прямо на сайте — готовая работа придёт в Telegram', all_services: 'Все услуги →',
     order_btn: 'Заказать', nothing: 'Ничего не найдено — попробуйте иначе', tags: ['Слайды', 'Курсовая', 'Портфолио', 'Самостоятельная', 'Скачать видео'],
@@ -91,6 +93,7 @@ const T = {
     support: 'Техподдержка:'
   },
   en: {
+    tools_title: 'Handy bots', tools_sub: 'Free, fast and right inside Telegram',
     nav_services: 'Services', bn_services: 'Services', search_ph: 'What do you need? e.g. slides, term paper, video', search_btn: 'Search',
     popular_title: 'Popular services', popular_sub: 'Order right on the site — the finished work arrives in Telegram', all_services: 'All services →',
     order_btn: 'Order', nothing: 'Nothing found — try other words', tags: ['Slides', 'Term paper', 'Portfolio', 'Assignment', 'Video download'],
@@ -490,6 +493,8 @@ function renderPopular() {
   const ids = ['s-taqdimot', 's-kurs', 's-mustaqil', 't-dars', 't-portfolio', 'yukla'];
   const items = ids.map(id => CAT.items.find(x => x.id === id)).filter(Boolean);
   $('#popularGrid').innerHTML = items.map(svcCard).join('');
+  $('#toolsGrid').innerHTML = ['lotin', 'hisob', 'stiker', 'musiqa'].map(id => CAT.items.find(x => x.id === id)).filter(Boolean)
+    .map(svcCard).join('').replaceAll('<a class="svc-card glass" href="https://t.me', '<a class="svc-card glass" target="_blank" rel="noopener" href="https://t.me');
   $('#quickTags').innerHTML = t('tags').map(x => `<button type="button" class="tag">${x}</button>`).join('');
 }
 

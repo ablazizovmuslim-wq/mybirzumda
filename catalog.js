@@ -20,10 +20,28 @@ const KEYWORDS = {
   test: 'test savollar тест вопросы quiz',
   tadbir: 'tadbir ssenariy мероприятие сценарий event',
   boshqa: 'boshqa другое other',
-  yukla: 'video yuklash скачать download instagram youtube tiktok pinterest facebook reels'
+  yukla: 'video yuklash скачать download instagram youtube tiktok pinterest facebook reels',
+  lotin: 'lotin kirill кириллица латиница latin cyrillic alifbo transliteratsiya word',
+  hisob: 'kurs valyuta dollar курс валют доллар qr kod кредит kredit kalkulyator calculator',
+  stiker: 'stiker стикер sticker rasm фото photo',
+  musiqa: 'musiqa mp3 музыка audio ovoz звук video'
 };
 
 const BOT_ITEMS = [
+  { id: 'lotin', kind: 'bot', icon: '🔤', from: 0, url: 'https://t.me/Birzumda_Lotin_bot',
+    names: { uz: 'Birzumda Lotin — kirill ↔ lotin', ru: 'Birzumda Lotin — кириллица ↔ латиница', en: 'Birzumda Lotin — Cyrillic ↔ Latin' },
+    descs: { uz: "Matn va Word fayllarni bir zumda o'giradi — bepul", ru: 'Переводит текст и Word-файлы в один миг — бесплатно',
+             en: 'Converts text and Word files instantly — free' } },
+  { id: 'hisob', kind: 'bot', icon: '🧮', from: 0, url: 'https://t.me/Birzumda_Hisob_bot',
+    names: { uz: 'Birzumda Hisob — kurs, QR, kredit', ru: 'Birzumda Hisob — курс, QR, кредит', en: 'Birzumda Hisob — rates, QR, loans' },
+    descs: { uz: 'Markaziy bank kursi, konvertor, QR kod, kredit kalkulyatori', ru: 'Курс ЦБ, конвертер, QR-код, кредитный калькулятор',
+             en: 'Central Bank rates, converter, QR codes, loan calculator' } },
+  { id: 'stiker', kind: 'bot', icon: '🧩', from: 0, url: 'https://t.me/Birzumda_Stiker_bot',
+    names: { uz: 'Birzumda Stiker — rasmdan stiker', ru: 'Birzumda Stiker — стикер из фото', en: 'Birzumda Stiker — photo to sticker' },
+    descs: { uz: "Rasmdan stiker va o'z stikerpakingiz", ru: 'Стикеры из фото и свой стикерпак', en: 'Stickers from photos and your own pack' } },
+  { id: 'musiqa', kind: 'bot', icon: '🎵', from: 0, url: 'https://t.me/Birzumda_Musiqa_bot',
+    names: { uz: 'Birzumda Musiqa — videodan MP3', ru: 'Birzumda Musiqa — MP3 из видео', en: 'Birzumda Musiqa — MP3 from video' },
+    descs: { uz: 'Video, dumaloq video va ovozli xabardan MP3', ru: 'MP3 из видео, кружков и голосовых', en: 'MP3 from videos, video notes and voice' } },
   { id: 'yukla', kind: 'bot', icon: '📥', from: 0, url: 'bot.html#yukla',
     names: { uz: 'Birzumda Yukla — video yuklash', ru: 'Birzumda Yukla — скачать видео', en: 'Birzumda Yukla — video download' },
     descs: { uz: 'Instagram, YouTube, Pinterest, TikTok, Facebook — bepul', ru: 'Instagram, YouTube, Pinterest, TikTok, Facebook — бесплатно',

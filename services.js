@@ -21,7 +21,7 @@ function render() {
   const items = searchCatalog($('#sQ').value, filter);
   $('#count').textContent = items.length ? `${items.length} ${s('found')}` : s('nothing');
   $('#grid').innerHTML = items.map((it, i) => `
-    <a class="svc-card glass" href="${it.url}" style="animation: msgIn .4s ${i * 40}ms both">
+    <a class="svc-card glass" href="${it.url}"${it.url.startsWith('http') ? ' target="_blank" rel="noopener"' : ''} style="animation: msgIn .4s ${i * 40}ms both">
       <span class="svc-ic">${it.icon}</span>
       <b>${escapeHtml(it.names[L])}</b>
       <p class="muted">${escapeHtml(it.descs[L] || '')}</p>
