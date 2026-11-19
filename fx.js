@@ -1,5 +1,5 @@
 /* =========================================
-   Birzumda — живой фон (8 эффектов) и маскот Zumik
+   Birzumda — живой фон (8 эффектов)
    ========================================= */
 
 // ---------- 1. Живой фон на canvas ----------
@@ -167,68 +167,3 @@ function measureFps(ms = 3000) {
     })(start);
   });
 }
-
-// ---------- 3. Маскот Zumik — летает по экрану без рамки ----------
-const Mascot = (() => {
-  let el = null, raf = 0, x = 80, y = 160, tx = 0, ty = 0, vx = 0, vy = 0, t = 0, onTap = null;
-
-  const SVG = `
-  <svg viewBox="0 0 64 64">
-    <defs><linearGradient id="zg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="var(--accent-2)"/><stop offset="1" stop-color="var(--accent)"/></linearGradient></defs>
-    <g class="wing"><path d="M14 26c-10-6-12 4-6 8 4 2 8 0 10-2z" fill="#fff" opacity=".85"/></g>
-    <path d="M38 4 14 36h14l-5 24 27-34H35z" fill="url(#zg)" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
-    <ellipse class="eye" cx="27" cy="30" rx="2.6" ry="3.4" fill="#1b1033"/>
-    <ellipse class="eye" cx="35" cy="30" rx="2.6" ry="3.4" fill="#1b1033"/>
-    <circle cx="28" cy="29" r=".9" fill="#fff"/><circle cx="36" cy="29" r=".9" fill="#fff"/>
-    <path d="M27 36q4 3 8 0" stroke="#1b1033" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-  </svg>`;
-
-  function newTarget() { tx = 40 + Math.random() * (innerWidth - 110); ty = 90 + Math.random() * (innerHeight - 200); }
-
-  function frame() {
-    raf = requestAnimationFrame(frame);
-    t++;
-    const dx = tx - x, dy = ty - y;
-    if (Math.hypot(dx, dy) < 30) newTarget();
-    vx += dx * .0009; vy += dy * .0009;   // плавно поворачивает к цели
-    vx *= .97; vy *= .97;
-    x += vx; y += vy;
-    const bob = Math.sin(t / 12) * 6;       // покачивание вверх-вниз
-    el.style.transform = `translate(${x}px, ${y + bob}px) rotate(${vx * 4}deg)`;
-    el.classList.toggle('flip', vx < 0);
-    if (t % 6 === 0) trail(x + 32, y + 40 + bob);
-  }
-
-  function trail(px, py) {
-    const s = document.createElement('i');
-    s.className = 'trail'; s.style.left = px + 'px'; s.style.top = py + 'px';
-    document.body.appendChild(s); setTimeout(() => s.remove(), 800);
-  }
-
-  function say(text) {
-    const b = document.createElement('div');
-    b.className = 'bubble'; b.textContent = text;
-    b.style.left = Math.min(x + 50, innerWidth - 230) + 'px'; b.style.top = Math.max(y - 30, 70) + 'px';
-    document.body.appendChild(b); setTimeout(() => b.remove(), 2600);
-  }
-
-  return {
-    enable(tapHandler) {
-      if (el) return;
-      onTap = tapHandler;
-      el = document.createElement('div');
-      el.className = 'mascot'; el.innerHTML = SVG; el.setAttribute('aria-hidden', 'true');
-      el.addEventListener('click', () => {
-        el.classList.remove('spin'); void el.offsetWidth; el.classList.add('spin');
-        vx += (Math.random() - .5) * 14; vy -= 6;   // отскакивает от пальца
-        if (onTap) onTap();
-      });
-      document.body.appendChild(el);
-      x = innerWidth * .2; y = innerHeight * .4; newTarget(); frame();
-    },
-    disable() { cancelAnimationFrame(raf); el?.remove(); el = null; },
-    say,
-    get on() { return !!el; }
-  };
-})();

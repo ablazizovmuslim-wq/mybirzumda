@@ -410,29 +410,6 @@ code { font-family: ui-monospace, monospace; background: color-mix(in srgb, var(
 .colors .auto::after { content: 'A'; position: absolute; inset: 0; display: grid; place-items: center; font-weight: 800; color: #fff; font-size: 14px; }
 .reset-btn { color: var(--muted); font-weight: 600; text-decoration: underline; justify-self: start; }
 
-/* ---------- 26. Маскот Zumik ---------- */
-.mascot {
-  position: fixed; left: 0; top: 0; z-index: 15; width: 64px; height: 64px; cursor: pointer;
-  will-change: transform; filter: drop-shadow(0 6px 14px color-mix(in srgb, var(--accent) 55%, transparent));
-}
-.mascot svg { width: 100%; height: 100%; transition: transform .3s; }
-.mascot.flip svg { transform: scaleX(-1); }
-.mascot.spin svg { animation: spin .8s cubic-bezier(.3,1.4,.5,1); }
-@keyframes spin { to { transform: rotate(360deg) scale(1.1); } }
-.mascot .wing { transform-origin: 30px 30px; animation: flap .25s ease-in-out infinite alternate; }
-@keyframes flap { to { transform: scaleY(.55); } }
-.mascot .eye { animation: blink 4s infinite; transform-origin: center; transform-box: fill-box; }
-@keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
-.bubble {
-  position: fixed; z-index: 16; max-width: 220px; padding: 8px 12px; border-radius: 14px 14px 14px 4px;
-  font-size: 13px; font-weight: 700; background: var(--text); color: var(--bg); pointer-events: none;
-  animation: bubble 2.6s ease forwards;
-}
-@keyframes bubble { 0% { opacity: 0; transform: translateY(8px) scale(.8); } 12%, 85% { opacity: 1; transform: none; } 100% { opacity: 0; } }
-.trail { position: fixed; z-index: 14; width: 6px; height: 6px; border-radius: 50%; pointer-events: none; background: var(--accent-2);
-  animation: trail .8s linear forwards; }
-@keyframes trail { to { transform: scale(0); opacity: 0; } }
-
 /* Лёгкий режим: без живого фона */
 .lite .blob { animation: none; }
 .lite #particles { display: none; }

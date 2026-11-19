@@ -9,10 +9,9 @@ const T = {
   uz: {
     more: 'Batafsil: qanday ishlaydi va narxlar →',
     copied: 'Havola nusxalandi ✅', share_text: "Birzumda — Telegram botlar", lite_auto: "Telefoningiz uchun yengil rejim yoqildi 🍃",
-    anim: 'Animatsiyalar', anim_full: "To'liq", anim_lite: 'Yengil', mascot: 'Zumik (maskot)', on: 'Yoqilgan', off: "O'chirilgan",
+    anim: 'Animatsiyalar', anim_full: "To'liq", anim_lite: 'Yengil',
     reset: 'Sozlamalarni tiklash', bn_home: 'Asosiy', bn_projects: 'Botlar', bn_reviews: 'Fikrlar',
     qr_hint: "Kamerani QR kodga qarating — bot ochiladi", close: 'Yopish',
-    zumik: ['Salom! Men Zumik ⚡', "Hammasi bir zumda! 🚀", "Video kerakmi? Birzumda Yukla'ni och! 📥", "Taqdimot? Tayyorla bor! 📊", "Meni ushlay olmaysan 😜", "Mavzuni almashtirib ko'r ⚙️"],
     cabinet: 'Kabinet', no_order: "Fikr qoldirish uchun avval bajarilgan buyurtmangiz bo'lishi kerak", error: 'Xatolik, keyinroq urinib ko\'ring',
     nav_projects: 'Loyihalar', nav_reviews: 'Fikrlar', nav_about: 'Biz haqimizda', nav_faq: 'Savollar',
     login: 'Kirish', settings: 'Sozlamalar', theme: 'Mavzu', dark: 'Tungi', light: 'Kunduzgi', color: 'Rang', language: 'Til',
@@ -48,10 +47,9 @@ const T = {
   ru: {
     more: 'Подробнее: как работает и цены →',
     copied: 'Ссылка скопирована ✅', share_text: 'Birzumda — Telegram-боты', lite_auto: 'Для вашего телефона включён лёгкий режим 🍃',
-    anim: 'Анимации', anim_full: 'Полные', anim_lite: 'Лёгкие', mascot: 'Zumik (маскот)', on: 'Включён', off: 'Выключен',
+    anim: 'Анимации', anim_full: 'Полные', anim_lite: 'Лёгкие',
     reset: 'Сбросить настройки', bn_home: 'Главная', bn_projects: 'Боты', bn_reviews: 'Отзывы',
     qr_hint: 'Наведите камеру на QR-код — откроется бот', close: 'Закрыть',
-    zumik: ['Привет! Я Zumik ⚡', 'Всё в один миг! 🚀', 'Нужно видео? Открой Birzumda Yukla! 📥', 'Презентация? Есть Tayyorla! 📊', 'Не поймаешь 😜', 'Попробуй сменить тему ⚙️'],
     cabinet: 'Кабинет', no_order: 'Отзыв можно оставить только после выполненного заказа', error: 'Ошибка, попробуйте позже',
     nav_projects: 'Проекты', nav_reviews: 'Отзывы', nav_about: 'О нас', nav_faq: 'Вопросы',
     login: 'Войти', settings: 'Настройки', theme: 'Тема', dark: 'Тёмная', light: 'Светлая', color: 'Цвет', language: 'Язык',
@@ -87,10 +85,9 @@ const T = {
   en: {
     more: 'Details: how it works & prices →',
     copied: 'Link copied ✅', share_text: 'Birzumda — Telegram bots', lite_auto: 'Light mode turned on for your phone 🍃',
-    anim: 'Animations', anim_full: 'Full', anim_lite: 'Light', mascot: 'Zumik (mascot)', on: 'On', off: 'Off',
+    anim: 'Animations', anim_full: 'Full', anim_lite: 'Light',
     reset: 'Reset settings', bn_home: 'Home', bn_projects: 'Bots', bn_reviews: 'Reviews',
     qr_hint: 'Point your camera at the QR code to open the bot', close: 'Close',
-    zumik: ["Hi! I'm Zumik ⚡", 'Everything in an instant! 🚀', 'Need a video? Open Birzumda Yukla! 📥', 'Presentation? Try Tayyorla! 📊', "Can't catch me 😜", 'Try another theme ⚙️'],
     cabinet: 'Account', no_order: 'You can leave a review only after a completed order', error: 'Error, please try again later',
     nav_projects: 'Projects', nav_reviews: 'Reviews', nav_about: 'About', nav_faq: 'FAQ',
     login: 'Log in', settings: 'Settings', theme: 'Theme', dark: 'Dark', light: 'Light', color: 'Color', language: 'Language',
@@ -194,29 +191,18 @@ $$('[data-lang-set]').forEach(b => b.addEventListener('click', () => setLang(b.d
 // быстрая кнопка языка в шапке: UZ → RU → EN → UZ
 $('#langQuick').addEventListener('click', () => setLang({ uz: 'ru', ru: 'en', en: 'uz' }[state.lang]));
 
-// ---------- 6. Анимации (полные / лёгкие) и маскот ----------
+// ---------- 6. Анимации (полные / лёгкие) ----------
 state.fx = load('fx', '');           // '' = ещё не решили → проверим телефон
-state.mascot = load('mascot', 'on');
 
 function applyFx() {
   const full = state.fx !== 'lite';
   document.documentElement.classList.toggle('lite', !full);
   FX.setEnabled(full);
   $$('[data-fx-set]').forEach(b => b.classList.toggle('active', b.dataset.fxSet === (full ? 'full' : 'lite')));
-  applyMascot();
-}
-
-function applyMascot() {
-  const on = state.mascot === 'on' && state.fx !== 'lite' && !matchMedia('(prefers-reduced-motion: reduce)').matches;
-  on ? Mascot.enable(() => Mascot.say(t('zumik')[Math.floor(Math.random() * t('zumik').length)])) : Mascot.disable();
-  $$('[data-mascot-set]').forEach(b => b.classList.toggle('active', b.dataset.mascotSet === state.mascot));
 }
 
 $$('[data-fx-set]').forEach(b => b.addEventListener('click', () => {
   state.fx = b.dataset.fxSet; save('fx', state.fx); applyFx();
-}));
-$$('[data-mascot-set]').forEach(b => b.addEventListener('click', () => {
-  state.mascot = b.dataset.mascotSet; save('mascot', state.mascot); applyMascot();
 }));
 
 // автопроверка: тянет ли телефон живые анимации
@@ -233,7 +219,7 @@ async function autoFx() {
 }
 
 $('#resetBtn').addEventListener('click', () => {
-  ['theme', 'accent', 'lang', 'fx', 'mascot'].forEach(k => save(k, null));
+  ['theme', 'accent', 'lang', 'fx'].forEach(k => save(k, null));
   location.reload();
 });
 
