@@ -17,7 +17,10 @@ const FX = (() => {
     // PRO — как шаблоны Birzumda Tayyorla
     synth: 'synth', rings: 'rings', circuit: 'circuit', fire: 'waves', hex: 'hex', bolt: 'lightning', holo: 'holo',
     // YANGI
-    aurora: 'aurora', matrix: 'matrix', warp: 'warp', rain: 'rain', lamp: 'lamp', dna: 'dna', galaxy: 'galaxy', party: 'confetti'
+    aurora: 'aurora', matrix: 'matrix', warp: 'warp', rain: 'rain', lamp: 'lamp', dna: 'dna', galaxy: 'galaxy', party: 'confetti',
+    // PREMIUM
+    salyut: 'fireworks', meteor: 'meteor', tunnel: 'tunnel', radar: 'radar', eq: 'equalizer',
+    lantern: 'lanterns', gears: 'gears', atom: 'atom', city: 'city', hilol: 'hilol'
   };
   let bgColor = '#000', extra = {};
 
@@ -384,6 +387,194 @@ const FX = (() => {
       step(p, i) { p.y += p.vy; p.x += Math.sin(t / 40 + p.fl) * .9; p.rot += p.vr; p.fl += .08; if (p.y > h + 20) parts[i] = this.make(false); },
       draw(p) { ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.scale(1, Math.cos(p.fl));
         ctx.globalAlpha = .85; ctx.fillStyle = p.col; ctx.fillRect(-p.s / 2, -p.s * .3, p.s, p.s * .6); ctx.restore(); }
+    }
+  });
+
+  // ===== PREMIUM: ещё 10 эффектов =====
+  const NONE = { density: 1e9, make: () => ({}), step() {}, draw() {} };
+  const twinkle = (d = 9000) => ({
+    density: d, max: 120,
+    make: () => ({ x: R() * w, y: R() * h, r: R() * 1.3 + .3, ph: R() * 6 }),
+    step() {},
+    draw(p) { dot(p.x, p.y, p.r, '#ffffff', .2 + Math.abs(Math.sin(t / 40 + p.ph)) * .5); }
+  });
+  function glow(x, y, r, col, a) {
+    const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+    g.addColorStop(0, col); g.addColorStop(1, 'transparent');
+    ctx.globalAlpha = a; ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill();
+  }
+  Object.assign(MODES, {
+    fireworks: { ...twinkle(14000), // салют: ракеты взлетают и раскрываются
+      after() {
+        const fw = extra.fw ||= { r: [], s: [] };
+        if (t % 55 === 0 || (fw.r.length < 1 && R() < .02)) fw.r.push({ x: w * (.15 + R() * .7), y: h, vy: -(h / 85) - R() * 3,
+          col: [c1, c2, '#ffffff', '#22d3ee', '#a3e635'][R() * 5 | 0] });
+        ctx.lineWidth = 2;
+        fw.r = fw.r.filter(r => {
+          r.y += r.vy; r.vy += .14;
+          ctx.globalAlpha = .8; ctx.strokeStyle = r.col; ctx.beginPath(); ctx.moveTo(r.x, r.y); ctx.lineTo(r.x, r.y - r.vy * 3); ctx.stroke();
+          if (r.vy < -1) return true;
+          const n = 46 + (R() * 30 | 0);
+          for (let k = 0; k < n; k++) { const a = k / n * 6.283, v = 1.5 + R() * 2.8;
+            fw.s.push({ x: r.x, y: r.y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: 70 + R() * 30, col: r.col }); }
+          return false;
+        });
+        fw.s = fw.s.filter(q => { q.x += q.vx; q.y += q.vy; q.vy += .035; q.vx *= .985; q.vy *= .985; q.life--;
+          dot(q.x, q.y, 1.8, q.col, Math.min(1, q.life / 60)); return q.life > 0; }).slice(-900);
+      }
+    },
+    meteor: { ...twinkle(6000), // звездопад: метеоры с хвостом
+      after() {
+        const ms = extra.m ||= [];
+        if (R() < .035) { const v = 11 + R() * 7;
+          ms.push({ x: R() * w * 1.2, y: -20 - R() * h * .2, vx: -v * .75, vy: v * .55, len: 90 + R() * 120, life: 1 }); }
+        extra.m = ms.filter(m => {
+          m.x += m.vx; m.y += m.vy; m.life -= .012;
+          const k = m.len / Math.hypot(m.vx, m.vy), tx = m.x - m.vx * k, ty = m.y - m.vy * k;
+          const g = ctx.createLinearGradient(m.x, m.y, tx, ty);
+          g.addColorStop(0, '#ffffff'); g.addColorStop(.25, c2); g.addColorStop(1, 'transparent');
+          ctx.globalAlpha = m.life; ctx.strokeStyle = g; ctx.lineWidth = 2.2;
+          ctx.beginPath(); ctx.moveTo(m.x, m.y); ctx.lineTo(tx, ty); ctx.stroke();
+          dot(m.x, m.y, 2.4, '#ffffff', m.life);
+          return m.life > 0 && m.y < h + 50 && m.x > -200;
+        });
+      }
+    },
+    tunnel: { ...NONE, // неоновый тоннель: рамки летят на зрителя и крутятся
+      after() {
+        const cx = w / 2, cy = h * .45, M = Math.hypot(w, h) * .62, N = 16;
+        ctx.lineWidth = 2;
+        for (let i = 0; i < N; i++) {
+          const z = ((i / N) + t * .0035) % 1, s = z * z * M;
+          ctx.save(); ctx.translate(cx, cy); ctx.rotate(t * .004 + z * 2.2);
+          ctx.globalAlpha = z * .7; ctx.strokeStyle = i % 2 ? c1 : c2;
+          ctx.strokeRect(-s / 2, -s / 2, s, s); ctx.restore();
+        }
+        glow(cx, cy, 70, c2, .25);
+      }
+    },
+    radar: { // радар: луч проходит, точки вспыхивают
+      density: 22000, max: 30,
+      make: () => ({ a: R() * 6.283, d: .15 + R() * .8 }),
+      step() {},
+      draw(p) {
+        const cx = w / 2, cy = h * .45, Rr = Math.min(w, h) * .44, sw = (t * .02) % 6.283;
+        const diff = ((sw - p.a) % 6.283 + 6.283) % 6.283, a = Math.max(0, 1 - diff / 3);
+        const x = cx + Math.cos(p.a) * p.d * Rr, y = cy + Math.sin(p.a) * p.d * Rr;
+        if (a > 0) { glow(x, y, 10, c2, a * .6); dot(x, y, 2.5, '#ffffff', a); }
+      },
+      before: true,
+      after() {
+        const cx = w / 2, cy = h * .45, Rr = Math.min(w, h) * .44, sw = (t * .02) % 6.283;
+        ctx.strokeStyle = c1; ctx.lineWidth = 1;
+        for (let k = 1; k <= 4; k++) { ctx.globalAlpha = .18; ctx.beginPath(); ctx.arc(cx, cy, Rr * k / 4, 0, 7); ctx.stroke(); }
+        ctx.beginPath(); ctx.moveTo(cx - Rr, cy); ctx.lineTo(cx + Rr, cy); ctx.moveTo(cx, cy - Rr); ctx.lineTo(cx, cy + Rr); ctx.stroke();
+        for (let k = 0; k < 28; k++) { const a = sw - k * .025;
+          ctx.globalAlpha = .32 * (1 - k / 28); ctx.strokeStyle = c2; ctx.lineWidth = 3;
+          ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + Math.cos(a) * Rr, cy + Math.sin(a) * Rr); ctx.stroke(); }
+      }
+    },
+    equalizer: { // эквалайзер: столбики прыгают под «музыку»
+      density: 20000, max: 40,
+      make: (init) => ({ x: R() * w, y: init ? R() * h : h + 10, vy: .4 + R() * .8, s: 10 + R() * 8, ch: '♪♫♬'[R() * 3 | 0] }),
+      step(p, i) { p.y -= p.vy; if (p.y < -20) parts[i] = this.make(false); },
+      draw(p) { ctx.globalAlpha = .3; ctx.fillStyle = c2; ctx.font = `${p.s}px sans-serif`; ctx.fillText(p.ch, p.x, p.y); },
+      after() {
+        const bw = w > 700 ? 16 : 11, n = Math.ceil(w / bw), H = h * .3;
+        const g = ctx.createLinearGradient(0, h, 0, h - H); g.addColorStop(0, c1); g.addColorStop(1, c2);
+        ctx.fillStyle = g;
+        for (let i = 0; i < n; i++) {
+          const v = (Math.sin(i * .31 + t * .06) + Math.sin(i * .13 - t * .09) + Math.sin(i * .77 + t * .17) * .6 + 2.6) / 5.2;
+          const bh = Math.max(4, v * v * H);
+          ctx.globalAlpha = .38; ctx.fillRect(i * bw + 1, h - bh, bw - 3, bh);
+          ctx.globalAlpha = .7; ctx.fillRect(i * bw + 1, h - bh - 6, bw - 3, 3);
+        }
+      }
+    },
+    lanterns: { // небесные фонарики поднимаются
+      density: 26000, max: 38,
+      make: (init) => ({ x: R() * w, y: init ? R() * h : h + 40, s: 9 + R() * 12, vy: .25 + R() * .55, ph: R() * 6 }),
+      step(p, i) { p.y -= p.vy; p.x += Math.sin(t / 70 + p.ph) * .3; if (p.y < -40) parts[i] = this.make(false); },
+      draw(p) {
+        const fl = .8 + Math.sin(t / 9 + p.ph) * .12;
+        glow(p.x, p.y, p.s * 3.2, c1, .28 * fl);
+        const g = ctx.createLinearGradient(0, p.y - p.s, 0, p.y + p.s); g.addColorStop(0, c2); g.addColorStop(1, c1);
+        ctx.globalAlpha = .85 * fl; ctx.fillStyle = g;
+        ctx.beginPath(); ctx.moveTo(p.x - p.s * .55, p.y - p.s); ctx.lineTo(p.x + p.s * .55, p.y - p.s);
+        ctx.lineTo(p.x + p.s * .42, p.y + p.s); ctx.lineTo(p.x - p.s * .42, p.y + p.s); ctx.closePath(); ctx.fill();
+      }
+    },
+    gears: { ...NONE, // механизм: шестерёнки крутятся и цепляются
+      init() {
+        const u = Math.min(w, h) / 9;
+        extra.g = [
+          { x: w * .12, y: h * .22, r: u * 1.3, n: 14, d: 1 },
+          { x: w * .12 + u * 2.55, y: h * .22 + u * .7, r: u * .95, n: 10, d: -1 },
+          { x: w * .88, y: h * .78, r: u * 1.8, n: 20, d: 1 },
+          { x: w * .88 - u * 2.95, y: h * .78 - u * .9, r: u * .9, n: 10, d: -1 },
+          { x: w * .82, y: h * .16, r: u * .7, n: 8, d: 1 }];
+      },
+      after() {
+        for (const g of extra.g || []) {
+          const rot = t * .012 * g.d * (14 / g.n), tooth = g.r * .18;
+          ctx.save(); ctx.translate(g.x, g.y); ctx.rotate(rot); ctx.beginPath();
+          for (let i = 0; i < g.n; i++) { const a = i / g.n * 6.283, da = 6.283 / g.n;
+            ctx.lineTo(Math.cos(a) * g.r, Math.sin(a) * g.r);
+            ctx.lineTo(Math.cos(a + da * .15) * (g.r + tooth), Math.sin(a + da * .15) * (g.r + tooth));
+            ctx.lineTo(Math.cos(a + da * .45) * (g.r + tooth), Math.sin(a + da * .45) * (g.r + tooth));
+            ctx.lineTo(Math.cos(a + da * .6) * g.r, Math.sin(a + da * .6) * g.r); }
+          ctx.closePath(); ctx.globalAlpha = .1; ctx.fillStyle = c1; ctx.fill();
+          ctx.globalAlpha = .45; ctx.strokeStyle = c2; ctx.lineWidth = 2; ctx.stroke();
+          ctx.beginPath(); ctx.arc(0, 0, g.r * .32, 0, 7); ctx.stroke();
+          for (let k = 0; k < 4; k++) { ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(Math.cos(k * 1.571) * g.r * .9, Math.sin(k * 1.571) * g.r * .9); ctx.globalAlpha = .2; ctx.stroke(); }
+          ctx.restore();
+        }
+      }
+    },
+    atom: { ...twinkle(12000), // атом: электроны на трёх орбитах
+      after() {
+        const cx = w / 2, cy = h * .42, Rr = Math.min(w, h) * .34;
+        glow(cx, cy, 60, c2, .45); dot(cx, cy, 9, '#ffffff', .9);
+        for (let k = 0; k < 3; k++) {
+          ctx.save(); ctx.translate(cx, cy); ctx.rotate(k * 1.047 + t * .001);
+          ctx.globalAlpha = .25; ctx.strokeStyle = c1; ctx.lineWidth = 1.5;
+          ctx.beginPath(); ctx.ellipse(0, 0, Rr, Rr * .34, 0, 0, 7); ctx.stroke();
+          for (let j = 0; j < 8; j++) { const a = t * .035 * (1 + k * .2) + k * 2 - j * .06;
+            dot(Math.cos(a) * Rr, Math.sin(a) * Rr * .34, j ? 3 - j * .3 : 4.5, j ? c2 : '#ffffff', j ? .5 - j * .06 : 1); }
+          ctx.restore();
+        }
+      }
+    },
+    city: { ...twinkle(14000), // ночной город: окна загораются и гаснут
+      init() {
+        const b = []; let x = -10;
+        while (x < w + 10) { const bw = 34 + R() * 60, bh = h * (.12 + R() * .3);
+          const win = []; for (let yy = 12; yy < bh - 10; yy += 16) for (let xx = 7; xx < bw - 10; xx += 13) win.push({ x: xx, y: yy, on: R() < .35 });
+          b.push({ x, bw, bh, win }); x += bw + 3; }
+        extra.b = b;
+      },
+      after() {
+        for (const b of extra.b || []) {
+          ctx.globalAlpha = .82; ctx.fillStyle = '#04030c'; ctx.fillRect(b.x, h - b.bh, b.bw, b.bh);
+          ctx.globalAlpha = .5; ctx.strokeStyle = c1; ctx.lineWidth = 1; ctx.strokeRect(b.x + .5, h - b.bh + .5, b.bw - 1, b.bh);
+          for (const q of b.win) { if (R() < .0015) q.on = !q.on; if (!q.on) continue;
+            ctx.globalAlpha = .75; ctx.fillStyle = c2; ctx.fillRect(b.x + q.x, h - b.bh + q.y, 6, 8); }
+        }
+      }
+    },
+    hilol: { ...twinkle(7000), // ночь с полумесяцем
+      after() {
+        const x = w * (w > 700 ? .82 : .76), y = h * .17, r = Math.min(64, w * .11);
+        glow(x, y, r * 3, c1, .22);
+        ctx.save(); ctx.globalAlpha = 1; ctx.fillStyle = c1; ctx.shadowColor = c1; ctx.shadowBlur = 30;
+        ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill(); ctx.shadowBlur = 0;
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.beginPath(); ctx.arc(x + r * .42, y - r * .22, r * .88, 0, 7); ctx.fill(); ctx.restore();
+        const sx = x - r * 1.5, sy = y + r * .1, s = 7 + Math.sin(t / 20) * 2;
+        ctx.globalAlpha = .9; ctx.fillStyle = c2; ctx.beginPath();
+        for (let k = 0; k < 10; k++) { const a = k * .628 - 1.571, rr = k % 2 ? s * .42 : s; ctx.lineTo(sx + Math.cos(a) * rr, sy + Math.sin(a) * rr); }
+        ctx.closePath(); ctx.fill();
+      }
     }
   });
 

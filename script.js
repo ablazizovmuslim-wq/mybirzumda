@@ -17,7 +17,7 @@ const T = {
     nav_services: 'Xizmatlar', bn_services: 'Xizmatlar', search_ph: 'Nima kerak? Masalan: slayd, kurs ishi, video', search_btn: 'Qidirish',
     popular_title: 'Mashhur xizmatlar', popular_sub: "Saytning o'zida buyurtma bering — tayyor ish Telegram'ga keladi", all_services: 'Barcha xizmatlar →',
     order_btn: 'Buyurtma berish', nothing: "Hech narsa topilmadi — boshqacha yozib ko'ring", tags: ['Slayd', 'Kurs ishi', 'Portfolio', 'Mustaqil ish', 'Video yuklash'],
-    themes_main: 'ASOSIY', themes_new: 'YANGI JONLI', themes_pro: 'BIRZUMDA TAYYORLA USLUBIDA',
+    themes_main: 'ASOSIY', themes_new: 'YANGI JONLI', themes_prem: 'PREMIUM JONLI', themes_pro: 'BIRZUMDA TAYYORLA USLUBIDA',
     more: 'Batafsil: qanday ishlaydi va narxlar →',
     copied: 'Havola nusxalandi ✅', share_text: "Birzumda — Telegram botlar", lite_auto: "Telefoningiz uchun yengil rejim yoqildi 🍃",
     anim: 'Animatsiyalar', anim_full: "To'liq", anim_lite: 'Yengil',
@@ -66,7 +66,7 @@ const T = {
     nav_services: 'Услуги', bn_services: 'Услуги', search_ph: 'Что нужно? Например: слайды, курсовая, видео', search_btn: 'Найти',
     popular_title: 'Популярные услуги', popular_sub: 'Заказывайте прямо на сайте — готовая работа придёт в Telegram', all_services: 'Все услуги →',
     order_btn: 'Заказать', nothing: 'Ничего не найдено — попробуйте иначе', tags: ['Слайды', 'Курсовая', 'Портфолио', 'Самостоятельная', 'Скачать видео'],
-    themes_main: 'ОСНОВНЫЕ', themes_new: 'НОВЫЕ ЖИВЫЕ', themes_pro: 'В СТИЛЕ BIRZUMDA TAYYORLA',
+    themes_main: 'ОСНОВНЫЕ', themes_new: 'НОВЫЕ ЖИВЫЕ', themes_prem: 'ПРЕМИУМ ЖИВЫЕ', themes_pro: 'В СТИЛЕ BIRZUMDA TAYYORLA',
     more: 'Подробнее: как работает и цены →',
     copied: 'Ссылка скопирована ✅', share_text: 'Birzumda — Telegram-боты', lite_auto: 'Для вашего телефона включён лёгкий режим 🍃',
     anim: 'Анимации', anim_full: 'Полные', anim_lite: 'Лёгкие',
@@ -115,7 +115,7 @@ const T = {
     nav_services: 'Services', bn_services: 'Services', search_ph: 'What do you need? e.g. slides, term paper, video', search_btn: 'Search',
     popular_title: 'Popular services', popular_sub: 'Order right on the site — the finished work arrives in Telegram', all_services: 'All services →',
     order_btn: 'Order', nothing: 'Nothing found — try other words', tags: ['Slides', 'Term paper', 'Portfolio', 'Assignment', 'Video download'],
-    themes_main: 'MAIN', themes_new: 'NEW LIVE', themes_pro: 'BIRZUMDA TAYYORLA STYLE',
+    themes_main: 'MAIN', themes_new: 'NEW LIVE', themes_prem: 'PREMIUM LIVE', themes_pro: 'BIRZUMDA TAYYORLA STYLE',
     more: 'Details: how it works & prices →',
     copied: 'Link copied ✅', share_text: 'Birzumda — Telegram bots', lite_auto: 'Light mode turned on for your phone 🍃',
     anim: 'Animations', anim_full: 'Full', anim_lite: 'Light',
@@ -184,17 +184,29 @@ const THEMES = [
   { id: 'lamp',   nw: 1, em: '🫧', prev: 'radial-gradient(circle at 30% 70%,#fb923c 0 18%,transparent 19%),radial-gradient(circle at 70% 30%,#f43f5e 0 22%,#12020c 23%)', name: { uz: 'Lava lampa', ru: 'Лава-лампа', en: 'Lava lamp' } },
   { id: 'dna',    nw: 1, em: '🧬', prev: 'linear-gradient(135deg,#010d14 40%,#06b6d4 65%,#f472b6)', name: { uz: 'DNK', ru: 'ДНК', en: 'DNA' } },
   { id: 'galaxy', nw: 1, em: '🪐', prev: 'radial-gradient(circle,#f0abfc 0 5%,#a855f7 20%,#05010f 62%)', name: { uz: 'Galaktika', ru: 'Галактика', en: 'Galaxy' } },
+  // PREMIUM — yana 10 ta jonli tema
+  { id: 'salyut',  pm: 1, em: '🎆', prev: 'radial-gradient(circle at 50% 35%,#facc15 0 6%,#f43f5e 14%,transparent 30%),#07040f', name: { uz: 'Salyut', ru: 'Салют', en: 'Fireworks' } },
+  { id: 'meteor',  pm: 1, em: '☄️', prev: 'linear-gradient(215deg,transparent 40%,#e0f2fe 42%,#60a5fa 46%,transparent 52%),#030716', name: { uz: "Yulduz yomg'iri", ru: 'Звездопад', en: 'Meteor shower' } },
+  { id: 'tunnel',  pm: 1, em: '🌀', prev: 'repeating-radial-gradient(circle,#05000d 0 8px,#d946ef 8px 10px,#05000d 10px 18px,#22d3ee 18px 20px)', name: { uz: 'Neon tunnel', ru: 'Неоновый тоннель', en: 'Neon tunnel' } },
+  { id: 'radar',   pm: 1, em: '📡', prev: 'conic-gradient(from 0deg,#22c55e 0 12%,transparent 30%),repeating-radial-gradient(circle,#010f08 0 14px,#14532d 14px 15px)', name: { uz: 'Radar', ru: 'Радар', en: 'Radar' } },
+  { id: 'eq',      pm: 1, em: '🎧', prev: 'linear-gradient(0deg,#8b5cf6,#f472b6 40%,#0b0618 41%)', name: { uz: 'Ekvalayzer', ru: 'Эквалайзер', en: 'Equalizer' } },
+  { id: 'lantern', pm: 1, em: '🏮', prev: 'radial-gradient(circle at 30% 60%,#fde68a 0 6%,#f97316 12%,transparent 24%),radial-gradient(circle at 70% 35%,#fde68a 0 5%,#f97316 10%,#120a05 20%)', name: { uz: 'Fonarlar', ru: 'Фонарики', en: 'Lanterns' } },
+  { id: 'gears',   pm: 1, em: '⚙️', prev: 'repeating-conic-gradient(#d97706 0 6deg,#0d0b08 6deg 18deg)', name: { uz: 'Mexanizm', ru: 'Механизм', en: 'Gears' } },
+  { id: 'atom',    pm: 1, em: '⚛️', prev: 'radial-gradient(ellipse 60% 20% at 50% 50%,transparent 70%,#0ea5e9 72%,transparent 76%),radial-gradient(circle,#a5f3fc 0 8%,#02080f 20%)', name: { uz: 'Atom', ru: 'Атом', en: 'Atom' } },
+  { id: 'city',    pm: 1, em: '🌃', prev: 'linear-gradient(0deg,#04030c 0 30%,transparent 30%),radial-gradient(circle at 50% 120%,#6366f1,#070616 70%)', name: { uz: 'Tungi shahar', ru: 'Ночной город', en: 'Night city' } },
+  { id: 'hilol',   pm: 1, em: '🌙', prev: 'radial-gradient(circle at 77% 25%,#040a1a 0 11%,transparent 12%),radial-gradient(circle at 72% 30%,#eab308 0 12%,transparent 13%),#040a1a', name: { uz: 'Hilol kechasi', ru: 'Ночь полумесяца', en: 'Crescent night' } },
   { id: 'party',  nw: 1, em: '🎉', prev: 'conic-gradient(#f59e0b,#ec4899,#22d3ee,#a3e635,#f59e0b)', name: { uz: 'Bayram', ru: 'Праздник', en: 'Party' } }
 ];
 
 function renderThemeList() {
   const card = th => `
-    <button class="theme-card${th.pro ? ' pro' : ''}${th.id === state.theme ? ' active' : ''}" data-theme-set="${th.id}" style="--prev:${th.prev}">
+    <button class="theme-card${th.pro ? ' pro' : ''}${th.pm ? ' prem' : ''}${th.id === state.theme ? ' active' : ''}" data-theme-set="${th.id}" style="--prev:${th.prev}">
       <span class="em">${th.em}</span>${th.name[state.lang] || th.name.uz}
     </button>`;
   $('#themeList').innerHTML =
+    `<p class="theme-group">${t('themes_prem')} <b class="prem">PREMIUM</b></p>` + THEMES.filter(x => x.pm).map(card).join('') +
     `<p class="theme-group">${t('themes_new')} <b>NEW</b></p>` + THEMES.filter(x => x.nw).map(card).join('') +
-    `<p class="theme-group">${t('themes_main')}</p>` + THEMES.filter(x => !x.pro && !x.nw).map(card).join('') +
+    `<p class="theme-group">${t('themes_main')}</p>` + THEMES.filter(x => !x.pro && !x.nw && !x.pm).map(card).join('') +
     `<p class="theme-group">${t('themes_pro')} <b>PRO</b></p>` + THEMES.filter(x => x.pro).map(card).join('');
 }
 

@@ -13,7 +13,9 @@
 [data-theme="kosmos"], [data-theme="okean"], [data-theme="neon"], [data-theme="qish"],
 [data-theme="lava"], [data-theme="orman"], [data-theme="synth"], [data-theme="rings"], [data-theme="circuit"],
 [data-theme="fire"], [data-theme="hex"], [data-theme="bolt"], [data-theme="aurora"], [data-theme="matrix"],
-[data-theme="warp"], [data-theme="rain"], [data-theme="lamp"], [data-theme="dna"], [data-theme="galaxy"], [data-theme="party"] {
+[data-theme="warp"], [data-theme="rain"], [data-theme="lamp"], [data-theme="dna"], [data-theme="galaxy"], [data-theme="party"],
+[data-theme="salyut"], [data-theme="meteor"], [data-theme="tunnel"], [data-theme="radar"], [data-theme="eq"],
+[data-theme="lantern"], [data-theme="gears"], [data-theme="atom"], [data-theme="city"], [data-theme="hilol"] {
   --text: #f4f2fa; --muted: #a39fb5;
   --glass: rgba(255, 255, 255, 0.06); --glass-border: rgba(255, 255, 255, 0.12);
   --shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
@@ -73,6 +75,17 @@
 [data-theme="lamp"]   { --bg: #12020c; --accent: #f43f5e; --accent-2: #fb923c; --muted: #c49aa8; }   /* lava lampa pufaklari */
 [data-theme="dna"]    { --bg: #010d14; --accent: #06b6d4; --accent-2: #f472b6; --muted: #92b1bd; }   /* aylanayotgan DNK */
 [data-theme="galaxy"] { --bg: #05010f; --accent: #a855f7; --accent-2: #f0abfc; --muted: #ac9cc6; }   /* spiral galaktika */
+/* ===== PREMIUM: yana 10 ta ===== */
+[data-theme="salyut"]  { --bg: #07040f; --accent: #f43f5e; --accent-2: #facc15; --muted: #b9a7b8; }
+[data-theme="meteor"]  { --bg: #030716; --accent: #60a5fa; --accent-2: #e0f2fe; --muted: #9fb0cc; }
+[data-theme="tunnel"]  { --bg: #05000d; --accent: #d946ef; --accent-2: #22d3ee; --muted: #b39fc4; }
+[data-theme="radar"]   { --bg: #010f08; --accent: #22c55e; --accent-2: #bbf7d0; --muted: #8fb39c; }
+[data-theme="eq"]      { --bg: #0b0618; --accent: #8b5cf6; --accent-2: #f472b6; --muted: #ada0c8; }
+[data-theme="lantern"] { --bg: #120a05; --accent: #f97316; --accent-2: #fde68a; --muted: #c8ad96; }
+[data-theme="gears"]   { --bg: #0d0b08; --accent: #d97706; --accent-2: #fcd34d; --muted: #b8a88c; }
+[data-theme="atom"]    { --bg: #02080f; --accent: #0ea5e9; --accent-2: #a5f3fc; --muted: #93aec0; }
+[data-theme="city"]    { --bg: #070616; --accent: #6366f1; --accent-2: #fbbf24; --muted: #a5a3c8; }
+[data-theme="hilol"]   { --bg: #040a1a; --accent: #eab308; --accent-2: #93c5fd; --muted: #a3adc4; }
 [data-theme="party"]  { --bg: #0f0a1e; --accent: #f59e0b; --accent-2: #ec4899; --muted: #b3a6c4; }   /* konfetti */
 
 /* Свой акцентный цвет (если выбран не «Avto») — перекрывает цвет темы */
@@ -774,3 +787,17 @@ html, body { overflow-x: clip; }
 @keyframes qlDot { 0%, 80%, 100% { opacity: .25; transform: scale(.8); } 40% { opacity: 1; transform: scale(1.15); } }
 .ql-open { width: 100%; padding: 12px; }
 @media (prefers-reduced-motion: reduce) { .ql-orb, .ql-dots i { animation: none; } }
+
+/* ---------- 32. PREMIUM tema kartalari: oltin yaltiroq ramka ---------- */
+.theme-group b.prem { background: linear-gradient(110deg, #b45309, #fde68a 45%, #f59e0b 55%, #b45309);
+  background-size: 220% 100%; color: #1c1206; animation: premShine 3s linear infinite; }
+.theme-card.prem { position: relative; isolation: isolate; }
+.theme-card.prem::after { content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 2px; pointer-events: none;
+  background: conic-gradient(from var(--ang, 0deg), #fde68a, #f59e0b, #ec4899, #8b5cf6, #22d3ee, #fde68a);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude;
+  animation: premSpin 4s linear infinite; }
+@property --ang { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+@keyframes premSpin { to { --ang: 360deg; } }
+@keyframes premShine { to { background-position: -220% 0; } }
+.lite .theme-card.prem::after, .lite .theme-group b.prem { animation: none; }
+@media (prefers-reduced-motion: reduce) { .theme-card.prem::after, .theme-group b.prem { animation: none; } }
