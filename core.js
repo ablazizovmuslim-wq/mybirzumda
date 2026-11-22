@@ -39,7 +39,9 @@ const $$ = (s) => document.querySelectorAll(s);
 const THEME_IDS = ['kosmos', 'light', 'okean', 'neon', 'qish', 'lava', 'orman', 'sakura',
                    'synth', 'rings', 'circuit', 'fire', 'hex', 'bolt', 'holo',
                    'aurora', 'matrix', 'warp', 'rain', 'lamp', 'dna', 'galaxy', 'party',
-                   'salyut', 'meteor', 'tunnel', 'radar', 'eq', 'lantern', 'gears', 'atom', 'city', 'hilol'];
+                   'salyut', 'meteor', 'tunnel', 'radar', 'eq', 'lantern', 'gears', 'atom', 'city', 'hilol',
+                   'sahro', 'kofe', 'zumrad', 'yoqut', 'oltin', 'muz', 'limon', 'binafsha', 'tun', 'marjon',
+                   'kaleido', 'dengiz', 'kapalak', 'tuynuk', 'yurak', 'bulut', 'uchqun', 'mayatnik', 'spiro', 'koi'];
 if (!THEME_IDS.includes(state.theme)) state.theme = state.theme === 'light' ? 'light' : 'kosmos';
 document.documentElement.dataset.theme = state.theme;
 if (load('fx', '') === 'lite') document.documentElement.classList.add('lite');

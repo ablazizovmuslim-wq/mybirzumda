@@ -20,7 +20,13 @@ const FX = (() => {
     aurora: 'aurora', matrix: 'matrix', warp: 'warp', rain: 'rain', lamp: 'lamp', dna: 'dna', galaxy: 'galaxy', party: 'confetti',
     // PREMIUM
     salyut: 'fireworks', meteor: 'meteor', tunnel: 'tunnel', radar: 'radar', eq: 'equalizer',
-    lantern: 'lanterns', gears: 'gears', atom: 'atom', city: 'city', hilol: 'hilol'
+    lantern: 'lanterns', gears: 'gears', atom: 'atom', city: 'city', hilol: 'hilol',
+    // ASOSIY +10
+    sahro: 'fireflies', kofe: 'bubbles', zumrad: 'constellation', yoqut: 'embers', oltin: 'snow',
+    muz: 'bubbles', limon: 'bubbles', binafsha: 'petals', tun: 'constellation', marjon: 'bubbles',
+    // YANGI JONLI +10
+    kaleido: 'kaleido', dengiz: 'sea', kapalak: 'butterfly', tuynuk: 'blackhole', yurak: 'hearts',
+    bulut: 'clouds', uchqun: 'sparkle', mayatnik: 'pendulum', spiro: 'spiro', koi: 'koi'
   };
   let bgColor = '#000', extra = {};
 
@@ -574,6 +580,133 @@ const FX = (() => {
         ctx.globalAlpha = .9; ctx.fillStyle = c2; ctx.beginPath();
         for (let k = 0; k < 10; k++) { const a = k * .628 - 1.571, rr = k % 2 ? s * .42 : s; ctx.lineTo(sx + Math.cos(a) * rr, sy + Math.sin(a) * rr); }
         ctx.closePath(); ctx.fill();
+      }
+    }
+  });
+
+  // ===== YANGI JONLI +10 =====
+  Object.assign(MODES, {
+    kaleido: { ...NONE, // калейдоскоп: симметричные узоры вращаются
+      after() {
+        const cx = w / 2, cy = h * .45, n = 12, Rr = Math.min(w, h) * .45;
+        ctx.save(); ctx.translate(cx, cy); ctx.globalCompositeOperation = 'lighter';
+        for (let k = 0; k < n; k++) {
+          ctx.save(); ctx.rotate(k * 6.283 / n + t * .003); if (k % 2) ctx.scale(1, -1);
+          for (let j = 0; j < 5; j++) {
+            const d = Rr * (.18 + j * .17) * (1 + Math.sin(t * .01 + j) * .12), s = 16 + j * 10 + Math.sin(t * .02 + j) * 5;
+            ctx.globalAlpha = .34; ctx.fillStyle = j % 2 ? c1 : c2;
+            ctx.beginPath(); ctx.moveTo(d, 0); ctx.lineTo(d + s, s * .6); ctx.lineTo(d + s * 2, 0); ctx.lineTo(d + s, -s * .25); ctx.closePath(); ctx.fill();
+          }
+          ctx.restore();
+        }
+        ctx.restore(); ctx.globalCompositeOperation = 'source-over';
+      }
+    },
+    sea: { ...NONE, // море: слои волн
+      after() {
+        for (let L = 0; L < 5; L++) {
+          const base = h * (.55 + L * .1), amp = 14 + L * 5, sp = .012 + L * .004;
+          ctx.globalAlpha = .12 + L * .07; ctx.fillStyle = L % 2 ? c1 : c2; ctx.beginPath(); ctx.moveTo(0, h);
+          for (let x = 0; x <= w + 10; x += 10)
+            ctx.lineTo(x, base + Math.sin(x * .008 + t * sp + L) * amp + Math.sin(x * .021 - t * sp * 1.3) * amp * .4);
+          ctx.lineTo(w, h); ctx.closePath(); ctx.fill();
+        }
+      }
+    },
+    butterfly: { // бабочки машут крыльями
+      density: 30000, max: 24,
+      make: () => ({ x: R() * w, y: R() * h, vx: (R() - .5) * 1.2, vy: (R() - .5) * .8, s: 14 + R() * 14, ph: R() * 6, col: R() < .5 }),
+      step(p) { p.x += p.vx + Math.sin(t / 50 + p.ph) * .6; p.y += p.vy + Math.cos(t / 40 + p.ph) * .5;
+        if (p.x < -30) p.x = w + 30; if (p.x > w + 30) p.x = -30; if (p.y < -30) p.y = h + 30; if (p.y > h + 30) p.y = -30; },
+      draw(p) {
+        const f = Math.abs(Math.sin(t / 6 + p.ph)) * .8 + .2;
+        ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(Math.atan2(p.vy, p.vx) + 1.571);
+        ctx.globalAlpha = .7; ctx.fillStyle = p.col ? c1 : c2;
+        for (const sx of [-1, 1]) { ctx.beginPath(); ctx.ellipse(sx * p.s * .55 * f, -p.s * .2, p.s * .6 * f, p.s * .45, 0, 0, 7); ctx.fill();
+          ctx.beginPath(); ctx.ellipse(sx * p.s * .4 * f, p.s * .35, p.s * .38 * f, p.s * .3, 0, 0, 7); ctx.fill(); }
+        ctx.globalAlpha = .9; ctx.fillStyle = '#fff'; ctx.fillRect(-1, -p.s * .5, 2, p.s); ctx.restore();
+      }
+    },
+    blackhole: { // чёрная дыра: аккреционный диск затягивает частицы
+      density: 3000, max: 300,
+      make: () => ({ a: R() * 6.283, d: .2 + R() * .8, r: R() * 2 + .8 }),
+      step(p) { p.a += .004 / (p.d * p.d + .05); p.d -= .0009; if (p.d < .12) { p.d = 1; p.a = R() * 6.283; } },
+      draw(p) {
+        const cx = w / 2, cy = h * .42, Rr = Math.min(w, h) * .75;
+        dot(cx + Math.cos(p.a) * p.d * Rr, cy + Math.sin(p.a) * p.d * Rr * .38, p.r, p.d < .35 ? '#ffffff' : (p.d < .6 ? c2 : c1), Math.min(1, (1.1 - p.d)));
+      },
+      after() { const cx = w / 2, cy = h * .42, r = Math.min(w, h) * .07;
+        glow(cx, cy, r * 3, c2, .35);
+        ctx.globalAlpha = 1; ctx.fillStyle = '#000'; ctx.beginPath(); ctx.arc(cx, cy, r, 0, 7); ctx.fill();
+        ctx.strokeStyle = c2; ctx.lineWidth = 2; ctx.globalAlpha = .8; ctx.stroke(); }
+    },
+    hearts: { // сердечки поднимаются
+      density: 16000, max: 60,
+      make: (init) => ({ x: R() * w, y: init ? R() * h : h + 20, s: 11 + R() * 16, vy: .4 + R() * .9, ph: R() * 6 }),
+      step(p, i) { p.y -= p.vy; p.x += Math.sin(t / 50 + p.ph) * .4; if (p.y < -30) parts[i] = this.make(false); },
+      draw(p) { const s = p.s * (1 + Math.sin(t / 12 + p.ph) * .08);
+        ctx.globalAlpha = .55; ctx.fillStyle = p.ph > 3 ? c1 : c2; ctx.beginPath();
+        ctx.moveTo(p.x, p.y + s * .35);
+        ctx.bezierCurveTo(p.x - s, p.y - s * .4, p.x - s * .5, p.y - s, p.x, p.y - s * .45);
+        ctx.bezierCurveTo(p.x + s * .5, p.y - s, p.x + s, p.y - s * .4, p.x, p.y + s * .35); ctx.fill(); }
+    },
+    clouds: { // светлое небо: плывут облака
+      density: 60000, max: 14,
+      make: (init) => ({ x: init ? R() * w : -200, y: R() * h * .8, s: 30 + R() * 50, v: .15 + R() * .35 }),
+      step(p, i) { p.x += p.v; if (p.x - p.s * 3 > w) parts[i] = this.make(false); },
+      draw(p) { ctx.globalAlpha = .75; ctx.fillStyle = '#ffffff';
+        for (const [dx, dy, k] of [[0, 0, 1], [p.s * .9, -p.s * .25, .8], [p.s * 1.7, 0, .9], [p.s * .8, p.s * .25, .85]]) {
+          ctx.beginPath(); ctx.arc(p.x + dx, p.y + dy, p.s * k, 0, 7); ctx.fill(); } },
+      after() { glow(w * .85, h * .12, 140, c2, .35); }
+    },
+    sparkle: { // блёстки: искры-звёздочки вспыхивают
+      density: 9000, max: 110,
+      make: () => ({ x: R() * w, y: R() * h, s: 3 + R() * 7, ph: R() * 6, sp: .03 + R() * .05 }),
+      step(p) { p.ph += p.sp; if (p.ph > 6.283) { p.ph = 0; p.x = R() * w; p.y = R() * h; } },
+      draw(p) { const a = Math.max(0, Math.sin(p.ph)), s = p.s * a;
+        if (a < .05) return;
+        ctx.globalAlpha = a * .9; ctx.fillStyle = p.s > 7 ? '#ffffff' : (p.s > 5 ? c2 : c1); ctx.beginPath();
+        ctx.moveTo(p.x, p.y - s * 2); ctx.quadraticCurveTo(p.x, p.y, p.x + s * 2, p.y); ctx.quadraticCurveTo(p.x, p.y, p.x, p.y + s * 2);
+        ctx.quadraticCurveTo(p.x, p.y, p.x - s * 2, p.y); ctx.quadraticCurveTo(p.x, p.y, p.x, p.y - s * 2); ctx.fill(); }
+    },
+    pendulum: { ...twinkle(14000), // маятниковая волна
+      after() {
+        const n = w > 700 ? 24 : 15, top = 0, L0 = h * .32;
+        for (let i = 0; i < n; i++) {
+          const x = w * (i + .5) / n, L = L0 + i * (h * .018), ang = Math.sin(t * .03 * (51 + i) / 60) * .55;
+          const bx = x + Math.sin(ang) * L * .35, by = top + Math.cos(ang) * L;
+          ctx.globalAlpha = .18; ctx.strokeStyle = c2; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x, top); ctx.lineTo(bx, by); ctx.stroke();
+          glow(bx, by, 16, i % 2 ? c1 : c2, .4); dot(bx, by, 5, '#ffffff', .85);
+        }
+      }
+    },
+    spiro: { ...NONE, // спирограф: светящийся узор рисуется сам
+      after() {
+        const cx = w / 2, cy = h * .45, Rr = Math.min(w, h) * .3, r = Rr * .37, d = Rr * .62;
+        ctx.lineWidth = 2.6;
+        for (let k = 0; k < 320; k++) {
+          const a = (t - k) * .045, b = (t - k - 1) * .045;
+          const p = (q) => [cx + (Rr - r) * Math.cos(q) + d * Math.cos((Rr - r) / r * q), cy + (Rr - r) * Math.sin(q) - d * Math.sin((Rr - r) / r * q)];
+          const [x1, y1] = p(a), [x2, y2] = p(b);
+          ctx.globalAlpha = (1 - k / 320) * .85; ctx.strokeStyle = k < 140 ? c2 : c1;
+          ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+        }
+      }
+    },
+    koi: { // карпы кои плавают по кругу
+      density: 40000, max: 12,
+      make: () => ({ x: R() * w, y: R() * h, a: R() * 6.283, v: .8 + R() * .8, s: 22 + R() * 16, turn: (R() - .5) * .02, col: R() < .5 }),
+      step(p) { p.a += p.turn + Math.sin(t / 60 + p.s) * .01; p.x += Math.cos(p.a) * p.v; p.y += Math.sin(p.a) * p.v;
+        if (p.x < -40) p.x = w + 40; if (p.x > w + 40) p.x = -40; if (p.y < -40) p.y = h + 40; if (p.y > h + 40) p.y = -40; },
+      draw(p) {
+        ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.a);
+        const wag = Math.sin(t / 6 + p.s) * .35;
+        ctx.globalAlpha = .75; ctx.fillStyle = p.col ? c1 : c2;
+        ctx.beginPath(); ctx.ellipse(0, 0, p.s, p.s * .38, 0, 0, 7); ctx.fill();
+        ctx.save(); ctx.translate(-p.s * .9, 0); ctx.rotate(wag);
+        ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(-p.s * .7, -p.s * .4); ctx.lineTo(-p.s * .55, 0); ctx.lineTo(-p.s * .7, p.s * .4); ctx.closePath(); ctx.fill(); ctx.restore();
+        ctx.globalAlpha = .5; ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.ellipse(p.s * .2, 0, p.s * .3, p.s * .16, 0, 0, 7); ctx.fill();
+        ctx.restore();
       }
     }
   });

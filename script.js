@@ -168,6 +168,16 @@ const THEMES = [
   { id: 'lava',   em: '🔥', prev: 'linear-gradient(135deg,#120604,#f97316)', name: { uz: 'Lava', ru: 'Лава', en: 'Lava' } },
   { id: 'orman',  em: '🌿', prev: 'linear-gradient(135deg,#04110a,#22c55e)', name: { uz: "O'rmon", ru: 'Лес', en: 'Forest' } },
   { id: 'sakura', em: '🌸', prev: 'linear-gradient(135deg,#fff1f5,#ec4899)', name: { uz: 'Sakura', ru: 'Сакура', en: 'Sakura' } },
+  { id: 'sahro',  em: '🏜', prev: 'linear-gradient(135deg,#1a1206,#f59e0b)', name: { uz: 'Sahro', ru: 'Пустыня', en: 'Desert' } },
+  { id: 'kofe',   em: '☕', prev: 'linear-gradient(135deg,#140c08,#b45309 70%,#fcd9a8)', name: { uz: 'Kofe', ru: 'Кофе', en: 'Coffee' } },
+  { id: 'zumrad', em: '💚', prev: 'linear-gradient(135deg,#021512,#10b981)', name: { uz: 'Zumrad', ru: 'Изумруд', en: 'Emerald' } },
+  { id: 'yoqut',  em: '❤️', prev: 'linear-gradient(135deg,#14020a,#e11d48)', name: { uz: 'Yoqut', ru: 'Рубин', en: 'Ruby' } },
+  { id: 'oltin',  em: '👑', prev: 'linear-gradient(135deg,#0f0c05,#eab308 70%,#fef08a)', name: { uz: 'Oltin', ru: 'Золото', en: 'Gold' } },
+  { id: 'muz',    em: '🧊', prev: 'linear-gradient(135deg,#eef8ff,#7dd3fc)', name: { uz: 'Muz', ru: 'Лёд', en: 'Ice' } },
+  { id: 'limon',  em: '🍋', prev: 'linear-gradient(135deg,#fbffe8,#a3e635)', name: { uz: 'Limon', ru: 'Лимон', en: 'Lime' } },
+  { id: 'binafsha', em: '💜', prev: 'linear-gradient(135deg,#f6f1ff,#c084fc)', name: { uz: 'Binafsha', ru: 'Фиалка', en: 'Violet' } },
+  { id: 'tun',    em: '🖤', prev: 'linear-gradient(135deg,#04050d,#475569 70%,#e2e8f0)', name: { uz: 'Yarim tun', ru: 'Полночь', en: 'Midnight' } },
+  { id: 'marjon', em: '🪸', prev: 'linear-gradient(135deg,#170708,#fb7185 65%,#fdba74)', name: { uz: 'Marjon', ru: 'Коралл', en: 'Coral' } },
   // PRO — как шаблоны Birzumda Tayyorla
   { id: 'synth',   pro: 1, em: '🌆', prev: 'linear-gradient(180deg,#0d0221 45%,#ff6ad5 60%,#b14bff)', name: { uz: 'Sintveyv', ru: 'Синтвейв', en: 'Synthwave' } },
   { id: 'rings',   pro: 1, em: '💫', prev: 'radial-gradient(circle at 50% 50%,#7dd3fc 0 6%,#020818 7% 20%,#3b82f6 21% 23%,#020818 24% 40%,#3b82f6 41% 43%,#020818 44%)', name: { uz: 'Halqalar', ru: 'Кольца', en: 'Rings' } },
@@ -195,6 +205,16 @@ const THEMES = [
   { id: 'atom',    pm: 1, em: '⚛️', prev: 'radial-gradient(ellipse 60% 20% at 50% 50%,transparent 70%,#0ea5e9 72%,transparent 76%),radial-gradient(circle,#a5f3fc 0 8%,#02080f 20%)', name: { uz: 'Atom', ru: 'Атом', en: 'Atom' } },
   { id: 'city',    pm: 1, em: '🌃', prev: 'linear-gradient(0deg,#04030c 0 30%,transparent 30%),radial-gradient(circle at 50% 120%,#6366f1,#070616 70%)', name: { uz: 'Tungi shahar', ru: 'Ночной город', en: 'Night city' } },
   { id: 'hilol',   pm: 1, em: '🌙', prev: 'radial-gradient(circle at 77% 25%,#040a1a 0 11%,transparent 12%),radial-gradient(circle at 72% 30%,#eab308 0 12%,transparent 13%),#040a1a', name: { uz: 'Hilol kechasi', ru: 'Ночь полумесяца', en: 'Crescent night' } },
+  { id: 'kaleido',  nw: 1, em: '🔮', prev: 'conic-gradient(#e879f9,#0b0420 15%,#38bdf8 30%,#0b0420 45%,#e879f9 60%,#0b0420 75%,#38bdf8 90%)', name: { uz: 'Kaleydoskop', ru: 'Калейдоскоп', en: 'Kaleidoscope' } },
+  { id: 'dengiz',   nw: 1, em: '🌊', prev: 'linear-gradient(180deg,#00111f 45%,#0ea5e9 60%,#0369a1 75%,#67e8f9)', name: { uz: "Dengiz to'lqini", ru: 'Морские волны', en: 'Sea waves' } },
+  { id: 'kapalak',  nw: 1, em: '🦋', prev: 'radial-gradient(ellipse at 40% 50%,#f0abfc 0 12%,transparent 14%),radial-gradient(ellipse at 60% 50%,#a78bfa 0 12%,#140a24 14%)', name: { uz: 'Kapalaklar', ru: 'Бабочки', en: 'Butterflies' } },
+  { id: 'tuynuk',   nw: 1, em: '🕳', prev: 'radial-gradient(circle,#000 0 12%,#fde68a 14%,#f97316 24%,#0a0400 50%)', name: { uz: 'Qora tuynuk', ru: 'Чёрная дыра', en: 'Black hole' } },
+  { id: 'yurak',    nw: 1, em: '💖', prev: 'radial-gradient(circle at 35% 40%,#fb7185 0 14%,transparent 15%),radial-gradient(circle at 65% 60%,#f9a8d4 0 12%,#1a0510 13%)', name: { uz: 'Yuraklar', ru: 'Сердечки', en: 'Hearts' } },
+  { id: 'bulut',    nw: 1, em: '☁️', prev: 'radial-gradient(circle at 35% 55%,#fff 0 16%,transparent 17%),radial-gradient(circle at 55% 45%,#fff 0 18%,#7dd3fc 19%)', name: { uz: 'Bulutlar', ru: 'Облака', en: 'Clouds' } },
+  { id: 'uchqun',   nw: 1, em: '✨', prev: 'radial-gradient(circle at 30% 30%,#fff 0 3%,transparent 5%),radial-gradient(circle at 70% 60%,#fde047 0 4%,transparent 6%),#0c0a1d', name: { uz: 'Uchqunlar', ru: 'Блёстки', en: 'Sparkles' } },
+  { id: 'mayatnik', nw: 1, em: '🔵', prev: 'radial-gradient(circle at 20% 70%,#34d399 0 6%,transparent 7%),radial-gradient(circle at 50% 80%,#a7f3d0 0 6%,transparent 7%),radial-gradient(circle at 80% 65%,#34d399 0 6%,#03130d 7%)', name: { uz: 'Mayatnik', ru: 'Маятник', en: 'Pendulum' } },
+  { id: 'spiro',    nw: 1, em: '🌀', prev: 'repeating-conic-gradient(from 10deg,#f472b6 0 4deg,#120617 4deg 22deg)', name: { uz: 'Spirograf', ru: 'Спирограф', en: 'Spirograph' } },
+  { id: 'koi',      nw: 1, em: '🐟', prev: 'radial-gradient(ellipse 30% 12% at 40% 45%,#fb923c 90%,transparent),radial-gradient(ellipse 25% 10% at 65% 65%,#fef3c7 90%,#041a24)', name: { uz: 'Koi baliqlar', ru: 'Рыбки кои', en: 'Koi fish' } },
   { id: 'party',  nw: 1, em: '🎉', prev: 'conic-gradient(#f59e0b,#ec4899,#22d3ee,#a3e635,#f59e0b)', name: { uz: 'Bayram', ru: 'Праздник', en: 'Party' } }
 ];
 
