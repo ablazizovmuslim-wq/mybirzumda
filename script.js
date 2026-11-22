@@ -9,7 +9,7 @@ const T = {
   uz: {
     h1a: 'Hammasi', h1b: 'bir zumda', hero_sub2: "Telegram botlar va sayt: video yuklash, taqdimot va kurs ishi, stiker, valyuta kursi va boshqalar — hammasi bir joyda.",
     wall_title: 'Botlarimiz', wall_sub: 'Har biri bitta ishni bajaradi va Telegram ichida ochiladi.', nav_bots: 'Botlar',
-    show_sub: "Taqdimot, portfolio, kurs ishi va mustaqil ish — 32 ta dizayn shablonidan. Narxi 20 000 so'mdan.", show_prices: 'Paketlar va narxlar',
+    show_sub: "Taqdimot, portfolio, kurs ishi va mustaqil ish — 62 ta dizayn shablonidan. Narxi 20 000 so'mdan.", show_prices: 'Paketlar va narxlar',
     how_title: 'Saytda buyurtma berish', how1: 'Ishni tanlang', how1s: 'Xizmat, paket, mavzu va muddat', how2: 'Telegram orqali kiring',
     how2s: 'Parolsiz, bitta tugma bilan', how3: "To'lang va kuting", how3s: 'Chek tasdiqlangach, tayyor ish botga keladi',
     foot_tag: "Telegram botlar oilasi. Andijon, O'zbekiston.", foot_bots: 'Botlar', foot_site: 'Sayt', soon: 'Tez orada', free: 'Bepul', open: 'Ochish', more: 'Batafsil',
@@ -58,7 +58,7 @@ const T = {
   ru: {
     h1a: 'Всё', h1b: 'в один миг', hero_sub2: 'Telegram-боты и сайт: скачать видео, презентации и курсовые, стикеры, курс валют и многое другое — всё в одном месте.',
     wall_title: 'Наши боты', wall_sub: 'Каждый делает одно дело и открывается прямо в Telegram.', nav_bots: 'Боты',
-    show_sub: 'Презентации, портфолио, курсовые и самостоятельные — 32 шаблона дизайна. Цена от 20 000 сум.', show_prices: 'Пакеты и цены',
+    show_sub: 'Презентации, портфолио, курсовые и самостоятельные — 62 шаблона дизайна. Цена от 20 000 сум.', show_prices: 'Пакеты и цены',
     how_title: 'Заказ на сайте', how1: 'Выберите работу', how1s: 'Услуга, пакет, тема и срок', how2: 'Войдите через Telegram',
     how2s: 'Без пароля, одной кнопкой', how3: 'Оплатите и ждите', how3s: 'После проверки чека готовая работа придёт в бота',
     foot_tag: 'Семья Telegram-ботов. Андижан, Узбекистан.', foot_bots: 'Боты', foot_site: 'Сайт', soon: 'Скоро', free: 'Бесплатно', open: 'Открыть', more: 'Подробнее',
@@ -107,7 +107,7 @@ const T = {
   en: {
     h1a: 'Everything', h1b: 'in an instant', hero_sub2: 'Telegram bots and a website: video downloads, presentations and papers, stickers, exchange rates and more — all in one place.',
     wall_title: 'Our bots', wall_sub: 'Each one does one job and opens right inside Telegram.', nav_bots: 'Bots',
-    show_sub: 'Presentations, portfolios, term papers and assignments — 32 design templates. From 20,000 sum.', show_prices: 'Plans and prices',
+    show_sub: 'Presentations, portfolios, term papers and assignments — 62 design templates. From 20,000 sum.', show_prices: 'Plans and prices',
     how_title: 'Ordering on the website', how1: 'Choose the work', how1s: 'Service, plan, topic and deadline', how2: 'Log in with Telegram',
     how2s: 'No password, one tap', how3: 'Pay and relax', how3s: 'Once the receipt is checked, the work arrives in the bot',
     foot_tag: 'A family of Telegram bots. Andijan, Uzbekistan.', foot_bots: 'Bots', foot_site: 'Website', soon: 'Soon', free: 'Free', open: 'Open', more: 'Details',
@@ -567,7 +567,7 @@ const WALL = [
   { id: 'eslatma', soon: 1, tg: 'Birzumda_Eslatma_bot', price: 0, color: '#eab308', name: 'Birzumda Eslatma',
     d: { uz: 'Eslatmalar va dars jadvali', ru: 'Напоминания и расписание', en: 'Reminders and timetable' } }
 ];
-const TPLS = [1, 4, 7, 13, 15, 17, 19, 23, 25, 28];
+const TPLS = [1, 13, 15, 21, 23, 33, 37, 39, 43, 53, 56, 58, 60, 62];
 const botHref = (b) => b.url || `https://t.me/${b.tg}`;
 const ext = (b) => b.url ? '' : ' target="_blank" rel="noopener"';
 
